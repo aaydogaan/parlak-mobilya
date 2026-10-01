@@ -3,7 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { Reveal } from "@/components/motion/Reveal";
 import { X } from "lucide-react";
-import galeriImages from "@/data/galeri_images.json";
+import galeriImagesJson from "@/data/galeri_images.json";
+import { useAdminStore } from "@/lib/admin/adminStore";
 
 export const Route = createFileRoute("/galeri")({
   component: GaleriPage,
@@ -26,8 +27,12 @@ export const Route = createFileRoute("/galeri")({
 
 function GaleriPage() {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
+  const storeGaleriImages = useAdminStore((s) => s.galeriImages);
 
-  const images = (galeriImages as string[]).slice(0, 48); // Top 48 high-res photos
+  const images =
+    storeGaleriImages && storeGaleriImages.length > 0
+      ? storeGaleriImages
+      : (galeriImagesJson as string[]);
 
   return (
     <SiteLayout

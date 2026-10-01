@@ -256,6 +256,9 @@ export const useAdminStore = create<AdminState>()(
       name: "parlak-mobilya-admin-storage-v5",
       merge: (persistedState: any, currentState: AdminState) => {
         const state = { ...currentState, ...(persistedState as any) };
+        if (!state.galeriImages || !Array.isArray(state.galeriImages) || state.galeriImages.length === 0) {
+          state.galeriImages = galeriImagesJson as string[];
+        }
         if (state.blogPosts && Array.isArray(state.blogPosts)) {
           state.blogPosts = state.blogPosts.map((b: BlogPostItem) => {
             return {
