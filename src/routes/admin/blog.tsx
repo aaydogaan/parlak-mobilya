@@ -948,14 +948,12 @@ export function AdminBlogPage() {
           </div>
 
           {/* 4. Professional Rich Text Editor */}
-          <div className="bg-white rounded-[24px] border border-black/5 shadow-xs p-3 sm:p-5">
-            <TipTapEditor
-              content={formContentHtml}
-              onChange={(newHtml) => setFormContentHtml(newHtml)}
-              onSave={handleSavePost}
-              isSaving={isSaving}
-            />
-          </div>
+          <TipTapEditor
+            content={formContentHtml}
+            onChange={(newHtml) => setFormContentHtml(newHtml)}
+            onSave={handleSavePost}
+            isSaving={isSaving}
+          />
 
           {/* Bottom Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-black/10">

@@ -285,7 +285,7 @@ export function TipTapEditor({ content, onChange, onSave, isSaving }: Props) {
   const isTableActive = editor.isActive("table");
 
   return (
-    <div className="rounded-[20px] border border-black/15 bg-white shadow-xs relative">
+    <div className="rounded-[24px] border border-black/10 bg-white shadow-xs relative">
       {/* Hidden image input for inserting into article */}
       <input
         type="file"
@@ -296,7 +296,7 @@ export function TipTapEditor({ content, onChange, onSave, isSaving }: Props) {
       />
 
       {/* Formatting Toolbar - Sticky at top so user never has to scroll up to format text */}
-      <div className="sticky top-[53px] md:top-0 z-20 flex flex-wrap items-center gap-1 p-2 sm:p-2.5 bg-[#f8f7f4]/95 backdrop-blur-md border-b border-black/10 rounded-t-[19px] shadow-[0_2px_10px_rgba(0,0,0,0.03)] select-none">
+      <div className="sticky top-[53px] md:top-0 z-30 flex flex-wrap items-center gap-1.5 p-2.5 sm:p-3 bg-[#f8f7f4] border-b border-black/10 rounded-t-[23px] shadow-sm select-none">
         {/* Headings */}
         <button
           type="button"
@@ -662,11 +662,11 @@ export function TipTapEditor({ content, onChange, onSave, isSaving }: Props) {
           value={rawHtml}
           onChange={handleHtmlChange}
           rows={16}
-          className="w-full p-4 font-mono text-[13px] leading-relaxed text-ink bg-[#faf9f5] focus:outline-none rounded-b-[19px]"
+          className="w-full p-5 sm:p-6 font-mono text-[13px] leading-relaxed text-ink bg-[#faf9f5] focus:outline-none rounded-b-[23px]"
           placeholder="<p>HTML içeriği...</p>"
         />
       ) : (
-        <div className="p-4 sm:p-5 min-h-[400px] bg-white blog-content rounded-b-[19px]">
+        <div className="p-5 sm:p-7 min-h-[450px] bg-white blog-content rounded-b-[23px]">
           <EditorContent editor={editor} />
         </div>
       )}

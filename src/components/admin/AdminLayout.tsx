@@ -165,7 +165,7 @@ export function AdminLayout({
 
       {/* Sidebar - Sleek Deep Black */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-[270px] bg-black text-[#a1a1aa] flex flex-col justify-between p-5 transition-transform duration-300 ease-in-out md:static md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-[270px] bg-black text-[#a1a1aa] flex flex-col justify-between p-5 transition-transform duration-300 ease-in-out md:sticky md:top-0 md:h-screen md:overflow-y-auto md:shrink-0 ${
           mobileOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         }`}
       >
@@ -303,7 +303,7 @@ export function AdminLayout({
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <main className="flex-1 flex flex-col min-w-0">
         {/* Top Breadcrumb / Action Bar */}
         <header
           className={`px-6 py-6 sm:px-8 md:py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/5 bg-white/60 backdrop-blur-sm ${
