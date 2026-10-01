@@ -3,10 +3,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { Reveal } from "@/components/motion/Reveal";
 import { X } from "lucide-react";
-import galeriImagesJson from "@/data/galeri_images.json";
-import { useAdminStore } from "@/lib/admin/adminStore";
+import { getGaleriImagesServerFn } from "@/lib/server/galeri";
+
 
 export const Route = createFileRoute("/galeri")({
+  loader: async () => {
+    const images = await getGaleriImagesServerFn();
+    return { images };
+  },
   component: GaleriPage,
   head: () => ({
     meta: [
@@ -26,13 +30,8 @@ export const Route = createFileRoute("/galeri")({
 });
 
 function GaleriPage() {
+  const { images } = Route.useLoaderData();
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
-  const storeGaleriImages = useAdminStore((s) => s.galeriImages);
-
-  const images =
-    storeGaleriImages && storeGaleriImages.length > 0
-      ? storeGaleriImages
-      : (galeriImagesJson as string[]);
 
   return (
     <SiteLayout
