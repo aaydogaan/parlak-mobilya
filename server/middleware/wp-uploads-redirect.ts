@@ -9,10 +9,11 @@ export default async function wpUploadsRedirect(
 ): Promise<unknown> {
   const path = event.url.pathname;
   if (path.startsWith("/wp-content/uploads/")) {
+    const cleanPath = path.replace(/^\/wp-content\/uploads\//, "/");
     return new Response(null, {
       status: 301,
       headers: {
-        Location: `https://cdn.parlakmobilyadekorasyon.com${path}${event.url.search}`,
+        Location: `https://cdn.parlakmobilyadekorasyon.com${cleanPath}${event.url.search}`,
       },
     });
   }
