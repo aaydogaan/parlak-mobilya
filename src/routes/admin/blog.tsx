@@ -46,8 +46,7 @@ export function AdminBlogPage() {
   const [formViews, setFormViews] = useState<number>(0);
 
   function getPostViews(post: BlogPostItem): number {
-    if (typeof post.views === "number" && post.views > 0) return post.views;
-    return post.slug === "yeni-web-sitemiz-yayinda" ? 1420 : 890;
+    return typeof post.views === "number" ? post.views : 0;
   }
 
   const filteredPosts = blogPosts.filter((b) =>

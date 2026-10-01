@@ -134,9 +134,10 @@ export function Footer() {
         {/* Çizgi Bölücü */}
         <div className="w-full h-px bg-[#f0ece5]" />
 
-        {/* Alt Satır: Yasal Bağlantılar ve Telif Bilgisi */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 md:pt-8 font-['Lexend'] text-[13.5px]">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#524e4e]">
+        {/* Alt Satır: Yasal Bağlantılar, Bromak Logo ve Telif Bilgisi */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 pt-6 md:pt-8 font-['Lexend'] text-[13.5px]">
+          {/* Yasal Sayfa Bağlantıları */}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-[#524e4e]">
             {legalNav.map((item) => (
               <Link
                 key={item.href}
@@ -148,22 +149,25 @@ export function Footer() {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 text-[#524e4e]">
-            <p>Tüm Hakları Saklıdır © Parlak Mobilya ve Dekorasyon — 1984'ten Bugüne</p>
-            <a
-              href="https://bromakagency.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 hover:opacity-85 transition-opacity"
-              title="Bromak Agency — Konya Web Tasarım"
-            >
-              <img
-                src="/images/bromak-agency-konya-web-tasarim.png"
-                alt="Bromak Agency - Konya Web Tasarım"
-                className="h-6.5 w-auto object-contain"
-              />
-            </a>
-          </div>
+          {/* Bromak Agency Logo (Ortada ve Büyük) */}
+          <a
+            href="https://bromakagency.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center hover:opacity-85 transition-opacity my-1 md:my-0 shrink-0"
+            title="Bromak Agency — Konya Web Tasarım"
+          >
+            <img
+              src="/images/bromak-agency-konya-web-tasarim.png"
+              alt="Bromak Agency - Konya Web Tasarım"
+              className="h-8 md:h-9 w-auto object-contain"
+            />
+          </a>
+
+          {/* Telif Yazısı */}
+          <p className="text-[#524e4e] text-center md:text-right">
+            Tüm Hakları Saklıdır © Parlak Mobilya ve Dekorasyon — 1984'ten Bugüne
+          </p>
         </div>
       </div>
     </footer>

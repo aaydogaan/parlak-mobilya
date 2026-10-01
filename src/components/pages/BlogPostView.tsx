@@ -15,8 +15,12 @@ export function BlogPostView({ post }: Props) {
   const incrementBlogPostViews = useAdminStore((s) => s.incrementBlogPostViews);
 
   useEffect(() => {
-    if (post && post.slug) {
-      incrementBlogPostViews(post.slug);
+    if (post && post.slug && typeof window !== "undefined") {
+      const storageKey = `pm_viewed_post_${post.slug}`;
+      if (!sessionStorage.getItem(storageKey)) {
+        sessionStorage.setItem(storageKey, "1");
+        incrementBlogPostViews(post.slug);
+      }
     }
   }, [post, incrementBlogPostViews]);
   const otherPosts = migratedBlogPosts.filter((p) => p.slug !== post.slug);

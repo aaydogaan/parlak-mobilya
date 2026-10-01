@@ -253,16 +253,14 @@ export const useAdminStore = create<AdminState>()(
         set((state) => ({ settings: { ...state.settings, ...newSettings } })),
     }),
     {
-      name: "parlak-mobilya-admin-storage-v3",
+      name: "parlak-mobilya-admin-storage-v5",
       merge: (persistedState: any, currentState: AdminState) => {
         const state = { ...currentState, ...(persistedState as any) };
         if (state.blogPosts && Array.isArray(state.blogPosts)) {
           state.blogPosts = state.blogPosts.map((b: BlogPostItem) => {
-            const initialMatch = migratedBlogPosts.find((mp) => mp.slug === b.slug);
-            const defaultViews = initialMatch?.views || (b.slug === "yeni-web-sitemiz-yayinda" ? 1420 : 890);
             return {
               ...b,
-              views: typeof b.views === "number" && b.views > 0 ? b.views : defaultViews,
+              views: typeof b.views === "number" ? b.views : 0,
             };
           });
         }
