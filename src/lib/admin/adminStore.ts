@@ -53,6 +53,7 @@ interface AdminState {
 
   // Blog
   blogPosts: BlogPostItem[];
+  setBlogPosts: (posts: BlogPostItem[]) => void;
   addBlogPost: (post: BlogPostItem) => void;
   updateBlogPost: (slug: string, data: Partial<BlogPostItem>) => void;
   deleteBlogPost: (slug: string) => void;
@@ -214,6 +215,7 @@ export const useAdminStore = create<AdminState>()(
 
       // Blog
       blogPosts: migratedBlogPosts,
+      setBlogPosts: (posts) => set({ blogPosts: posts }),
       addBlogPost: (post) =>
         set((state) => ({ blogPosts: [post, ...state.blogPosts] })),
       updateBlogPost: (slug, data) =>

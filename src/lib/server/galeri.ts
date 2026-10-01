@@ -191,13 +191,14 @@ export const uploadImageToR2ServerFn = createServerFn({ method: "POST" })
       fileName: string;
       base64Data: string;
       contentType?: string;
+      addToGallery?: boolean;
     }) => d
   )
   .handler(
     async ({
       data,
     }): Promise<{ success: boolean; url: string; images: string[] }> => {
-      const { fileName, base64Data, contentType = "image/webp" } = data;
+      const { fileName, base64Data, contentType = "image/webp", addToGallery = true } = data;
 
       if (!base64Data || !fileName) {
         throw new Error("Eksik dosya verisi");
@@ -229,21 +230,23 @@ export const uploadImageToR2ServerFn = createServerFn({ method: "POST" })
 
       const publicUrl = `${CDN_URL}/${key}`;
 
-      // Insert into PostgreSQL database
-      try {
-        const { getSql } = await import("@/lib/db");
-        const sql = await getSql();
+      // Only insert into Gallery table if addToGallery is true
+      if (addToGallery) {
+        try {
+          const { getSql } = await import("@/lib/db");
+          const sql = await getSql();
 
-        await sql`INSERT INTO galeri_images (url) VALUES (${publicUrl}) ON CONFLICT DO NOTHING`;
-      } catch (dbErr) {
-        console.warn("[galeri] DB insert after R2 upload:", dbErr);
+          await sql`INSERT INTO galeri_images (url) VALUES (${publicUrl}) ON CONFLICT DO NOTHING`;
+        } catch (dbErr) {
+          console.warn("[galeri] DB insert after R2 upload:", dbErr);
+        }
+
+        if (memoryCache) {
+          memoryCache = [publicUrl, ...memoryCache];
+        }
       }
 
-      if (memoryCache) {
-        memoryCache = [publicUrl, ...memoryCache];
-      }
-
-      const updatedImages = await getGaleriImagesServerFn();
+      const updatedImages = addToGallery ? await getGaleriImagesServerFn() : (memoryCache || []);
       return { success: true, url: publicUrl, images: updatedImages };
     }
   );

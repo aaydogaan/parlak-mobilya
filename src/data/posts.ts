@@ -11,12 +11,14 @@ export interface BlogPostItem {
   contentHtml: string;
   image: string;
   views?: number;
+  status?: "published" | "draft";
 }
 
 export const migratedBlogPosts: BlogPostItem[] = [
   {
     "slug": "yeni-web-sitemiz-yayinda",
     "title": "Yeni Web Sitemiz Yayında!",
+    "status": "published",
     "metaTitle": "Yeni Web Sitemiz Yayında! - Parlak Mobilya ve Dekorasyon",
     "metaDesc": "Parlak Mobilya ve Dekorasyon'un yeni web sitesi yayında. Modern tasarım, güçlü altyapı ve Bromak Agency tarafından geliştirilen yeni dijital deneyimi keşfedin.",
     "date": "15 Haziran 2026",
@@ -30,6 +32,7 @@ export const migratedBlogPosts: BlogPostItem[] = [
   {
     "slug": "ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler",
     "title": "Özel Ölçü Mobilya Yaptırmadan Önce Nelere Dikkat Etmelisiniz?",
+    "status": "published",
     "metaTitle": "Özel Ölçü Mobilya Yaptırmadan Önce Nelere Dikkat Edilmeli?",
     "metaDesc": "Özel ölçü mobilya yaptırmadan önce ölçü, malzeme, kullanım alanı, tasarım ve montaj konusunda dikkat edilmesi gerekenleri öğrenin.",
     "date": "28 Mayıs 2026",

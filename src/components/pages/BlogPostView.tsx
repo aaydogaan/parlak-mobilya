@@ -7,11 +7,14 @@ import { migratedBlogPosts, type BlogPostItem } from "@/data/posts";
 import { Calendar, User, Clock, ArrowLeft, ArrowRight, MessageCircle } from "lucide-react";
 import { useAdminStore } from "@/lib/admin/adminStore";
 
+import { incrementBlogPostViewServerFn } from "@/lib/server/blog";
+
 interface Props {
   post: BlogPostItem;
+  otherPosts?: BlogPostItem[];
 }
 
-export function BlogPostView({ post }: Props) {
+export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
   const incrementBlogPostViews = useAdminStore((s) => s.incrementBlogPostViews);
 
   useEffect(() => {
@@ -20,10 +23,12 @@ export function BlogPostView({ post }: Props) {
       if (!sessionStorage.getItem(storageKey)) {
         sessionStorage.setItem(storageKey, "1");
         incrementBlogPostViews(post.slug);
+        incrementBlogPostViewServerFn({ data: { slug: post.slug } }).catch(() => {});
       }
     }
   }, [post, incrementBlogPostViews]);
-  const otherPosts = migratedBlogPosts.filter((p) => p.slug !== post.slug);
+
+  const otherPosts = propOtherPosts || migratedBlogPosts.filter((p) => p.slug !== post.slug);
 
   const articleSchema = {
     "@context": "https://schema.org",

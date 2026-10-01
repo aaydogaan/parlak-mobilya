@@ -1,12 +1,16 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { getBlogPost } from "@/data/posts";
+import { getBlogPostBySlugServerFn, getBlogPostsServerFn } from "@/lib/server/blog";
 import { BlogPostView } from "@/components/pages/BlogPostView";
 
 export const Route = createFileRoute("/blog/$slug")({
-  loader: ({ params }) => {
-    const post = getBlogPost(params.slug);
-    if (!post) throw notFound();
-    return { post };
+  loader: async ({ params }) => {
+    const post = await getBlogPostBySlugServerFn({ data: { slug: params.slug } });
+    if (!post || post.status === "draft") throw notFound();
+
+    const allPosts = await getBlogPostsServerFn({ data: { includeDrafts: false } });
+    const otherPosts = allPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
+
+    return { post, otherPosts };
   },
   component: BlogPostPage,
   head: ({ loaderData, params }) => ({
@@ -26,6 +30,6 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function BlogPostPage() {
-  const { post } = Route.useLoaderData();
-  return <BlogPostView post={post} />;
+  const { post, otherPosts } = Route.useLoaderData();
+  return <BlogPostView post={post} otherPosts={otherPosts} />;
 }

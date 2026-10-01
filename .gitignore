@@ -40,6 +40,8 @@ dist-ssr
 attachments/
 chaty/
 *.sql
+!migrations/*.sql
+!migrations/**/*.sql
 *.tar.gz
 *.zip
 artifacts/

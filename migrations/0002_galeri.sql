@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS galeri_images (
+  id SERIAL PRIMARY KEY,
+  url TEXT NOT NULL UNIQUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  display_order INT NOT NULL DEFAULT 0
+);

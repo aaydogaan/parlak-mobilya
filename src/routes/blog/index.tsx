@@ -1,10 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { Reveal } from "@/components/motion/Reveal";
-import { migratedBlogPosts } from "@/data/posts";
+import { getBlogPostsServerFn } from "@/lib/server/blog";
 import { ArrowRight, Calendar } from "lucide-react";
 
 export const Route = createFileRoute("/blog/")({
+  loader: async () => {
+    const posts = await getBlogPostsServerFn({ data: { includeDrafts: false } });
+    return { posts };
+  },
   component: BlogIndexPage,
   head: () => ({
     meta: [
@@ -24,6 +28,7 @@ export const Route = createFileRoute("/blog/")({
 });
 
 export function BlogIndexPage() {
+  const { posts } = Route.useLoaderData();
   return (
     <SiteLayout
       title="Blog ve Dekorasyon Rehberi"
@@ -33,7 +38,7 @@ export function BlogIndexPage() {
       <section className="bg-white py-16 md:py-20">
         <div className="container-site max-w-[1100px]">
           <div className="grid gap-8 md:grid-cols-2">
-            {migratedBlogPosts.map((post, idx) => (
+            {posts.map((post, idx) => (
               <Reveal key={post.slug} delay={idx * 60}>
                 <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-black/10 bg-[#faf7f2] shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
                   <div className="relative aspect-[16/9] overflow-hidden bg-[#1a120c]">
