@@ -348,3 +348,155 @@ select {
   border-top: 1.5px solid rgba(0, 0, 0, 0.08);
 }
 
+/* ============================================================
+   IMAGE SIZING & ALIGNMENT STYLES
+   ============================================================ */
+.blog-content img,
+.tiptap img,
+.ProseMirror img {
+  border-radius: 18px !important;
+  box-shadow: 0 4px 20px rgba(13, 1, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  height: auto !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Image Sizes */
+.blog-content img[data-size="small"],
+.tiptap img[data-size="small"],
+.ProseMirror img[data-size="small"] {
+  width: 38% !important;
+  max-width: 320px !important;
+}
+
+.blog-content img[data-size="medium"],
+.tiptap img[data-size="medium"],
+.ProseMirror img[data-size="medium"] {
+  width: 68% !important;
+  max-width: 620px !important;
+}
+
+.blog-content img[data-size="full"],
+.tiptap img[data-size="full"],
+.ProseMirror img[data-size="full"],
+.blog-content img:not([data-size]),
+.tiptap img:not([data-size]),
+.ProseMirror img:not([data-size]) {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Image Alignments */
+.blog-content img[data-align="center"],
+.tiptap img[data-align="center"],
+.ProseMirror img[data-align="center"],
+.blog-content img:not([data-align]),
+.tiptap img:not([data-align]),
+.ProseMirror img:not([data-align]) {
+  margin: 2rem auto !important;
+  display: block !important;
+}
+
+.blog-content img[data-align="left"],
+.tiptap img[data-align="left"],
+.ProseMirror img[data-align="left"] {
+  margin: 2rem auto 2rem 0 !important;
+  display: block !important;
+}
+
+.blog-content img[data-align="right"],
+.tiptap img[data-align="right"],
+.ProseMirror img[data-align="right"] {
+  margin: 2rem 0 2rem auto !important;
+  display: block !important;
+}
+
+/* ============================================================
+   RESPONSIVE TABLE STYLES & MOBILE OVERFLOW SAFEGUARDS
+   ============================================================ */
+/* Container that prevents any horizontal site shake or overflow */
+.blog-content .tableWrapper,
+.tiptap .tableWrapper,
+.ProseMirror .tableWrapper,
+.table-responsive {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  margin: 2rem 0 !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(13, 1, 0, 0.04) !important;
+}
+
+/* Fallback for raw tables directly in HTML */
+.blog-content table,
+.tiptap table,
+.ProseMirror table {
+  width: 100% !important;
+  min-width: 500px !important;
+  border-collapse: collapse !important;
+  text-align: left !important;
+  font-size: 14.5px !important;
+  margin: 0 !important;
+  border-style: hidden !important;
+}
+
+.blog-content table {
+  display: table !important;
+}
+
+@media (max-width: 640px) {
+  /* On small mobile screens, ensure tables scroll smoothly inside their bounds */
+  .blog-content {
+    overflow-x: hidden !important;
+  }
+}
+
+.blog-content th,
+.tiptap th,
+.ProseMirror th {
+  background-color: #f7f5f0 !important;
+  color: #0d0100 !important;
+  font-weight: 700 !important;
+  font-family: var(--font-display) !important;
+  font-size: 14px !important;
+  letter-spacing: -0.01em !important;
+  padding: 13px 18px !important;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.12) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.06) !important;
+  white-space: nowrap !important;
+}
+
+.blog-content td,
+.tiptap td,
+.ProseMirror td {
+  padding: 12px 18px !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.05) !important;
+  color: #383330 !important;
+  line-height: 1.6 !important;
+  vertical-align: top !important;
+  font-size: 14px !important;
+}
+
+.blog-content tr:nth-child(even) td,
+.tiptap tr:nth-child(even) td,
+.ProseMirror tr:nth-child(even) td {
+  background-color: #faf9f6 !important;
+}
+
+.blog-content tr:hover td,
+.tiptap tr:hover td,
+.ProseMirror tr:hover td {
+  background-color: #f4f1e8 !important;
+}
+
+/* TipTap Selected Table Cell Outline */
+.tiptap .selectedCell,
+.ProseMirror .selectedCell {
+  background-color: rgba(252, 190, 84, 0.2) !important;
+}
+
+

@@ -61,6 +61,24 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Wrap any tables in .tableWrapper to prevent any horizontal overflow on mobile
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      const articleEl = document.querySelector(".blog-content");
+      if (articleEl) {
+        const tables = articleEl.querySelectorAll("table");
+        tables.forEach((table) => {
+          if (!table.parentElement?.classList.contains("tableWrapper")) {
+            const wrapper = document.createElement("div");
+            wrapper.className = "tableWrapper";
+            table.parentNode?.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+          }
+        });
+      }
+    }
+  }, [post.contentHtml]);
+
   const otherPosts = propOtherPosts || migratedBlogPosts.filter((p) => p.slug !== post.slug);
   const authorName = cleanAuthorName(post.author);
 

@@ -67,6 +67,50 @@ function getTurkishTodayDate(): string {
   return `${day} ${month} ${year}`;
 }
 
+function turkishDateToIso(dateStr: string): string {
+  if (!dateStr) return new Date().toISOString().split("T")[0];
+  const months: Record<string, string> = {
+    ocak: "01",
+    subat: "02",
+    şubat: "02",
+    mart: "03",
+    nisan: "04",
+    mayis: "05",
+    mayıs: "05",
+    haziran: "06",
+    temmuz: "07",
+    agustos: "08",
+    ağustos: "08",
+    eylul: "09",
+    eylül: "09",
+    ekim: "10",
+    kasim: "11",
+    kasım: "11",
+    aralik: "12",
+    aralık: "12",
+  };
+  const parts = dateStr.trim().split(/\s+/);
+  if (parts.length >= 3) {
+    const day = parts[0].padStart(2, "0");
+    const monthKey = parts[1].toLowerCase();
+    const month = months[monthKey] || "10";
+    const year = parts[2];
+    return `${year}-${month}-${day}`;
+  }
+  return new Date().toISOString().split("T")[0];
+}
+
+function isoToTurkishDate(isoStr: string): string {
+  if (!isoStr) return getTurkishTodayDate();
+  const [year, monthNum, dayNum] = isoStr.split("-");
+  const months = [
+    "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+    "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+  ];
+  const monthName = months[parseInt(monthNum, 10) - 1] || "Ekim";
+  return `${parseInt(dayNum, 10).toString().padStart(2, "0")} ${monthName} ${year}`;
+}
+
 function generateSlug(text: string): string {
   return text
     .toLowerCase()
@@ -127,6 +171,21 @@ export function AdminBlogPage() {
   const [coverUploadError, setCoverUploadError] = useState("");
   const [showManualUrlInput, setShowManualUrlInput] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const datePickerInputRef = useRef<HTMLInputElement>(null);
+
+  function handleOpenCalendar() {
+    if (datePickerInputRef.current) {
+      if ("showPicker" in HTMLInputElement.prototype) {
+        try {
+          datePickerInputRef.current.showPicker();
+          return;
+        } catch {
+          // fallback
+        }
+      }
+      datePickerInputRef.current.focus();
+    }
+  }
 
   // SERP Preview Device State
   const [serpDevice, setSerpDevice] = useState<"desktop" | "mobile">("desktop");
@@ -574,7 +633,7 @@ export function AdminBlogPage() {
                 )}
               </div>
 
-              {/* Date */}
+              {/* Date with Interactive Calendar Picker */}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="block text-[13.5px] font-semibold text-[#09090b]">
@@ -588,16 +647,45 @@ export function AdminBlogPage() {
                     Bugünün Tarihini Al
                   </button>
                 </div>
-                <div className="relative">
-                  <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-black/40 pointer-events-none" />
+
+                {/* Hidden native date input for browser calendar picker */}
+                <input
+                  ref={datePickerInputRef}
+                  type="date"
+                  value={turkishDateToIso(formDate)}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setFormDate(isoToTurkishDate(e.target.value));
+                    }
+                  }}
+                  className="sr-only pointer-events-none"
+                  tabIndex={-1}
+                />
+
+                <div
+                  onClick={handleOpenCalendar}
+                  className="relative group cursor-pointer"
+                >
+                  <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-black/40 group-hover:text-black transition" />
                   <input
                     type="text"
+                    readOnly
                     value={formDate}
-                    onChange={(e) => setFormDate(e.target.value)}
-                    placeholder="Örn: 01 Ekim 2026"
-                    required
-                    className="w-full rounded-[16px] border border-black/15 pl-10 pr-4 py-3 text-[14px] text-ink focus:outline-none focus:border-black"
+                    onClick={handleOpenCalendar}
+                    placeholder="Tarih seçmek için tıklayın..."
+                    className="w-full rounded-[16px] border border-black/15 pl-10 pr-24 py-3 text-[14px] text-ink focus:outline-none group-hover:border-black/50 transition cursor-pointer bg-white font-medium select-none"
                   />
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOpenCalendar();
+                    }}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full bg-zinc-100 hover:bg-zinc-200 px-3 py-1.5 text-[11.5px] font-semibold text-zinc-800 transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                  >
+                    <Calendar className="size-3" />
+                    <span>Takvim</span>
+                  </button>
                 </div>
               </div>
             </div>
