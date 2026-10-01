@@ -7,8 +7,10 @@ export function FloatingChatyWidget() {
   const widgetRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
-  // Admin panelinde gösterme
-  const isAdmin = location.pathname.startsWith("/admin");
+  // Admin panelinde veya admin subdomain'de gösterme
+  const isAdmin =
+    location.pathname.startsWith("/admin") ||
+    (typeof window !== "undefined" && window.location.hostname.startsWith("admin."));
 
   // Dışarı tıklayınca kapat
   useEffect(() => {

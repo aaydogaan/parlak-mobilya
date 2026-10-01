@@ -125,6 +125,14 @@ export const Route = createRootRoute({
 });
 
 function RootDocument() {
+  if (typeof window !== "undefined") {
+    const isAdminHost = window.location.hostname.startsWith("admin.");
+    const isPathAdmin = window.location.pathname.startsWith("/admin");
+    if (isAdminHost && !isPathAdmin) {
+      window.location.replace("/admin/talepler");
+    }
+  }
+
   return (
     <html lang="tr" className="antialiased" suppressHydrationWarning>
       <head>

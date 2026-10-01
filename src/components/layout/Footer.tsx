@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone, MessageCircle } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
@@ -18,6 +19,13 @@ const legalNav = [
 ];
 
 export function Footer() {
+  const [isAdminSubdomain, setIsAdminSubdomain] = useState(false);
+
+  useEffect(() => {
+    setIsAdminSubdomain(window.location.hostname.startsWith("admin."));
+  }, []);
+
+  if (isAdminSubdomain) return null;
   return (
     <footer className="w-full bg-white pt-20 md:pt-24 lg:pt-[116px] pb-8 md:pb-10 lg:pb-[32px] px-6 sm:px-8 md:px-12">
       <div className="mx-auto w-full max-w-[1280px]">

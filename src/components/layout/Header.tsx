@@ -23,6 +23,13 @@ export function Header({ variant = "light" }: Props) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAdminSubdomain, setIsAdminSubdomain] = useState(false);
+
+  useEffect(() => {
+    setIsAdminSubdomain(window.location.hostname.startsWith("admin."));
+  }, []);
+
+  if (isAdminSubdomain) return null;
 
   useEffect(() => {
     const handleScroll = () => {
