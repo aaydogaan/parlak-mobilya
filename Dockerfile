@@ -13,9 +13,9 @@ COPY . .
 RUN npm run build
 
 # Expose port
-EXPOSE 8080
-ENV PORT=8080
+EXPOSE 3000
+ENV PORT=3000
 ENV HOST=0.0.0.0
 
-# Start server
-CMD ["node", "scripts/with-app-env.mjs", "vite", "preview", "--host", "0.0.0.0", "--port", "8080"]
+# Start production server
+CMD ["node", ".output/server/index.mjs"]
