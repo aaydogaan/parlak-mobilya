@@ -67,7 +67,7 @@ export function TipTapEditor({ content, onChange }: Props) {
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm sm:prose-base lg:prose-lg max-w-none focus:outline-none min-h-[300px] p-4 text-ink leading-relaxed",
+          "blog-content tiptap max-w-none focus:outline-none min-h-[350px] p-4 text-ink leading-relaxed",
       },
     },
   });
@@ -414,7 +414,7 @@ export function TipTapEditor({ content, onChange }: Props) {
           placeholder="<p>HTML içeriği...</p>"
         />
       ) : (
-        <div className="p-2 min-h-[350px] bg-white">
+        <div className="p-3 min-h-[350px] bg-white blog-content">
           <EditorContent editor={editor} />
         </div>
       )}

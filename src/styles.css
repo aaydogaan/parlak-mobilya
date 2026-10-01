@@ -169,3 +169,182 @@ select {
   background-repeat: no-repeat;
   background-position: right 16px center;
 }
+
+/* ============================================================
+   PROFESSIONAL BLOG & TIPTAP TYPOGRAPHY STYLES
+   ============================================================ */
+.blog-content,
+.tiptap,
+.ProseMirror {
+  color: #221d1a;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.85;
+  letter-spacing: -0.01em;
+}
+
+.blog-content p,
+.tiptap p,
+.ProseMirror p {
+  margin-top: 0;
+  margin-bottom: 1.35rem;
+  color: #3b3531;
+  line-height: 1.85;
+}
+
+.blog-content h2,
+.tiptap h2,
+.ProseMirror h2,
+.wp-block-heading:is(h2) {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.85rem !important; /* ~30px */
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  color: #0d0100 !important;
+  margin-top: 2.8rem !important;
+  margin-bottom: 1rem !important;
+  letter-spacing: -0.025em !important;
+  padding-bottom: 0.5rem;
+  border-bottom: 1.5px solid rgba(13, 1, 0, 0.08);
+}
+
+@media (min-width: 768px) {
+  .blog-content h2,
+  .tiptap h2,
+  .ProseMirror h2,
+  .wp-block-heading:is(h2) {
+    font-size: 2.15rem !important; /* ~34px */
+  }
+}
+
+.blog-content h3,
+.tiptap h3,
+.ProseMirror h3,
+.wp-block-heading:is(h3) {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.45rem !important; /* ~23px */
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  color: #1a120c !important;
+  margin-top: 2.2rem !important;
+  margin-bottom: 0.85rem !important;
+  letter-spacing: -0.02em !important;
+}
+
+.blog-content h4,
+.tiptap h4,
+.ProseMirror h4,
+.wp-block-heading:is(h4) {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.25rem !important; /* ~20px */
+  font-weight: 650 !important;
+  line-height: 1.45 !important;
+  color: #271d12 !important;
+  margin-top: 1.8rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.blog-content h5,
+.tiptap h5,
+.ProseMirror h5,
+.wp-block-heading:is(h5) {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.1rem !important; /* ~17.5px */
+  font-weight: 600 !important;
+  color: #271d12 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.blog-content strong,
+.blog-content b,
+.tiptap strong,
+.tiptap b,
+.ProseMirror strong,
+.ProseMirror b {
+  font-weight: 700 !important;
+  color: #0d0100 !important;
+}
+
+.blog-content ul,
+.tiptap ul,
+.ProseMirror ul,
+.wp-block-list {
+  list-style-type: disc !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1.6rem !important;
+  padding-left: 1.75rem !important;
+}
+
+.blog-content ol,
+.tiptap ol,
+.ProseMirror ol {
+  list-style-type: decimal !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1.6rem !important;
+  padding-left: 1.75rem !important;
+}
+
+.blog-content li,
+.tiptap li,
+.ProseMirror li,
+.wp-block-list li {
+  display: list-item !important;
+  margin-bottom: 0.65rem !important;
+  line-height: 1.75 !important;
+  color: #3b3531 !important;
+}
+
+.blog-content blockquote,
+.tiptap blockquote,
+.ProseMirror blockquote {
+  border-left: 4px solid #fcbe54 !important;
+  background: #fbf9f5 !important;
+  padding: 1.25rem 1.65rem !important;
+  margin: 1.85rem 0 !important;
+  border-radius: 0 16px 16px 0 !important;
+  font-style: italic !important;
+  color: #3d3734 !important;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+.blog-content a,
+.tiptap a,
+.ProseMirror a {
+  color: #b45309 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  font-weight: 500 !important;
+  transition: color 0.15s ease;
+}
+
+.blog-content a:hover,
+.tiptap a:hover,
+.ProseMirror a:hover {
+  color: #78350f !important;
+}
+
+.blog-content img,
+.tiptap img,
+.ProseMirror img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  margin: 2rem auto;
+  box-shadow: 0 8px 30px rgba(13, 1, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.blog-content hr,
+.tiptap hr,
+.ProseMirror hr {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1.5px solid rgba(0, 0, 0, 0.08);
+}
+
