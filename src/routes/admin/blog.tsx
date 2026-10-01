@@ -327,8 +327,8 @@ export function AdminBlogPage() {
   }
 
   // Handle Save (Create or Update)
-  async function handleSavePost(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleSavePost(e?: React.FormEvent) {
+    if (e) e.preventDefault();
     if (!formTitle.trim()) {
       alert("Lütfen makale başlığını girin.");
       return;
@@ -446,6 +446,7 @@ export function AdminBlogPage() {
       <AdminLayout
         title={editingSlug ? "Makaleyi Düzenle" : "Yeni Blog Yazısı Yaz"}
         subtitle="Makale başlığı, kapak görseli, zengin metin içeriği, yayın durumu ve Google arama önizlemesi."
+        stickyHeader={false}
         actions={
           <div className="flex items-center gap-3">
             <button
@@ -947,10 +948,12 @@ export function AdminBlogPage() {
           </div>
 
           {/* 4. Professional Rich Text Editor */}
-          <div className="bg-white rounded-[24px] border border-black/5 shadow-xs p-5 sm:p-7">
+          <div className="bg-white rounded-[24px] border border-black/5 shadow-xs p-3 sm:p-5">
             <TipTapEditor
               content={formContentHtml}
               onChange={(newHtml) => setFormContentHtml(newHtml)}
+              onSave={handleSavePost}
+              isSaving={isSaving}
             />
           </div>
 

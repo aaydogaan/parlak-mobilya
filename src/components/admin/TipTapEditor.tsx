@@ -45,6 +45,8 @@ import {
 interface Props {
   content: string;
   onChange: (html: string) => void;
+  onSave?: () => void;
+  isSaving?: boolean;
 }
 
 // Custom Image Extension with data-size and data-align attributes
@@ -70,7 +72,7 @@ const CustomImageExtension = ImageExtension.extend({
   },
 });
 
-export function TipTapEditor({ content, onChange }: Props) {
+export function TipTapEditor({ content, onChange, onSave, isSaving }: Props) {
   const [isHtmlMode, setIsHtmlMode] = useState(false);
   const [rawHtml, setRawHtml] = useState(content);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
@@ -283,7 +285,7 @@ export function TipTapEditor({ content, onChange }: Props) {
   const isTableActive = editor.isActive("table");
 
   return (
-    <div className="rounded-[20px] border border-black/15 bg-white overflow-hidden shadow-xs relative">
+    <div className="rounded-[20px] border border-black/15 bg-white shadow-xs relative">
       {/* Hidden image input for inserting into article */}
       <input
         type="file"
@@ -293,8 +295,8 @@ export function TipTapEditor({ content, onChange }: Props) {
         className="hidden"
       />
 
-      {/* Formatting Toolbar */}
-      <div className="flex flex-wrap items-center gap-1 p-2 bg-[#f8f7f4] border-b border-black/10 select-none">
+      {/* Formatting Toolbar - Sticky at top so user never has to scroll up to format text */}
+      <div className="sticky top-[53px] md:top-0 z-20 flex flex-wrap items-center gap-1 p-2 sm:p-2.5 bg-[#f8f7f4]/95 backdrop-blur-md border-b border-black/10 rounded-t-[19px] shadow-[0_2px_10px_rgba(0,0,0,0.03)] select-none">
         {/* Headings */}
         <button
           type="button"
@@ -621,8 +623,25 @@ export function TipTapEditor({ content, onChange }: Props) {
           <Redo className="size-4" />
         </button>
 
-        {/* Right side HTML View Toggle */}
+        {/* Right side Actions */}
         <div className="ml-auto flex items-center gap-2">
+          {onSave && (
+            <button
+              type="button"
+              onClick={onSave}
+              disabled={isSaving}
+              className="px-3.5 py-1.5 rounded-lg text-[12px] font-semibold bg-black text-white hover:bg-zinc-800 transition inline-flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
+              title="Yazıyı Kaydet"
+            >
+              {isSaving ? (
+                <Loader2 className="size-3.5 animate-spin" />
+              ) : (
+                <Check className="size-3.5" />
+              )}
+              <span>{isSaving ? "Kaydediliyor..." : "Kaydet"}</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={() => setIsHtmlMode(!isHtmlMode)}
@@ -643,11 +662,11 @@ export function TipTapEditor({ content, onChange }: Props) {
           value={rawHtml}
           onChange={handleHtmlChange}
           rows={16}
-          className="w-full p-4 font-mono text-[13px] leading-relaxed text-ink bg-[#faf9f5] focus:outline-none"
+          className="w-full p-4 font-mono text-[13px] leading-relaxed text-ink bg-[#faf9f5] focus:outline-none rounded-b-[19px]"
           placeholder="<p>HTML içeriği...</p>"
         />
       ) : (
-        <div className="p-3 min-h-[350px] bg-white blog-content">
+        <div className="p-4 sm:p-5 min-h-[400px] bg-white blog-content rounded-b-[19px]">
           <EditorContent editor={editor} />
         </div>
       )}

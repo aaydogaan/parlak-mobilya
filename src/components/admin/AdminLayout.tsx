@@ -23,9 +23,16 @@ interface Props {
   title: string;
   subtitle?: string;
   actions?: ReactNode;
+  stickyHeader?: boolean;
 }
 
-export function AdminLayout({ children, title, subtitle, actions }: Props) {
+export function AdminLayout({
+  children,
+  title,
+  subtitle,
+  actions,
+  stickyHeader = true,
+}: Props) {
   const location = useLocation();
   const {
     isAuthenticated,
@@ -286,7 +293,11 @@ export function AdminLayout({ children, title, subtitle, actions }: Props) {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Top Breadcrumb / Action Bar */}
-        <header className="px-6 py-6 sm:px-8 md:py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/5 bg-white/60 backdrop-blur-sm sticky top-0 z-30">
+        <header
+          className={`px-6 py-6 sm:px-8 md:py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/5 bg-white/60 backdrop-blur-sm ${
+            stickyHeader ? "sticky top-0 z-30" : ""
+          }`}
+        >
           <div>
             <h1 className="text-[26px] sm:text-[30px] font-display font-semibold tracking-[-0.03em] text-[#09090b]">
               {title}
