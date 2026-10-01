@@ -36,6 +36,15 @@ dist-ssr
 .env.*
 !.env.example
 
+# Backup & local legacy attachments
+attachments/
+chaty/
+*.sql
+*.tar.gz
+*.zip
+artifacts/
+scratch/
+
 # Temporary and media storage
 .tempmediaStorage
 screenshots
