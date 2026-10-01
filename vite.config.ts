@@ -178,6 +178,35 @@ function wpUploadsPlugin(): Plugin {
   };
 }
 
+function sitemapDevPlugin(): Plugin {
+  return {
+    name: "app-builder:sitemap-dev",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        const rawUrl = req.url ?? "";
+        const pathOnly = rawUrl.split("?", 1)[0] ?? "";
+        if (pathOnly === "/sitemap.xml" || pathOnly === "/sitemap") {
+          try {
+            const mod = (await server.ssrLoadModule("/src/lib/server/sitemap.ts")) as {
+              generateSitemapXml: () => Promise<string>;
+            };
+            const xml = await mod.generateSitemapXml();
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/xml; charset=utf-8");
+            res.setHeader("Cache-Control", "no-cache");
+            res.end(xml);
+            return;
+          } catch (err) {
+            console.error("[sitemap] Dev handler failed:", err);
+          }
+        }
+        next();
+      });
+    },
+  };
+}
+
 // `0.0.0.0:8080` is the live-preview contract — don't change host/port.
 // The dev server starts once `src/router.tsx` and `src/routes/` exist — see
 // AGENTS.md § "First scaffold".
@@ -197,6 +226,7 @@ export default defineConfig(({ command, isPreview }) => ({
     pgliteBootstrapPlugin(),
     // Before tanstackStart so /auth/popup never falls through to the SPA.
     authPopupPlugin(),
+    sitemapDevPlugin(),
     wpUploadsPlugin(),
     // Dev-only /__app-env, read by scripts/check-auth-invariant.mjs.
     appEnvPlugin(),

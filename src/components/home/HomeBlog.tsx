@@ -1,8 +1,11 @@
 import { Reveal } from "@/components/motion/Reveal";
 import { BlogCard } from "@/components/cards/BlogCard";
 import { featuredBlogs } from "@/data/site";
+import type { BlogPostItem } from "@/data/posts";
 
-export function HomeBlog() {
+export function HomeBlog({ posts }: { posts?: BlogPostItem[] }) {
+  const displayPosts = posts && posts.length > 0 ? posts : featuredBlogs;
+
   return (
     <section className="bg-white py-16 md:py-24">
       <div className="container-site">
@@ -17,7 +20,7 @@ export function HomeBlog() {
           </div>
         </Reveal>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredBlogs.map((p, i) => (
+          {displayPosts.map((p, i) => (
             <Reveal key={p.slug} delay={i * 70}>
               <BlogCard post={p} />
             </Reveal>

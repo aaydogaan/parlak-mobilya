@@ -8,8 +8,18 @@ import { Ideas } from "@/components/home/Ideas";
 import { HomeServices } from "@/components/home/HomeServices";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { HomeBlog } from "@/components/home/HomeBlog";
+import { getBlogPostsServerFn } from "@/lib/server/blog";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    try {
+      const posts = await getBlogPostsServerFn({ data: { includeDrafts: false } });
+      return { posts: posts.slice(0, 3) };
+    } catch (err) {
+      console.warn("[home] Could not fetch blog posts for homepage:", err);
+      return { posts: [] };
+    }
+  },
   component: Home,
   head: () => ({
     meta: [
@@ -29,6 +39,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { posts } = Route.useLoaderData();
   return (
     <SiteLayout variant="transparent">
       <Hero />
@@ -38,7 +49,7 @@ function Home() {
       <Ideas />
       <HomeServices />
       <HowItWorks showArrows={true} />
-      <HomeBlog />
+      <HomeBlog posts={posts} />
     </SiteLayout>
   );
 }

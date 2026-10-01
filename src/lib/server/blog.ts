@@ -5,6 +5,7 @@ import { adminAuthMiddleware, getAuthenticatedAdmin } from "./security/auth";
 import { logAuditEvent } from "./security/audit";
 import { sanitizeBlogHtml, sanitizeText } from "./security/sanitize";
 import { checkRateLimit, getClientIp } from "./security/rate-limiter";
+import { syncSitemapFile } from "./sitemap";
 
 let blogMemoryCache: BlogPostItem[] | null = null;
 
@@ -228,6 +229,9 @@ export const saveBlogPostServerFn = createServerFn({ method: "POST" })
           details: { title: cleanTitle, status: cleanStatus },
           req,
         });
+
+        // Keep sitemap.xml in sync whenever an article is created or updated
+        syncSitemapFile().catch((err) => console.warn("[blog] sitemap sync failed:", err));
       } catch (dbErr) {
         console.error("[blog] DB save error:", dbErr);
         throw new Error("Makale veritabanına kaydedilirken bir hata oluştu.");
@@ -280,6 +284,9 @@ export const deleteBlogPostServerFn = createServerFn({ method: "POST" })
           entityId: slug,
           req,
         });
+
+        // Keep sitemap.xml in sync after deletion
+        syncSitemapFile().catch((err) => console.warn("[blog] sitemap sync failed:", err));
       } catch (err) {
         console.error("[blog] DB delete error:", err);
         throw new Error("Makale silinirken bir hata oluştu.");
@@ -320,6 +327,9 @@ export const toggleBlogPostStatusServerFn = createServerFn({ method: "POST" })
           details: { newStatus: status },
           req,
         });
+
+        // Keep sitemap.xml in sync after draft/published status toggle
+        syncSitemapFile().catch((err) => console.warn("[blog] sitemap sync failed:", err));
       } catch (err) {
         console.error("[blog] DB status toggle error:", err);
         throw new Error("Makale durumu güncellenirken bir hata oluştu.");

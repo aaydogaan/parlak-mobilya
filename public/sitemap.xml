@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Ana Sayfa -->
   <url>
     <loc>https://www.parlakmobilyadekorasyon.com/</loc>
     <lastmod>2026-10-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- Kurumsal & İletişim -->
   <url>
     <loc>https://www.parlakmobilyadekorasyon.com/hakkimizda</loc>
     <lastmod>2026-10-01</lastmod>
@@ -27,16 +24,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- Hizmetler -->
   <url>
     <loc>https://www.parlakmobilyadekorasyon.com/hizmetler</loc>
     <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Projeler -->
   <url>
     <loc>https://www.parlakmobilyadekorasyon.com/projeler</loc>
     <lastmod>2026-10-01</lastmod>
@@ -44,10 +37,34 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://www.parlakmobilyadekorasyon.com/blog</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.parlakmobilyadekorasyon.com/kvkk</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.parlakmobilyadekorasyon.com/gizlilik-politikasi</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.parlakmobilyadekorasyon.com/cerez-politikasi</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.parlakmobilyadekorasyon.com/projeler/konya-mutfak-dolaplari</loc>
     <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.parlakmobilyadekorasyon.com/projeler/modern-gardirop-modelleri</loc>
@@ -79,24 +96,16 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- Blog -->
   <url>
-    <loc>https://www.parlakmobilyadekorasyon.com/blog</loc>
+    <loc>https://www.parlakmobilyadekorasyon.com/blog/yeni-web-sitemiz-yayinda</loc>
     <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.parlakmobilyadekorasyon.com/blog/yeni-web-sitemiz-yayinda</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.parlakmobilyadekorasyon.com/blog/ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler</loc>
     <lastmod>2026-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

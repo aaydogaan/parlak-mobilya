@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import type { BlogPost } from "@/data/site";
+import type { BlogPostItem } from "@/data/posts";
 
-export function BlogCard({ post }: { post: BlogPost }) {
+export function BlogCard({ post }: { post: BlogPost | BlogPostItem }) {
   return (
     <Link
       to="/blog/$slug"
