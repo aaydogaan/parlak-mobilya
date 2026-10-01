@@ -1,15 +1,24 @@
+import { useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 import { migratedBlogPosts, type BlogPostItem } from "@/data/posts";
 import { Calendar, User, Clock, ArrowLeft, ArrowRight, MessageCircle } from "lucide-react";
+import { useAdminStore } from "@/lib/admin/adminStore";
 
 interface Props {
   post: BlogPostItem;
 }
 
 export function BlogPostView({ post }: Props) {
+  const incrementBlogPostViews = useAdminStore((s) => s.incrementBlogPostViews);
+
+  useEffect(() => {
+    if (post && post.slug) {
+      incrementBlogPostViews(post.slug);
+    }
+  }, [post, incrementBlogPostViews]);
   const otherPosts = migratedBlogPosts.filter((p) => p.slug !== post.slug);
 
   const articleSchema = {

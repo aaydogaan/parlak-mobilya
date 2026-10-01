@@ -45,14 +45,9 @@ export function AdminBlogPage() {
   const [formContentHtml, setFormContentHtml] = useState("");
   const [formViews, setFormViews] = useState<number>(0);
 
-  const defaultViewsForSlug: Record<string, number> = {
-    "yeni-web-sitemiz-yayinda": 1420,
-    "ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler": 890,
-  };
-
   function getPostViews(post: BlogPostItem): number {
     if (typeof post.views === "number" && post.views > 0) return post.views;
-    return defaultViewsForSlug[post.slug] || 850;
+    return post.slug === "yeni-web-sitemiz-yayinda" ? 1420 : 890;
   }
 
   const filteredPosts = blogPosts.filter((b) =>
