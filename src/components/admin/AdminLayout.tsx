@@ -165,7 +165,7 @@ export function AdminLayout({
 
       {/* Sidebar - Sleek Deep Black */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-[270px] bg-black text-[#a1a1aa] flex flex-col justify-between p-5 transition-transform duration-300 ease-in-out md:sticky md:top-0 md:h-screen md:overflow-y-auto md:shrink-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-[270px] bg-black text-[#a1a1aa] flex flex-col justify-between p-5 transition-transform duration-300 ease-in-out md:sticky md:top-0 md:h-screen md:overflow-y-auto md:shrink-0 md:translate-x-0 md:shadow-none ${
           mobileOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         }`}
       >
