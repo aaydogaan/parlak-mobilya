@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /kvkk
+Disallow: /gizlilik-politikasi
+Disallow: /cerez-politikasi
+Disallow: /privacy-policy
+Disallow: /terms-and-conditions
+Disallow: /404
+
+Sitemap: https://www.parlakmobilyadekorasyon.com/sitemap.xml

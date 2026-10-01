@@ -1,0 +1,1048 @@
+{
+    "manifest_version": "1.0.23",
+    "title": "Crafter",
+    "page_builder": "elementor",
+    "kit_version": "1.0.0",
+    "templates": [
+        {
+            "name": "Global Kit Styles",
+            "screenshot": "screenshots\/global-kit-styles.jpg",
+            "source": "templates\/global.json",
+            "preview_url": "https:\/\/live.sociolib.com",
+            "type": "section",
+            "category": "page",
+            "metadata": {
+                "template_type": "global-styles",
+                "include_in_zip": "1",
+                "elementor_pro_required": null,
+                "additional_template_information": [
+                    "These are the global theme styles configured through the Elementor Theme Styles area."
+                ]
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Header",
+            "screenshot": "screenshots\/header.jpg",
+            "source": "templates\/header.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/header\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-header",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Footer",
+            "screenshot": "screenshots\/footer.jpg",
+            "source": "templates\/footer.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/footer\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-footer",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Home",
+            "screenshot": "screenshots\/home.jpg",
+            "source": "templates\/home.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/home\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Services",
+            "screenshot": "screenshots\/services.jpg",
+            "source": "templates\/services.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/services\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Our Work",
+            "screenshot": "screenshots\/our-work.jpg",
+            "source": "templates\/our-work.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/our-work\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Pricing",
+            "screenshot": "screenshots\/pricing.jpg",
+            "source": "templates\/pricing.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/pricing\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "About",
+            "screenshot": "screenshots\/about.jpg",
+            "source": "templates\/about.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/about\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Process",
+            "screenshot": "screenshots\/process.jpg",
+            "source": "templates\/process.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/process\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Single Service",
+            "screenshot": "screenshots\/single-service.jpg",
+            "source": "templates\/single-service.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/single-service\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Contact",
+            "screenshot": "screenshots\/contact.jpg",
+            "source": "templates\/contact.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/contact\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Contact Form",
+            "screenshot": "screenshots\/contact-form.jpg",
+            "source": "templates\/contact-form.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/contact-2\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-contact",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Subscribe Form",
+            "screenshot": "screenshots\/subscribe-form.jpg",
+            "source": "templates\/subscribe-form.json",
+            "preview_url": "https:\/\/live.sociolib.com\/crafter\/template-kit\/subscribe\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-contact",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        }
+    ],
+    "required_plugins": [
+        {
+            "name": "MetForm",
+            "version": "4.0.6",
+            "file": "metform\/metform.php",
+            "author": "Wpmet"
+        },
+        {
+            "name": "ElementsKit Lite",
+            "version": "3.7.2",
+            "file": "elementskit-lite\/elementskit-lite.php",
+            "author": "Wpmet"
+        },
+        {
+            "name": "Elementor",
+            "version": "3.32.2",
+            "file": "elementor\/elementor.php",
+            "author": "Elementor.com"
+        }
+    ],
+    "images": [
+        {
+            "filename": "Crafter-Company-logo.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/Crafter-Company-logo.webp",
+            "templates": [
+                {
+                    "source": "templates\/header.json",
+                    "name": "Header"
+                }
+            ],
+            "filesize": 1908,
+            "dimensions": [
+                200,
+                82
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com"
+        },
+        {
+            "filename": "crafter2.png",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/crafter2.png",
+            "templates": [
+                {
+                    "source": "templates\/header.json",
+                    "name": "Header"
+                }
+            ],
+            "filesize": 3480,
+            "dimensions": [
+                196,
+                82
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com"
+        },
+        {
+            "filename": "plane-jointer-carpenter-or-joiner-tool-and-wood-sh-2024-10-14-22-57-24-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/08\/plane-jointer-carpenter-or-joiner-tool-and-wood-sh-2024-10-14-22-57-24-utc-800x534.webp",
+            "templates": [
+                {
+                    "source": "templates\/footer.json",
+                    "name": "Footer"
+                }
+            ],
+            "filesize": 178432,
+            "dimensions": [
+                1600,
+                1067
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "shot-of-a-focused-handyman-examining-a-piece-of-wo-2025-04-06-10-10-35-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/shot-of-a-focused-handyman-examining-a-piece-of-wo-2025-04-06-10-10-35-utc-800x533.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 92276,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "carpenter-uses-tight-wood-clamps-for-wooden-plank-2024-10-18-09-38-01-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/carpenter-uses-tight-wood-clamps-for-wooden-plank-2024-10-18-09-38-01-utc-800x533.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/single-service.json",
+                    "name": "Single Service"
+                }
+            ],
+            "filesize": 105380,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "carpenter-wooden-plank-factory-furniture-workshop-2025-03-26-09-57-23-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/carpenter-wooden-plank-factory-furniture-workshop-2025-03-26-09-57-23-utc-800x533.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                }
+            ],
+            "filesize": 69692,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "a-man-worker-in-the-carpentry-workshop-working-wi-2024-10-18-08-44-47-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/a-man-worker-in-the-carpentry-workshop-working-wi-2024-10-18-08-44-47-utc-800x533.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/process.json",
+                    "name": "Process"
+                }
+            ],
+            "filesize": 87080,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "kitchen-with-white-stove-and-oven-sink-and-large-2025-03-09-06-51-25-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/kitchen-with-white-stove-and-oven-sink-and-large-2025-03-09-06-51-25-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                }
+            ],
+            "filesize": 42336,
+            "dimensions": [
+                800,
+                900
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "handmade-epoxy-resin-round-wood-table-live-edge-t-2025-03-30-00-39-07-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/handmade-epoxy-resin-round-wood-table-live-edge-t-2025-03-30-00-39-07-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                }
+            ],
+            "filesize": 32932,
+            "dimensions": [
+                800,
+                900
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "set-of-wooden-kitchenware-cutting-board-and-bowl-2025-01-07-06-07-20-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/set-of-wooden-kitchenware-cutting-board-and-bowl-2025-01-07-06-07-20-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                }
+            ],
+            "filesize": 45314,
+            "dimensions": [
+                800,
+                900
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "wardrobe-2024-09-23-04-36-56-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/wardrobe-2024-09-23-04-36-56-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                }
+            ],
+            "filesize": 66344,
+            "dimensions": [
+                800,
+                900
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "hardwood-steps-of-elevated-walkway-in-public-park-2025-03-11-14-50-16-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/hardwood-steps-of-elevated-walkway-in-public-park-2025-03-11-14-50-16-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                }
+            ],
+            "filesize": 54380,
+            "dimensions": [
+                800,
+                900
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "housebuilder-speaking-through-smartphone-on-stairc-2025-03-07-07-53-20-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/housebuilder-speaking-through-smartphone-on-stairc-2025-03-07-07-53-20-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 68022,
+            "dimensions": [
+                800,
+                900
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "minimalist-composition-on-the-design-wooden-table-2024-10-14-19-55-45-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/minimalist-composition-on-the-design-wooden-table-2024-10-14-19-55-45-utc-800x1200.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                }
+            ],
+            "filesize": 56262,
+            "dimensions": [
+                1000,
+                1500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "flowers-in-vase-on-wooden-commode-in-simple-bedroo-2025-10-09-06-54-02-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/flowers-in-vase-on-wooden-commode-in-simple-bedroo-2025-10-09-06-54-02-utc-800x534.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                }
+            ],
+            "filesize": 49672,
+            "dimensions": [
+                1000,
+                667
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "male-carpenter-happy-to-work-in-wood-factory-and-i-2025-03-09-09-29-16-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/male-carpenter-happy-to-work-in-wood-factory-and-i-2025-03-09-09-29-16-utc-800x534.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                }
+            ],
+            "filesize": 29328,
+            "dimensions": [
+                1000,
+                667
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "12.jpg",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/12.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                },
+                {
+                    "source": "templates\/single-service.json",
+                    "name": "Single Service"
+                }
+            ],
+            "filesize": 11094,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "11.jpg",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/11.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                },
+                {
+                    "source": "templates\/single-service.json",
+                    "name": "Single Service"
+                }
+            ],
+            "filesize": 13665,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "13.jpg",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/13.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                },
+                {
+                    "source": "templates\/single-service.json",
+                    "name": "Single Service"
+                }
+            ],
+            "filesize": 14431,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "various-wooden-kitchen-utensils-on-black-backgroun-2025-03-24-03-23-59-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/09\/various-wooden-kitchen-utensils-on-black-backgroun-2025-03-24-03-23-59-utc-800x400.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 162308,
+            "dimensions": [
+                1920,
+                960
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "hands-of-a-craftsman-2024-10-11-01-17-53-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/08\/hands-of-a-craftsman-2024-10-11-01-17-53-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                },
+                {
+                    "source": "templates\/process.json",
+                    "name": "Process"
+                }
+            ],
+            "filesize": 27508,
+            "dimensions": [
+                600,
+                750
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "new-brick-fireplace-with-big-supply-of-firewood-2025-10-09-11-38-23-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/new-brick-fireplace-with-big-supply-of-firewood-2025-10-09-11-38-23-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 36194,
+            "dimensions": [
+                600,
+                750
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "cozy-scandinavian-kitchen-room-in-white-and-wood-s-2025-01-08-03-58-21-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/cozy-scandinavian-kitchen-room-in-white-and-wood-s-2025-01-08-03-58-21-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 22592,
+            "dimensions": [
+                600,
+                750
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "carpenter-working-with-wooden-plank-in-workshop-m-2025-03-25-15-27-18-utc-1-1.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/carpenter-working-with-wooden-plank-in-workshop-m-2025-03-25-15-27-18-utc-1-1.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/process.json",
+                    "name": "Process"
+                }
+            ],
+            "filesize": 31144,
+            "dimensions": [
+                600,
+                750
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "carpenter-using-sander-power-tool-on-wooden-plank-2025-01-08-03-41-34-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/carpenter-using-sander-power-tool-on-wooden-plank-2025-01-08-03-41-34-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/process.json",
+                    "name": "Process"
+                }
+            ],
+            "filesize": 26354,
+            "dimensions": [
+                600,
+                750
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "wood-carving-2025-03-07-09-28-12-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/08\/wood-carving-2025-03-07-09-28-12-utc-800x450.webp",
+            "templates": [
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 50866,
+            "dimensions": [
+                1920,
+                1080
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "carpenter-making-handmade-furniture.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/08\/carpenter-making-handmade-furniture.webp",
+            "templates": [
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/single-service.json",
+                    "name": "Single Service"
+                }
+            ],
+            "filesize": 37470,
+            "dimensions": [
+                600,
+                750
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "housebuilder-speaking-through-smartphone-on-stairc-2025-03-07-07-53-20-utc-1.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/08\/housebuilder-speaking-through-smartphone-on-stairc-2025-03-07-07-53-20-utc-1.webp",
+            "templates": [
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 47898,
+            "dimensions": [
+                600,
+                750
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "hardwood-steps-of-elevated-walkway-in-public-park-2025-03-11-14-50-16-utc-1.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/08\/hardwood-steps-of-elevated-walkway-in-public-park-2025-03-11-14-50-16-utc-1.webp",
+            "templates": [
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                }
+            ],
+            "filesize": 36048,
+            "dimensions": [
+                600,
+                750
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "interior-design-of-neutral-living-room-2024-10-16-08-11-05-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/09\/interior-design-of-neutral-living-room-2024-10-16-08-11-05-utc-800x533.webp",
+            "templates": [
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                }
+            ],
+            "filesize": 96080,
+            "dimensions": [
+                1500,
+                1000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "the-carpenter-works-with-a-tree-2024-12-06-07-45-12-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/09\/the-carpenter-works-with-a-tree-2024-12-06-07-45-12-utc-800x533.webp",
+            "templates": [
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                },
+                {
+                    "source": "templates\/single-service.json",
+                    "name": "Single Service"
+                }
+            ],
+            "filesize": 64896,
+            "dimensions": [
+                1500,
+                1000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "the-carpenter-works-with-a-tree-2024-12-06-06-17-17-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/09\/the-carpenter-works-with-a-tree-2024-12-06-06-17-17-utc-800x533.webp",
+            "templates": [
+                {
+                    "source": "templates\/our-work.json",
+                    "name": "Our Work"
+                }
+            ],
+            "filesize": 52708,
+            "dimensions": [
+                1500,
+                1000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "handsome-male-carpenter-standing-near-woodworking-2024-10-20-02-34-08-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/08\/handsome-male-carpenter-standing-near-woodworking-2024-10-20-02-34-08-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 52026,
+            "dimensions": [
+                500,
+                667
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "worker-packing-boxes-at-warehouse-2025-03-13-05-23-49-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/08\/worker-packing-boxes-at-warehouse-2025-03-13-05-23-49-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 28664,
+            "dimensions": [
+                500,
+                667
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "lo1.png",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/11\/lo1.png",
+            "templates": [
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 1698,
+            "dimensions": [
+                280,
+                60
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com"
+        },
+        {
+            "filename": "lo2.png",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/11\/lo2.png",
+            "templates": [
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 1532,
+            "dimensions": [
+                280,
+                60
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com"
+        },
+        {
+            "filename": "lo4.png",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/11\/lo4.png",
+            "templates": [
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 1909,
+            "dimensions": [
+                280,
+                60
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com"
+        },
+        {
+            "filename": "lo3.png",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/11\/lo3.png",
+            "templates": [
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 1899,
+            "dimensions": [
+                280,
+                60
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com"
+        },
+        {
+            "filename": "man-worker-hammering-while-building-wooden-frame-h-2025-01-16-23-43-53-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/man-worker-hammering-while-building-wooden-frame-h-2025-01-16-23-43-53-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/process.json",
+                    "name": "Process"
+                }
+            ],
+            "filesize": 63016,
+            "dimensions": [
+                600,
+                750
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "fretsaw-processing-2025-03-31-07-03-38-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/07\/fretsaw-processing-2025-03-31-07-03-38-utc.webp",
+            "templates": [
+                {
+                    "source": "templates\/process.json",
+                    "name": "Process"
+                }
+            ],
+            "filesize": 36646,
+            "dimensions": [
+                600,
+                750
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        },
+        {
+            "filename": "female-woodworker-2025-03-09-00-38-28-utc.webp",
+            "thumbnail_url": "http:\/\/live.sociolib.com\/crafter\/wp-content\/uploads\/sites\/20\/2025\/08\/female-woodworker-2025-03-09-00-38-28-utc-800x450.webp",
+            "templates": [
+                {
+                    "source": "templates\/contact.json",
+                    "name": "Contact"
+                }
+            ],
+            "filesize": 63954,
+            "dimensions": [
+                1600,
+                900
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/27NXLWZCY6"
+        }
+    ]
+}
