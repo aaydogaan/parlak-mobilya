@@ -6,30 +6,41 @@ import { adminAuthMiddleware } from "./security/auth";
 import { logAuditEvent } from "./security/audit";
 import { sanitizeFileName } from "./security/sanitize";
 
-// R2 credentials exclusively from server environment variables (NEVER hardcoded!)
-const BUCKET_NAME = process.env.R2_BUCKET_NAME || "parlak-mobilya-media";
-const ENDPOINT = process.env.R2_ENDPOINT;
-const ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
-const SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
-const CDN_URL = process.env.R2_CDN_URL || "https://cdn.parlakmobilyadekorasyon.com";
+export function getR2Config() {
+  const accountId = (process.env.R2_ACCOUNT_ID || "").trim();
+  const endpoint = (
+    process.env.R2_ENDPOINT ||
+    (accountId ? `https://${accountId}.r2.cloudflarestorage.com` : "")
+  ).trim();
+  const accessKeyId = (process.env.R2_ACCESS_KEY_ID || "").trim();
+  const secretAccessKey = (process.env.R2_SECRET_ACCESS_KEY || "").trim();
+  const bucketName = (process.env.R2_BUCKET_NAME || "parlak-mobilya-media").trim();
+  const cdnUrl = (process.env.R2_CDN_URL || "https://cdn.parlakmobilyadekorasyon.com")
+    .trim()
+    .replace(/\/+$/, "");
+
+  return { accountId, endpoint, accessKeyId, secretAccessKey, bucketName, cdnUrl };
+}
 
 // Server-side in-memory cache as reliable fallback if DB is temporarily connecting
 let memoryCache: string[] | null = null;
 
 async function getR2Client() {
-  if (!ENDPOINT || !ACCESS_KEY_ID || !SECRET_ACCESS_KEY) {
+  const { endpoint, accessKeyId, secretAccessKey } = getR2Config();
+
+  if (!endpoint || !accessKeyId || !secretAccessKey) {
     throw new Error(
-      "Cloudflare R2 configuration error: R2_ENDPOINT, R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY must be set in server environment."
+      "Cloudflare R2 yapılandırma hatası: Coolify veya sunucu ortam değişkenlerinde R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY ve R2_ENDPOINT (veya R2_ACCOUNT_ID) tanımlanmalıdır."
     );
   }
 
   const { S3Client } = await import("@aws-sdk/client-s3");
   return new S3Client({
     region: "auto",
-    endpoint: ENDPOINT,
+    endpoint: endpoint,
     credentials: {
-      accessKeyId: ACCESS_KEY_ID,
-      secretAccessKey: SECRET_ACCESS_KEY,
+      accessKeyId: accessKeyId,
+      secretAccessKey: secretAccessKey,
     },
   });
 }
@@ -163,14 +174,15 @@ export const deleteGaleriImageServerFn = createServerFn({ method: "POST" })
 
     // Try deleting from Cloudflare R2 if it's our CDN url
     try {
-      if (url.startsWith(CDN_URL)) {
-        const key = url.replace(`${CDN_URL}/`, "").replace(/^\/+/, "");
+      const { bucketName, cdnUrl } = getR2Config();
+      if (url.startsWith(cdnUrl)) {
+        const key = url.replace(`${cdnUrl}/`, "").replace(/^\/+/, "");
         if (key && !key.includes("..")) {
           const { DeleteObjectCommand } = await import("@aws-sdk/client-s3");
           const client = await getR2Client();
           await client.send(
             new DeleteObjectCommand({
-              Bucket: BUCKET_NAME,
+              Bucket: bucketName,
               Key: key,
             })
           );
@@ -223,17 +235,18 @@ export const deleteGaleriImagesBulkServerFn = createServerFn({ method: "POST" })
 
     // Try deleting from Cloudflare R2
     try {
+      const { bucketName, cdnUrl } = getR2Config();
       const { DeleteObjectsCommand } = await import("@aws-sdk/client-s3");
       const objectsToDelete = urls
-        .filter((url) => url.startsWith(CDN_URL))
-        .map((url) => ({ Key: url.replace(`${CDN_URL}/`, "").replace(/^\/+/, "") }))
+        .filter((url) => url.startsWith(cdnUrl))
+        .map((url) => ({ Key: url.replace(`${cdnUrl}/`, "").replace(/^\/+/, "") }))
         .filter((item) => !!item.Key && !item.Key.includes(".."));
 
       if (objectsToDelete.length > 0) {
         const client = await getR2Client();
         await client.send(
           new DeleteObjectsCommand({
-            Bucket: BUCKET_NAME,
+            Bucket: bucketName,
             Delete: {
               Objects: objectsToDelete,
             },
@@ -336,12 +349,13 @@ export const uploadImageToR2ServerFn = createServerFn({ method: "POST" })
       const randomSuffix = randomBytes(8).toString("hex");
       const key = `${yearMonth}/${Date.now()}-${randomSuffix}-${cleanFileName}`;
 
+      const { bucketName, cdnUrl } = getR2Config();
       const { PutObjectCommand } = await import("@aws-sdk/client-s3");
       const client = await getR2Client();
 
       await client.send(
         new PutObjectCommand({
-          Bucket: BUCKET_NAME,
+          Bucket: bucketName,
           Key: key,
           Body: buffer,
           ContentType: mimeType,
@@ -349,7 +363,7 @@ export const uploadImageToR2ServerFn = createServerFn({ method: "POST" })
         })
       );
 
-      const publicUrl = `${CDN_URL}/${key}`;
+      const publicUrl = `${cdnUrl}/${key}`;
 
       // Insert into Gallery table if requested
       if (addToGallery) {
