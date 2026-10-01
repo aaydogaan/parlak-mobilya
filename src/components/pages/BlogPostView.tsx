@@ -6,7 +6,6 @@ import { site } from "@/data/site";
 import { migratedBlogPosts, type BlogPostItem } from "@/data/posts";
 import {
   Calendar,
-  User,
   Clock,
   ArrowLeft,
   ArrowRight,
@@ -15,7 +14,6 @@ import {
   Share2,
   Check,
   PhoneCall,
-  Sparkles,
   ChevronRight,
 } from "lucide-react";
 import { useAdminStore } from "@/lib/admin/adminStore";
@@ -24,6 +22,13 @@ import { incrementBlogPostViewServerFn } from "@/lib/server/blog";
 interface Props {
   post: BlogPostItem;
   otherPosts?: BlogPostItem[];
+}
+
+function cleanAuthorName(author?: string): string {
+  if (!author) return "Ahmet Parlak";
+  // Remove parenthetical nicknames like "(Ahmet Usta)"
+  const cleaned = author.replace(/\s*\([^)]*\)/g, "").trim();
+  return cleaned || "Ahmet Parlak";
 }
 
 export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
@@ -57,6 +62,7 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
   }, []);
 
   const otherPosts = propOtherPosts || migratedBlogPosts.filter((p) => p.slug !== post.slug);
+  const authorName = cleanAuthorName(post.author);
 
   function handleCopyLink() {
     if (typeof window !== "undefined") {
@@ -71,12 +77,12 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.metaDesc,
-    image: post.image.startsWith("http")
+    image: post.image?.startsWith("http")
       ? post.image
-      : `https://www.parlakmobilyadekorasyon.com${post.image}`,
+      : `https://www.parlakmobilyadekorasyon.com${post.image || ""}`,
     author: {
       "@type": "Person",
-      name: post.author || "Ahmet Parlak (Ahmet Usta)",
+      name: authorName,
     },
     publisher: {
       "@type": "Organization",
@@ -117,6 +123,10 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
     ],
   };
 
+  const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+    `${post.title} - https://www.parlakmobilyadekorasyon.com/blog/${post.slug}`
+  )}`;
+
   return (
     <SiteLayout variant="light" showCta={false}>
       {/* Top Reading Progress Bar */}
@@ -138,94 +148,82 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
       {/* Main Blog Article Container */}
       <article className="bg-[#ffffff] text-ink pb-16 md:pb-24">
         {/* Editorial Header Section */}
-        <section className="bg-gradient-to-b from-[#faf8f5] to-white pt-8 pb-10 sm:pb-12 border-b border-black/5">
-          <div className="container-site max-w-[880px]">
+        <section className="bg-gradient-to-b from-[#faf8f5] to-white pt-6 sm:pt-8 pb-8 sm:pb-10 border-b border-black/5">
+          <div className="container-site max-w-[860px]">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-1.5 text-[12.5px] sm:text-[13px] text-black/50 mb-6 flex-wrap">
+            <nav className="flex items-center gap-1.5 text-[12px] sm:text-[13px] text-black/50 mb-4 sm:mb-5 flex-wrap">
               <Link to="/" className="hover:text-ink transition">
                 Ana Sayfa
               </Link>
-              <ChevronRight className="size-3.5 text-black/30 shrink-0" />
+              <ChevronRight className="size-3 text-black/30 shrink-0" />
               <Link to="/blog" className="hover:text-ink transition">
-                Blog & Rehber
+                Blog
               </Link>
-              <ChevronRight className="size-3.5 text-black/30 shrink-0" />
-              <span className="text-black/80 font-medium truncate max-w-[240px] sm:max-w-none">
+              <ChevronRight className="size-3 text-black/30 shrink-0" />
+              <span className="text-black/75 font-medium truncate max-w-[200px] sm:max-w-none">
                 {post.category}
               </span>
             </nav>
 
-            {/* Category Pill Badge */}
-            <div className="mb-4">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200/80 px-3.5 py-1 text-[12px] font-semibold text-amber-900 shadow-2xs uppercase tracking-wider">
-                <Sparkles className="size-3 text-amber-600" />
+            {/* Category Badge: Clean Solid Black (No AI orange/amber) */}
+            <div className="mb-3.5">
+              <span className="inline-block rounded-full bg-black px-3.5 py-1 text-[11.5px] font-semibold text-white tracking-wide">
                 {post.category}
               </span>
             </div>
 
             {/* Title (H1) */}
-            <h1 className="font-display text-[27px] sm:text-[36px] md:text-[42px] lg:text-[46px] font-semibold text-[#0d0100] tracking-tight leading-[1.22] mb-5">
+            <h1 className="font-display text-[26px] sm:text-[34px] md:text-[40px] lg:text-[44px] font-semibold text-[#0d0100] tracking-tight leading-[1.22] mb-4">
               {post.title}
             </h1>
 
             {/* Subtitle / Excerpt */}
             {post.metaDesc && (
-              <p className="text-[15.5px] sm:text-[17.5px] text-[#4d4845] leading-relaxed mb-6 font-normal">
+              <p className="text-[15px] sm:text-[16.5px] text-[#4d4845] leading-relaxed mb-6 font-normal">
                 {post.metaDesc}
               </p>
             )}
 
-            {/* Meta Row: Author, Date, Reading Time, Views & Quick Actions */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-black/8 text-[13px] text-black/60">
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-                {/* Author */}
-                <div className="flex items-center gap-2.5">
-                  <div className="size-9 rounded-full overflow-hidden bg-black/5 border border-black/10 shrink-0 flex items-center justify-center font-display font-semibold text-black text-[13px]">
-                    <img
-                      src="/images/logo-footer.png"
-                      alt={post.author || "Ahmet Usta"}
-                      className="size-full object-contain p-1"
-                    />
-                  </div>
-                  <div>
-                    <span className="font-semibold text-ink block leading-tight text-[13.5px]">
-                      {post.author || "Ahmet Parlak (Ahmet Usta)"}
-                    </span>
-                    <span className="text-[11.5px] text-black/45 leading-tight block">
-                      Kurucu & Baş Usta
-                    </span>
-                  </div>
+            {/* Meta Row: Responsive, Consistent on Desktop and Mobile */}
+            <div className="pt-4 border-t border-black/8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              {/* Author & Publishing Details */}
+              <div className="flex items-center gap-3">
+                <div className="size-10 rounded-full overflow-hidden bg-black text-white border border-black/10 shrink-0 flex items-center justify-center font-display font-semibold text-[13px] shadow-2xs">
+                  <img
+                    src="/images/ahmet-parlak-mobilyaa-1.jpg"
+                    alt={authorName}
+                    className="size-full object-cover object-top"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = "none";
+                    }}
+                  />
+                  <span className="hidden select-none">AP</span>
                 </div>
 
-                <div className="h-6 w-px bg-black/10 hidden sm:block" />
-
-                {/* Date */}
-                <div className="flex items-center gap-1.5 font-medium">
-                  <Calendar className="size-3.5 text-black/40" />
-                  <span>{post.date}</span>
-                </div>
-
-                {/* Read Time */}
-                <div className="flex items-center gap-1.5 font-medium">
-                  <Clock className="size-3.5 text-black/40" />
-                  <span>{post.readTime}</span>
-                </div>
-
-                {/* Views Count */}
-                {typeof post.views === "number" && (
-                  <div className="flex items-center gap-1.5 font-medium">
-                    <Eye className="size-3.5 text-black/40" />
-                    <span>{post.views.toLocaleString("tr-TR")} Okunma</span>
+                <div className="min-w-0">
+                  <span className="font-semibold text-ink text-[14px] leading-tight block truncate">
+                    {authorName}
+                  </span>
+                  <div className="flex items-center gap-2 text-[12px] text-black/50 mt-0.5 font-medium flex-wrap">
+                    <span>{post.date}</span>
+                    <span>•</span>
+                    <span>{post.readTime}</span>
+                    {typeof post.views === "number" && (
+                      <>
+                        <span>•</span>
+                        <span>{post.views.toLocaleString("tr-TR")} Okunma</span>
+                      </>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
 
-              {/* Share & Copy Buttons */}
-              <div className="flex items-center gap-2 ml-auto sm:ml-0">
+              {/* Action Buttons: Clean & Proportionate */}
+              <div className="flex items-center gap-2 pt-1 sm:pt-0">
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-black/10 bg-white hover:bg-black/5 text-ink text-[12px] font-medium transition cursor-pointer shadow-2xs"
+                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-full border border-black/15 bg-white hover:bg-black/5 text-[12.5px] font-medium text-ink transition shadow-2xs cursor-pointer"
                   title="Bağlantıyı Kopyala"
                 >
                   {copiedLink ? (
@@ -242,12 +240,10 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
                 </button>
 
                 <a
-                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                    `${post.title} - https://www.parlakmobilyadekorasyon.com/blog/${post.slug}`
-                  )}`}
+                  href={whatsappShareUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#25D366] text-white text-[12px] font-semibold shadow-2xs hover:brightness-105 transition"
+                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-[#25D366] text-white text-[12.5px] font-semibold shadow-2xs hover:brightness-105 transition cursor-pointer"
                   title="WhatsApp'ta Paylaş"
                 >
                   <MessageCircle className="size-3.5" />
@@ -259,17 +255,16 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
         </section>
 
         {/* Content & Proportional Cover Section */}
-        <section className="container-site max-w-[880px] pt-8 sm:pt-10">
+        <section className="container-site max-w-[860px] pt-8 sm:pt-10">
           {/* Refined Proportional Cover Image (Cinematic, not screen-eating) */}
           {post.image && (
             <Reveal>
-              <div className="relative w-full max-h-[380px] sm:max-h-[430px] overflow-hidden rounded-[22px] sm:rounded-[26px] bg-[#1a120c] shadow-md border border-black/5 mb-10 sm:mb-12">
+              <div className="relative w-full max-h-[360px] sm:max-h-[400px] overflow-hidden rounded-[20px] sm:rounded-[24px] bg-[#1a120c] shadow-sm border border-black/5 mb-8 sm:mb-10">
                 <img
                   src={post.image}
                   alt={post.title}
-                  className="w-full h-full max-h-[380px] sm:max-h-[430px] object-cover"
+                  className="w-full h-full max-h-[360px] sm:max-h-[400px] object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
               </div>
             </Reveal>
           )}
@@ -283,29 +278,25 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
           </Reveal>
 
           {/* Quick Lead & WhatsApp Consultation Card */}
-          <div className="mt-14 rounded-[26px] bg-gradient-to-br from-[#1c140d] to-[#271d12] p-7 sm:p-9 text-white shadow-xl relative overflow-hidden">
-            <div className="absolute right-0 top-0 translate-x-12 -translate-y-12 size-48 rounded-full bg-amber-500/10 blur-2xl pointer-events-none" />
+          <div className="mt-12 rounded-[24px] bg-gradient-to-br from-[#1c140d] to-[#271d12] p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="space-y-2 max-w-xl">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11.5px] font-semibold uppercase tracking-wider text-amber-300">
-                  <Sparkles className="size-3" /> Özel İmalat & Keşif
-                </span>
-                <h3 className="font-display text-[22px] sm:text-[25px] font-semibold text-white leading-snug">
+                <h3 className="font-display text-[21px] sm:text-[24px] font-semibold text-white leading-snug">
                   Eviniz İçin Özel Ölçü Mobilya mı Planlıyorsunuz?
                 </h3>
-                <p className="text-[14px] text-white/75 leading-relaxed">
+                <p className="text-[13.5px] text-white/75 leading-relaxed">
                   Konya atölyemizde mutfak dolabı, gardırop, vestiyer ve komple ev yenileme projeleriniz için 40 yılı aşkın tecrübeyle ücretsiz keşif ve 3D projelendirme yapıyoruz.
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0">
+              <div className="flex flex-col sm:flex-row md:flex-col gap-2.5 shrink-0">
                 <a
                   href={`https://api.whatsapp.com/send?phone=905071721196&text=${encodeURIComponent(
-                    `Merhaba Ahmet Usta, web sitenizdeki "${post.title}" makalenizi okudum. Özel mobilya yaptırmak istiyorum, bilgi alabilir miyim?`
+                    `Merhaba, web sitenizdeki "${post.title}" yazınızı okudum. Özel mobilya yaptırmak istiyorum, bilgi alabilir miyim?`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[14px] font-semibold text-white shadow-md hover:brightness-110 transition cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-[13.5px] font-semibold text-white shadow-md hover:brightness-110 transition cursor-pointer"
                 >
                   <MessageCircle className="size-4" />
                   <span>WhatsApp'tan Yazın</span>
@@ -313,39 +304,12 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
 
                 <a
                   href="tel:05071721196"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white/15 hover:bg-white/25 px-6 py-3 text-[14px] font-semibold text-white transition border border-white/20 cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white/15 hover:bg-white/25 px-5 py-2.5 text-[13.5px] font-semibold text-white transition border border-white/20 cursor-pointer"
                 >
                   <PhoneCall className="size-4" />
                   <span>0507 172 11 96</span>
                 </a>
               </div>
-            </div>
-          </div>
-
-          {/* Author Box */}
-          <div className="mt-12 rounded-[24px] border border-black/8 bg-[#faf8f5] p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6 text-center sm:text-left">
-            <div className="size-20 rounded-full overflow-hidden bg-white border-2 border-black/10 shadow-sm shrink-0 flex items-center justify-center p-2.5">
-              <img
-                src="/images/logo-footer.png"
-                alt="Parlak Mobilya ve Dekorasyon"
-                className="size-full object-contain"
-              />
-            </div>
-            <div className="space-y-1.5 flex-1">
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                <h4 className="font-display text-[19px] font-semibold text-ink">
-                  Ahmet Parlak (Ahmet Usta)
-                </h4>
-                <span className="rounded-full bg-black/5 px-2.5 py-0.5 text-[11.5px] font-semibold text-black/60">
-                  1984'ten Beri
-                </span>
-              </div>
-              <p className="text-[13px] font-medium text-amber-800">
-                Parlak Mobilya ve Dekorasyon Kurucusu & Baş Usta
-              </p>
-              <p className="text-[14px] text-subtle leading-relaxed pt-1">
-                40 yılı aşkın süredir Konya Selçuklu Horozluhan Sanayi'deki atölyesinde özel ölçü ahşap mutfak dolapları, gardıroplar, vestiyerler ve komple mekan dekorasyon projeleri üretmektedir.
-              </p>
             </div>
           </div>
 
@@ -363,7 +327,7 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-black/10 bg-white hover:bg-black/5 text-[13px] font-medium text-ink transition cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-black/10 bg-white hover:bg-black/5 text-[12.5px] font-medium text-ink transition cursor-pointer"
               >
                 <Share2 className="size-3.5" />
                 <span>{copiedLink ? "Kopyalandı!" : "Linki Kopyala"}</span>
@@ -372,67 +336,62 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
           </div>
         </section>
 
-        {/* Other Posts (Recommendations) */}
+        {/* Other Posts (Compact, Elegant Horizontal Cards) */}
         {otherPosts.length > 0 && (
-          <section className="bg-[#faf8f5] py-16 md:py-20 mt-16 border-t border-black/5">
-            <div className="container-site max-w-[880px]">
-              <div className="flex items-center justify-between mb-8">
+          <section className="bg-[#faf8f5] py-12 md:py-16 mt-14 border-t border-black/5">
+            <div className="container-site max-w-[860px]">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <span className="text-[12px] font-semibold uppercase tracking-wider text-black/40 block mb-1">
-                    DİĞER YAZILAR
-                  </span>
-                  <h2 className="font-display text-[24px] sm:text-[28px] font-semibold text-ink">
+                  <h2 className="font-display text-[21px] sm:text-[24px] font-semibold text-ink">
                     İlginizi Çekebilecek Diğer Rehberler
                   </h2>
                 </div>
                 <Link
                   to="/blog"
-                  className="text-[13.5px] font-semibold text-brown hover:underline hidden sm:inline-block"
+                  className="text-[13px] font-semibold text-brown hover:underline hidden sm:inline-block"
                 >
                   Tümünü Gör →
                 </Link>
               </div>
 
-              <div className="grid gap-6 sm:grid-cols-2">
+              {/* Compact Card List */}
+              <div className="grid sm:grid-cols-2 gap-4">
                 {otherPosts.slice(0, 2).map((p) => (
                   <article
                     key={p.slug}
-                    className="group flex flex-col overflow-hidden rounded-[22px] bg-white border border-black/8 shadow-2xs hover:shadow-md transition hover:-translate-y-0.5"
+                    className="group flex items-center gap-3.5 p-3 rounded-[18px] bg-white border border-black/8 hover:border-black/20 hover:shadow-sm transition"
                   >
-                    <div className="relative aspect-[16/10] overflow-hidden bg-[#1a120c]">
+                    {/* Small Proportionate Thumbnail */}
+                    <div className="relative size-20 sm:size-22 rounded-[12px] overflow-hidden bg-[#1a120c] shrink-0 border border-black/5">
                       <img
                         src={p.image}
                         alt={p.title}
                         className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                       />
-                      <div className="absolute top-3 left-3">
-                        <span className="rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-[11px] font-semibold text-ink shadow-2xs uppercase tracking-wider">
-                          {p.category}
-                        </span>
-                      </div>
                     </div>
 
-                    <div className="flex flex-1 flex-col p-6">
-                      <div className="flex items-center gap-2 text-[12.5px] text-black/50 mb-2">
-                        <span>{p.date}</span>
+                    <div className="flex-1 min-w-0 pr-1">
+                      <div className="flex items-center gap-1.5 text-[11px] text-black/50 mb-1">
+                        <span className="font-semibold text-black bg-zinc-100 px-2 py-0.5 rounded-full text-[10px]">
+                          {p.category}
+                        </span>
                         <span>•</span>
                         <span>{p.readTime}</span>
                       </div>
-                      <h3 className="font-display text-[18px] font-semibold text-ink group-hover:text-brown transition line-clamp-2 leading-snug">
+
+                      <h3 className="font-display text-[14px] sm:text-[14.5px] font-semibold text-ink group-hover:text-brown transition line-clamp-2 leading-snug">
                         {p.title}
                       </h3>
-                      <p className="mt-2 text-[13.5px] text-subtle line-clamp-2 leading-relaxed">
-                        {p.metaDesc}
-                      </p>
-                      <div className="mt-auto pt-5">
+
+                      <div className="mt-1.5">
                         <Link
                           to="/blog/$slug"
                           params={{ slug: p.slug }}
-                          className="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brown group-hover:text-ink transition"
+                          className="inline-flex items-center gap-1 text-[12px] font-medium text-brown group-hover:underline"
                         >
-                          <span>Yazının Devamı</span>
-                          <ArrowRight className="size-3.5" />
+                          <span>Yazıyı Oku</span>
+                          <ArrowRight className="size-3" />
                         </Link>
                       </div>
                     </div>

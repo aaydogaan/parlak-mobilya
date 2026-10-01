@@ -290,7 +290,7 @@ export function AdminBlogPage() {
       metaDesc: formMetaDesc.trim() || formTitle.trim(),
       date: finalDate,
       category: finalCategory,
-      author: "Ahmet Parlak (Ahmet Usta)",
+      author: "Ahmet Parlak",
       readTime: "5 dk okuma",
       image: finalImage,
       contentHtml: formContentHtml,
