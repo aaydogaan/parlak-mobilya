@@ -1,0 +1,11 @@
+node_modules
+.git
+.vercel
+.output
+.tempmediaStorage
+screenshots
+attachments
+chaty
+*.sql
+*.tar.gz
+*.zip
