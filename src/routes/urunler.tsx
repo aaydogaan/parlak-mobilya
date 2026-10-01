@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ServicesPage } from "./services/index";
+import { ServicesPageView } from "@/components/pages/ServicesPageView";
 
 export const Route = createFileRoute("/urunler")({
   component: UrunlerPage,
@@ -21,5 +21,6 @@ export const Route = createFileRoute("/urunler")({
 });
 
 function UrunlerPage() {
-  return <ServicesPage />;
+  return <ServicesPageView />;
 }
+

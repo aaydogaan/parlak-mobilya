@@ -4,7 +4,7 @@ import type { Service } from "@/data/site";
 export function ServiceCard({ service }: { service: Service }) {
   return (
     <Link
-      to="/services/$slug"
+      to="/projeler/$slug"
       params={{ slug: service.slug }}
       className="group relative block overflow-hidden rounded-[20px] aspect-[1.03/1] shadow-sm cursor-pointer"
     >

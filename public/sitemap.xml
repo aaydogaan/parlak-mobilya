@@ -35,42 +35,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  <url>
-    <loc>https://www.parlakmobilyadekorasyon.com/services/konya-mutfak-dolaplari</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.parlakmobilyadekorasyon.com/services/modern-gardirop-modelleri</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.parlakmobilyadekorasyon.com/services/ozel-olcu-vestiyer-modelleri</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.parlakmobilyadekorasyon.com/services/komple-ev-yenileme</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.parlakmobilyadekorasyon.com/services/konya-tv-unitesi</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.parlakmobilyadekorasyon.com/services/konya-cocuk-odasi</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
 
   <!-- Projeler -->
   <url>
@@ -131,18 +95,6 @@
   </url>
   <url>
     <loc>https://www.parlakmobilyadekorasyon.com/blog/ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.parlakmobilyadekorasyon.com/yeni-web-sitemiz-yayinda</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.parlakmobilyadekorasyon.com/ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler</loc>
     <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

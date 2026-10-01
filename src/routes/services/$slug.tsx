@@ -1,30 +1,12 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { getProjectBySlug } from "@/data/projects";
-import { ProjectDetailView } from "@/components/pages/ProjectDetailView";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/services/$slug")({
-  loader: ({ params }) => {
-    const project = getProjectBySlug(params.slug);
-    if (!project) throw notFound();
-    return { project };
+  beforeLoad: ({ params }) => {
+    throw redirect({
+      to: "/projeler/$slug",
+      params: { slug: params.slug },
+      statusCode: 301,
+    });
   },
-  component: ServiceDetailPage,
-  head: ({ loaderData, params }) => ({
-    meta: [
-      { title: loaderData?.project.metaTitle ?? "Hizmet Detayı — Parlak Mobilya" },
-      { name: "description", content: loaderData?.project.metaDesc ?? "" },
-      { property: "og:title", content: loaderData?.project.metaTitle ?? "Hizmet Detayı — Parlak Mobilya" },
-      { property: "og:description", content: loaderData?.project.metaDesc ?? "" },
-      { property: "og:image", content: loaderData?.project.heroImage ?? "" },
-      { property: "og:url", content: `https://www.parlakmobilyadekorasyon.com/services/${params.slug}` },
-    ],
-    links: [
-      { rel: "canonical", href: `https://www.parlakmobilyadekorasyon.com/services/${params.slug}` },
-    ],
-  }),
+  component: () => null,
 });
-
-function ServiceDetailPage() {
-  const { project } = Route.useLoaderData();
-  return <ProjectDetailView project={project} />;
-}
