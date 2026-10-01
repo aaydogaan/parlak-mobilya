@@ -3,6 +3,14 @@ import { pendingMigrations } from "../../scripts/migration-plan.mjs";
 /** Which database backend is active. */
 export type DbSource = "neon" | "pglite";
 
+export class DatabaseUnavailableError extends Error {
+  readonly status = 503;
+  constructor(message = "Service Unavailable: Database connection failed") {
+    super(message);
+    this.name = "DatabaseUnavailableError";
+  }
+}
+
 // An empty/whitespace DATABASE_URL (an easy misconfig in deploy UIs) must mean
 // "unset" — otherwise production would silently run on the PGLite fallback.
 const rawDatabaseUrl =
@@ -10,13 +18,30 @@ const rawDatabaseUrl =
 const databaseUrl =
   rawDatabaseUrl && rawDatabaseUrl.trim() ? rawDatabaseUrl : undefined;
 
+export const isProduction =
+  typeof process !== "undefined" &&
+  (process.env.NODE_ENV === "production" ||
+    process.env.VERCEL_ENV === "production" ||
+    process.env.COOLIFY === "true");
+
+export const explicitDatabaseMode =
+  typeof process !== "undefined" ? process.env.DATABASE_MODE?.toLowerCase().trim() : undefined;
+
 /**
- * Active backend: real **Neon** when `DATABASE_URL` is set (deployed / configured
- * sandbox), otherwise a local embedded **PGLite** (Postgres compiled to WASM) so
- * the app has a working database even with nothing configured — the live preview
- * included. Swap in Neon later by just setting `DATABASE_URL`; no code changes.
+ * Strict Database Backend Resolution:
+ * - Production default is ALWAYS "postgres" (Neon / self-hosted PostgreSQL).
+ * - Silent PGLite fallback is STRICTLY DISABLED in production.
+ * - If DATABASE_URL is missing or postgres fails in production, fails closed with 503.
+ * - PGLite is only permitted in dev/test or when explicitly requested outside production.
  */
-export const dbSource: DbSource = databaseUrl ? "neon" : "pglite";
+export const databaseMode: "postgres" | "pglite" =
+  explicitDatabaseMode === "pglite"
+    ? "pglite"
+    : explicitDatabaseMode === "postgres" || isProduction || Boolean(databaseUrl)
+      ? "postgres"
+      : "pglite";
+
+export const dbSource: DbSource = databaseMode === "postgres" ? "neon" : "pglite";
 
 /**
  * Minimal shared SQL surface, satisfied by both Neon and PGLite. Both the
@@ -86,17 +111,47 @@ function toSql(run: Run): Sql {
 }
 
 function createNeonSql(): Promise<Sql> {
+  if (!databaseUrl) {
+    throw new DatabaseUnavailableError(
+      "PostgreSQL configuration error: DATABASE_URL is not configured."
+    );
+  }
+
   globalRef.__pgSqlPromise__ ??= (async () => {
     // Regular Postgres driver: node-postgres (`pg`) — works directly with Neon's
-    // pooled endpoint. One pool per process; warm serverless instances reuse it.
+    // pooled endpoint or self-hosted PostgreSQL. One pool per process.
     const { Pool, types } = await import("pg");
     types.setTypeParser(OID_INT8, Number);
     types.setTypeParser(OID_DATE, identity);
     types.setTypeParser(OID_INTERVAL, identity);
-    const pool = new Pool({ connectionString: databaseUrl });
+    const pool = new Pool({
+      connectionString: databaseUrl,
+      connectionTimeoutMillis: 10000,
+      max: 10,
+    });
+
+    pool.on("error", (err) => {
+      console.error("[db] PostgreSQL pool client error (safe log):", {
+        message: err?.message,
+        code: (err as any)?.code,
+      });
+    });
+
     return toSql(async <T>(text: string, params: unknown[]) => {
-      const res = await pool.query(text, params);
-      return res.rows as T[];
+      try {
+        const res = await pool.query(text, params);
+        return res.rows as T[];
+      } catch (err: any) {
+        console.error("[db] PostgreSQL query error (safe log, credentials redacted):", {
+          message: err?.message,
+          code: err?.code,
+          severity: err?.severity,
+        });
+        if (isProduction || databaseMode === "postgres") {
+          throw new DatabaseUnavailableError("Database query execution failed.");
+        }
+        throw err;
+      }
     });
   })().catch((err) => {
     globalRef.__pgSqlPromise__ = undefined;
@@ -137,11 +192,15 @@ async function createPgliteSql(): Promise<Sql> {
   // passes serialized on a global chain so concurrent callers never
   // double-apply.
   const migrate = async (): Promise<void> => {
-    const migrations = import.meta.glob("/migrations/*.sql", {
-      query: "?raw",
-      import: "default",
-      eager: true,
-    }) as Record<string, string>;
+    const migrations = (
+      typeof (import.meta as any).glob === "function"
+        ? (import.meta as any).glob("/migrations/*.sql", {
+            query: "?raw",
+            import: "default",
+            eager: true,
+          })
+        : {}
+    ) as Record<string, string>;
     const doneRows = await pg.query<{ name: string }>(
       "select name from _migrations",
     );
@@ -176,7 +235,22 @@ async function createSql(): Promise<Sql> {
         "or a server route loader, never from client code.",
     );
   }
-  return dbSource === "neon" ? createNeonSql() : createPgliteSql();
+
+  if (dbSource === "neon") {
+    return createNeonSql();
+  }
+
+  // PGLite is strictly forbidden in production / postgres mode
+  if (isProduction || databaseMode === "postgres") {
+    console.error(
+      "[SECURITY ALERT] Attempted to use PGLite fallback in production or postgres mode. Request rejected with 503."
+    );
+    throw new DatabaseUnavailableError(
+      "Service Unavailable: PGLite fallback is disabled in production. Ensure PostgreSQL is configured and reachable."
+    );
+  }
+
+  return createPgliteSql();
 }
 
 /**

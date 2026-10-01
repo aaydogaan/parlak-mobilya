@@ -2,8 +2,7 @@ import { useState, type FormEvent } from "react";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { services, site } from "@/data/site";
 import { cn } from "@/lib/utils";
-
-import { useAdminStore } from "@/lib/admin/adminStore";
+import { submitTalepServerFn } from "@/lib/server/talepler";
 
 type Props = {
   className?: string;
@@ -13,28 +12,40 @@ type Props = {
 
 export function QuoteForm({ className, compact, defaultService }: Props) {
   const [sent, setSent] = useState(false);
-  const addTalep = useAdminStore((s) => s.addTalep);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrorMessage(null);
+    setLoading(true);
+
     const fd = new FormData(e.currentTarget);
-    const name = fd.get("name") as string;
-    const phone = fd.get("phone") as string;
-    const email = fd.get("email") as string;
+    const name = (fd.get("name") as string)?.trim();
+    const phone = (fd.get("phone") as string)?.trim();
+    const email = (fd.get("email") as string)?.trim();
     const serviceSlug = fd.get("service") as string;
 
     const matchedService = services.find((s) => s.slug === serviceSlug);
 
-    addTalep({
-      name: name || "Müşteri",
-      phone: phone || "05XX XXX XX XX",
-      email: email || undefined,
-      district: "Konya / Merkez",
-      category: matchedService?.title || "Özel Mobilya Talebi",
-      message: `${name || "Müşteri"} web sitesi üzerinden ${matchedService?.title || "özel mobilya"} için keşif ve teklif talebinde bulundu.`,
-    });
-
-    setSent(true);
+    try {
+      await submitTalepServerFn({
+        data: {
+          name: name || "Müşteri",
+          phone: phone || "05XX XXX XX XX",
+          email: email || undefined,
+          district: "Konya / Merkez",
+          category: matchedService?.title || "Özel Mobilya Talebi",
+          message: `${name || "Müşteri"} web sitesi üzerinden ${matchedService?.title || "özel mobilya"} için keşif ve teklif talebinde bulundu.`,
+        },
+      });
+      setSent(true);
+    } catch (err: any) {
+      console.error("Talep gönderim hatası:", err);
+      setErrorMessage(err?.message || "Talep gönderilirken bir hata oluştu. Lütfen tekrar deneyiniz.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -118,11 +129,24 @@ export function QuoteForm({ className, compact, defaultService }: Props) {
               autoComplete="email"
             />
           </Field>
+          {errorMessage ? (
+            <div className="rounded-xl bg-red-500/20 border border-red-500/40 p-3 text-red-100 text-[13.5px]">
+              {errorMessage}
+            </div>
+          ) : null}
           <button
             type="submit"
-            className="mt-2 w-full justify-center inline-flex items-center rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-ink hover:bg-white/90 transition shadow-sm cursor-pointer"
+            disabled={loading}
+            className="mt-2 w-full justify-center inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-ink hover:bg-white/90 disabled:opacity-50 transition shadow-sm cursor-pointer"
           >
-            Ücretsiz Teklif Talebini Gönder
+            {loading ? (
+              <>
+                <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-ink border-t-transparent" />
+                <span>Gönderiliyor...</span>
+              </>
+            ) : (
+              <span>Ücretsiz Teklif Talebini Gönder</span>
+            )}
           </button>
         </form>
       )}

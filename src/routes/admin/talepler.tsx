@@ -1,7 +1,13 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { useAdminStore, type TalepItem, type TalepStatus } from "@/lib/admin/adminStore";
+import {
+  getTaleplerServerFn,
+  updateTalepStatusServerFn,
+  updateTalepNotesServerFn,
+  deleteTalepServerFn,
+} from "@/lib/server/talepler";
 import {
   Search,
   Filter,
@@ -41,12 +47,29 @@ const avatarBgColors = [
 ];
 
 export function AdminTaleplerPage() {
-  const { talepler, updateTalepStatus, updateTalepNotes, deleteTalep } = useAdminStore();
+  const { talepler, setTalepler, updateTalepStatus, updateTalepNotes, deleteTalep } = useAdminStore();
   const [selectedId, setSelectedId] = useState<string>(talepler[0]?.id ?? "");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [editingNotes, setEditingNotes] = useState(false);
   const [noteText, setNoteText] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    getTaleplerServerFn()
+      .then((res) => {
+        if (mounted && res?.talepler?.length) {
+          setTalepler(res.talepler);
+        }
+      })
+      .catch((err) => {
+        console.error("Talepler sunucudan yüklenemedi:", err);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, [setTalepler]);
 
   const filteredTalepler = useMemo(() => {
     return talepler.filter((t) => {
@@ -471,9 +494,16 @@ export function AdminTaleplerPage() {
                       İptal
                     </button>
                     <button
-                      onClick={() => {
+                      onClick={async () => {
                         updateTalepNotes(selectedTalep.id, noteText);
                         setEditingNotes(false);
+                        try {
+                          await updateTalepNotesServerFn({
+                            data: { id: selectedTalep.id, notes: noteText },
+                          });
+                        } catch (err) {
+                          console.error("Not kaydedilemedi:", err);
+                        }
                       }}
                       className="px-4 py-1.5 rounded-lg bg-black text-white text-[12.5px] font-medium cursor-pointer hover:bg-zinc-800"
                     >
@@ -494,7 +524,17 @@ export function AdminTaleplerPage() {
                 <span className="text-[12.5px] text-black/60">Durumu Değiştir:</span>
                 <select
                   value={selectedTalep.status}
-                  onChange={(e) => updateTalepStatus(selectedTalep.id, e.target.value as TalepStatus)}
+                  onChange={async (e) => {
+                    const newStatus = e.target.value as TalepStatus;
+                    updateTalepStatus(selectedTalep.id, newStatus);
+                    try {
+                      await updateTalepStatusServerFn({
+                        data: { id: selectedTalep.id, status: newStatus },
+                      });
+                    } catch (err) {
+                      console.error("Durum güncellenemedi:", err);
+                    }
+                  }}
                   className="rounded-xl border border-black/10 bg-white px-3 py-1.5 text-[12.5px] font-semibold text-[#09090b] shadow-xs cursor-pointer"
                 >
                   <option value="Yeni">Yeni</option>
@@ -550,9 +590,15 @@ export function AdminTaleplerPage() {
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  deleteTalep(deleteTargetTalep.id);
+                onClick={async () => {
+                  const targetId = deleteTargetTalep.id;
+                  deleteTalep(targetId);
                   setDeleteTargetTalep(null);
+                  try {
+                    await deleteTalepServerFn({ data: { id: targetId } });
+                  } catch (err) {
+                    console.error("Talep silinemedi:", err);
+                  }
                 }}
                 className="flex-1 rounded-full bg-red-600 py-2.5 text-[13.5px] font-semibold text-white hover:bg-red-700 transition shadow-sm cursor-pointer"
               >

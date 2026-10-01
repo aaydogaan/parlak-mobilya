@@ -27,13 +27,22 @@ interface Props {
 
 export function AdminLayout({ children, title, subtitle, actions }: Props) {
   const location = useLocation();
-  const navigate = useNavigate();
-  const { isAuthenticated, logout, talepler, projeler, galeriImages } = useAdminStore();
+  const {
+    isAuthenticated,
+    logout,
+    talepler,
+    projeler,
+    galeriImages,
+    checkSession,
+    authChecked,
+    adminUser,
+  } = useAdminStore();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    checkSession();
     // Google ve arama motorlarının admin paneli indekslemesini engelle
     let metaRobots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
     if (!metaRobots) {
@@ -42,9 +51,20 @@ export function AdminLayout({ children, title, subtitle, actions }: Props) {
       document.head.appendChild(metaRobots);
     }
     metaRobots.content = "noindex, nofollow";
-  }, []);
+  }, [checkSession]);
 
-  if (mounted && !isAuthenticated) {
+  if (!mounted || !authChecked) {
+    return (
+      <div className="min-h-screen bg-[#faf8f5] flex items-center justify-center font-['Lexend',sans-serif]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="size-9 rounded-full border-2 border-black border-t-transparent animate-spin" />
+          <p className="text-[13px] font-medium text-black/60">Güvenli oturum doğrulanıyor...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
     return <AdminLoginPage />;
   }
 
@@ -243,17 +263,16 @@ export function AdminLayout({ children, title, subtitle, actions }: Props) {
               </div>
               <div className="truncate">
                 <span className="text-[13px] font-medium text-white block truncate">
-                  Ahmet Usta
+                  {adminUser?.name || "Ahmet Parlak"}
                 </span>
                 <span className="text-[11px] text-white/50 block truncate">
-                  Yönetici
+                  {adminUser?.email || "Yönetici"}
                 </span>
               </div>
             </div>
             <button
-              onClick={() => {
-                logout();
-                navigate({ to: "/admin/login" });
+              onClick={async () => {
+                await logout();
               }}
               title="Çıkış Yap"
               className="p-2 text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition cursor-pointer"

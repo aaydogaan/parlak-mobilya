@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import { allProjectsList, type ProjectDetail } from "@/data/projects";
 import { migratedBlogPosts, type BlogPostItem } from "@/data/posts";
 import galeriImagesJson from "@/data/galeri_images.json";
+import { adminLoginServerFn, adminLogoutServerFn, getAdminSessionServerFn } from "@/lib/server/admin";
 
 export type TalepStatus = "Yeni" | "İncelendi" | "Arandı" | "Keşif Planlandı" | "Tamamlandı" | "İptal";
 
@@ -11,8 +12,8 @@ export interface TalepItem {
   name: string;
   phone: string;
   email?: string;
-  district: string; // Selçuklu, Meram, Karatay vb.
-  category: string; // Mutfak Dolabı, Gardırop, Vestiyer vb.
+  district: string;
+  category: string;
   message: string;
   date: string;
   timestamp: number;
@@ -30,16 +31,24 @@ export interface AdminSettings {
   workingHours: string;
 }
 
+export interface AdminUserProfile {
+  id: string;
+  name: string;
+  role: string;
+  email: string;
+}
+
 interface AdminState {
   isAuthenticated: boolean;
-  adminPassword?: string;
-  adminUser: { name: string; role: string; email: string } | null;
-  login: (password: string) => boolean;
-  logout: () => void;
-  updatePassword: (newPassword: string) => void;
+  adminUser: AdminUserProfile | null;
+  authChecked: boolean;
+  checkSession: () => Promise<boolean>;
+  login: (email: string, password: string, turnstileToken?: string) => Promise<{ success: boolean; error?: string }>;
+  logout: () => Promise<void>;
 
   // Talepler (Leads)
   talepler: TalepItem[];
+  setTalepler: (talepler: TalepItem[]) => void;
   addTalep: (talep: Omit<TalepItem, "id" | "date" | "timestamp" | "status">) => void;
   updateTalepStatus: (id: string, status: TalepStatus) => void;
   updateTalepNotes: (id: string, notes: string) => void;
@@ -61,6 +70,7 @@ interface AdminState {
 
   // Galeri
   galeriImages: string[];
+  setGaleriImages: (images: string[]) => void;
   addGaleriImage: (url: string) => void;
   removeGaleriImage: (url: string) => void;
 
@@ -122,60 +132,66 @@ const initialTalepler: TalepItem[] = [
     notes: "WhatsApp üzerinden örnek modeller yollandı.",
     estimatedBudget: "35.000 ₺",
   },
-  {
-    id: "TLP-1044",
-    name: "Ali Demir",
-    phone: "0530 876 54 32",
-    district: "Meram / Melikşah",
-    category: "Konya TV Ünitesi",
-    message: "Şömineli ve lambiri kaplamalı modern TV ünitesi tasarımı için fiyat almak istiyorum.",
-    date: "3 gün önce",
-    timestamp: Date.now() - 1000 * 60 * 60 * 75,
-    status: "Keşif Planlandı",
-    notes: "Ölçü alındı, 3D çizim hazırlanıyor.",
-    estimatedBudget: "40.000 ₺",
-  },
-  {
-    id: "TLP-1043",
-    name: "Emine Aksoy",
-    phone: "0542 111 22 33",
-    district: "Selçuklu / Şeker",
-    category: "Mutfak Dolabı",
-    message: "Akrilik kapaklı parlak beyaz mutfak dolabı ve kiler dolabı yapımı.",
-    date: "5 gün önce",
-    timestamp: Date.now() - 1000 * 60 * 60 * 120,
-    status: "Tamamlandı",
-    notes: "Sözleşme imzalandı, atölye imalatına başlandı.",
-    estimatedBudget: "95.000 ₺",
-  },
 ];
 
 export const useAdminStore = create<AdminState>()(
   persist(
     (set, get) => ({
       isAuthenticated: false,
-      adminPassword: "parlak1984",
       adminUser: null,
-      login: (password: string) => {
-        const currentPassword = get().adminPassword || "parlak1984";
-        if (password === currentPassword || password === "parlak1984") {
-          set({
-            isAuthenticated: true,
-            adminUser: {
-              name: "Ahmet Parlak",
-              role: "Baş Usta & Yönetici",
-              email: "info@parlakmobilyadekorasyon.com",
-            },
-          });
-          return true;
+      authChecked: false,
+
+      // Sync with server cryptographic session
+      checkSession: async () => {
+        try {
+          const res = await getAdminSessionServerFn();
+          if (res.authenticated && res.user) {
+            set({ isAuthenticated: true, adminUser: res.user, authChecked: true });
+            return true;
+          } else {
+            set({ isAuthenticated: false, adminUser: null, authChecked: true });
+            return false;
+          }
+        } catch {
+          set({ isAuthenticated: false, adminUser: null, authChecked: true });
+          return false;
         }
-        return false;
       },
-      logout: () => set({ isAuthenticated: false, adminUser: null }),
-      updatePassword: (newPassword: string) => set({ adminPassword: newPassword }),
+
+      // Server-authenticated login (No client credential evaluation)
+      login: async (email: string, password: string, turnstileToken?: string) => {
+        try {
+          const res = await adminLoginServerFn({
+            data: { email, password, turnstileToken },
+          });
+
+          if (res.success && res.user) {
+            set({
+              isAuthenticated: true,
+              adminUser: res.user,
+              authChecked: true,
+            });
+            return { success: true };
+          }
+          return { success: false, error: res.error || "Giriş bilgileri hatalı." };
+        } catch (err: any) {
+          return { success: false, error: err?.message || "Sunucu bağlantı hatası." };
+        }
+      },
+
+      // Server-side session invalidation on logout
+      logout: async () => {
+        try {
+          await adminLogoutServerFn();
+        } catch {
+          // ignore
+        }
+        set({ isAuthenticated: false, adminUser: null, authChecked: true });
+      },
 
       // Talepler
       talepler: initialTalepler,
+      setTalepler: (talepler) => set({ talepler }),
       addTalep: (talepData) => {
         const id = `TLP-${Math.floor(1000 + Math.random() * 9000)}`;
         const newTalep: TalepItem = {
@@ -235,6 +251,7 @@ export const useAdminStore = create<AdminState>()(
 
       // Galeri
       galeriImages: galeriImagesJson as string[],
+      setGaleriImages: (images) => set({ galeriImages: images }),
       addGaleriImage: (url) =>
         set((state) => ({ galeriImages: [url, ...state.galeriImages] })),
       removeGaleriImage: (url) =>
@@ -256,21 +273,11 @@ export const useAdminStore = create<AdminState>()(
     }),
     {
       name: "parlak-mobilya-admin-storage-v5",
-      merge: (persistedState: any, currentState: AdminState) => {
-        const state = { ...currentState, ...(persistedState as any) };
-        if (!state.galeriImages || !Array.isArray(state.galeriImages) || state.galeriImages.length === 0) {
-          state.galeriImages = galeriImagesJson as string[];
-        }
-        if (state.blogPosts && Array.isArray(state.blogPosts)) {
-          state.blogPosts = state.blogPosts.map((b: BlogPostItem) => {
-            return {
-              ...b,
-              views: typeof b.views === "number" ? b.views : 0,
-            };
-          });
-        }
-        return state;
-      },
+      // SECURITY: Exclude all authentication and user state from localStorage!
+      partialize: (state) => ({
+        settings: state.settings,
+        projeler: state.projeler,
+      }),
     }
   )
 );
