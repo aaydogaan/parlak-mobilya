@@ -187,9 +187,27 @@ select {
 .tiptap p,
 .ProseMirror p {
   margin-top: 0;
-  margin-bottom: 1.35rem;
+  margin-bottom: 1.25rem;
   color: #3b3531;
   line-height: 1.85;
+}
+
+/* Preserve empty lines & multiple Enters across editor and blog page */
+.blog-content p:empty,
+.blog-content p:has(> br:only-child),
+.tiptap p:empty,
+.ProseMirror p:empty,
+.ProseMirror p.is-editor-empty {
+  min-height: 1.85em !important;
+  display: block !important;
+}
+
+.blog-content p:empty::before,
+.blog-content p:has(> br:only-child)::before,
+.tiptap p:empty::before,
+.ProseMirror p:empty::before {
+  content: "\00a0" !important;
+  display: inline-block !important;
 }
 
 .blog-content h2,
@@ -202,11 +220,11 @@ select {
   font-weight: 700 !important;
   line-height: 1.35 !important;
   color: #0d0100 !important;
-  margin-top: 2.8rem !important;
-  margin-bottom: 1rem !important;
+  margin-top: 2.5rem !important;
+  margin-bottom: 0.85rem !important;
   letter-spacing: -0.025em !important;
-  padding-bottom: 0.5rem;
-  border-bottom: 1.5px solid rgba(13, 1, 0, 0.08);
+  padding-bottom: 0 !important;
+  border-bottom: none !important;
 }
 
 @media (min-width: 768px) {
@@ -315,17 +333,19 @@ select {
 .blog-content a,
 .tiptap a,
 .ProseMirror a {
-  color: #b45309 !important;
+  color: #09090b !important;
   text-decoration: underline !important;
-  text-underline-offset: 3px !important;
-  font-weight: 500 !important;
-  transition: color 0.15s ease;
+  text-decoration-color: rgba(0, 0, 0, 0.4) !important;
+  text-underline-offset: 3.5px !important;
+  font-weight: 600 !important;
+  transition: all 0.15s ease;
 }
 
 .blog-content a:hover,
 .tiptap a:hover,
 .ProseMirror a:hover {
-  color: #78350f !important;
+  color: #000000 !important;
+  text-decoration-color: #000000 !important;
 }
 
 .blog-content img,

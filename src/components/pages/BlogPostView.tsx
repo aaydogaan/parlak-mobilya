@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { Reveal } from "@/components/motion/Reveal";
@@ -61,6 +61,14 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Normalize empty paragraphs and trailing breaks so multiple Enters always render proper vertical space
+  const formattedContentHtml = useMemo(() => {
+    if (!post.contentHtml) return "";
+    return post.contentHtml
+      .replace(/<p>\s*<\/p>/gi, "<p>&nbsp;</p>")
+      .replace(/<p>\s*<br\s*\/?>\s*<\/p>/gi, "<p>&nbsp;</p>");
+  }, [post.contentHtml]);
+
   // Wrap any tables in .tableWrapper to prevent any horizontal overflow on mobile
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -77,7 +85,7 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
         });
       }
     }
-  }, [post.contentHtml]);
+  }, [formattedContentHtml]);
 
   const otherPosts = propOtherPosts || migratedBlogPosts.filter((p) => p.slug !== post.slug);
   const authorName = cleanAuthorName(post.author);
@@ -291,7 +299,7 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
           <Reveal delay={60}>
             <div
               className="blog-content"
-              dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+              dangerouslySetInnerHTML={{ __html: formattedContentHtml }}
             />
           </Reveal>
 

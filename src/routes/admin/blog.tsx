@@ -342,6 +342,13 @@ export function AdminBlogPage() {
     setIsSaving(true);
     setSaveSuccessMsg("");
 
+    // Normalize empty paragraphs so multiple Enters are preserved
+    const normalizedContentHtml = formContentHtml
+      ? formContentHtml
+          .replace(/<p>\s*<\/p>/gi, "<p>&nbsp;</p>")
+          .replace(/<p>\s*<br\s*\/?>\s*<\/p>/gi, "<p>&nbsp;</p>")
+      : "";
+
     const postToSave: BlogPostItem = {
       slug: finalSlug,
       title: formTitle.trim(),
@@ -352,7 +359,7 @@ export function AdminBlogPage() {
       author: "Ahmet Parlak",
       readTime: "5 dk okuma",
       image: finalImage,
-      contentHtml: formContentHtml,
+      contentHtml: normalizedContentHtml,
       status: formStatus,
       views: formViews,
     };
@@ -939,19 +946,8 @@ export function AdminBlogPage() {
             </div>
           </div>
 
-          {/* 4. Professional TipTap Rich Text Editor */}
-          <div className="bg-white rounded-[24px] border border-black/5 shadow-xs p-6 sm:p-8 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-black/5 pb-3">
-              <div>
-                <span className="text-[12px] font-semibold text-black/40 uppercase tracking-wider font-mono block">
-                  MAKALE İÇERİĞİ (TIPTAP EDİTÖR)
-                </span>
-                <p className="text-[12.5px] text-black/50 mt-0.5">
-                  Başlıklar (H2, H3, H4, H5), kalın, italik, listeler, alıntılar ve bilgisayardan görsel ekleme araçlarını kullanın.
-                </p>
-              </div>
-            </div>
-
+          {/* 4. Professional Rich Text Editor */}
+          <div className="bg-white rounded-[24px] border border-black/5 shadow-xs p-5 sm:p-7">
             <TipTapEditor
               content={formContentHtml}
               onChange={(newHtml) => setFormContentHtml(newHtml)}

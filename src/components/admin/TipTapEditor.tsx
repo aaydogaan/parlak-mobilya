@@ -90,6 +90,7 @@ export function TipTapEditor({ content, onChange }: Props) {
 
   // Table Submenu Dropdown State
   const [isTableMenuOpen, setIsTableMenuOpen] = useState(false);
+  const [, setTick] = useState(0);
 
   const editor = useEditor({
     extensions: [
@@ -102,7 +103,7 @@ export function TipTapEditor({ content, onChange }: Props) {
       LinkExtension.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: "text-amber-700 underline font-medium",
+          class: "text-[#09090b] underline font-semibold decoration-black/40 underline-offset-4",
         },
       }),
       CustomImageExtension.configure({
@@ -118,6 +119,8 @@ export function TipTapEditor({ content, onChange }: Props) {
       TableCell,
     ],
     content,
+    onSelectionUpdate: () => setTick((t) => t + 1),
+    onTransaction: () => setTick((t) => t + 1),
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       setRawHtml(html);
@@ -443,17 +446,30 @@ export function TipTapEditor({ content, onChange }: Props) {
 
         <div className="h-5 w-px bg-black/15 mx-1" />
 
-        {/* Modern Link Button (No browser window.prompt!) */}
+        {/* Modern Link Button */}
         <button
           type="button"
           onClick={openLinkModal}
           className={`p-2 rounded-lg text-[13px] transition ${
-            editor.isActive("link") ? "bg-amber-800 text-white" : "text-black/70 hover:bg-black/5"
+            editor.isActive("link") ? "bg-black text-white" : "text-black/70 hover:bg-black/5"
           }`}
           title="Bağlantı (Link) Ekle / Düzenle"
         >
           <LinkIcon className="size-4" />
         </button>
+
+        {/* Dedicated Unlink / Cancel Link Button */}
+        {editor.isActive("link") && (
+          <button
+            type="button"
+            onClick={() => editor.chain().focus().extendMarkRange("link").unsetLink().run()}
+            className="px-2.5 py-1.5 rounded-lg text-[12px] font-semibold bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 transition flex items-center gap-1 cursor-pointer animate-in fade-in duration-100"
+            title="Seçili Bağlantıyı Kaldır / İptal Et"
+          >
+            <Unlink className="size-3.5" />
+            <span>Linki Kaldır</span>
+          </button>
+        )}
 
         {/* Direct PC Image Upload Button */}
         <button
@@ -705,13 +721,14 @@ export function TipTapEditor({ content, onChange }: Props) {
             </div>
 
             <div className="flex items-center justify-between pt-4 border-t border-black/8 gap-2">
-              {editor.isActive("link") ? (
+              {editor.isActive("link") || linkUrl ? (
                 <button
                   type="button"
                   onClick={handleRemoveLink}
-                  className="px-3.5 py-2 rounded-full text-red-600 hover:bg-red-50 text-[12.5px] font-semibold transition cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-red-600 hover:bg-red-50 text-[12.5px] font-semibold transition cursor-pointer"
                 >
-                  Bağlantıyı Kaldır
+                  <Unlink className="size-3.5" />
+                  <span>Bağlantıyı Kaldır / İptal Et</span>
                 </button>
               ) : (
                 <div />
