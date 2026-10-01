@@ -33,6 +33,14 @@ export function AdminLayout({ children, title, subtitle, actions }: Props) {
 
   useEffect(() => {
     setMounted(true);
+    // Google ve arama motorlarının admin paneli indekslemesini engelle
+    let metaRobots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    if (!metaRobots) {
+      metaRobots = document.createElement("meta");
+      metaRobots.name = "robots";
+      document.head.appendChild(metaRobots);
+    }
+    metaRobots.content = "noindex, nofollow";
   }, []);
 
   if (mounted && !isAuthenticated) {
