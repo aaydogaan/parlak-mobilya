@@ -77,19 +77,21 @@ export function AdminGaleriPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Sync with store
-  const { removeGaleriImage, addGaleriImage } = useAdminStore();
+  const { setGaleriImages, removeGaleriImage, addGaleriImage } = useAdminStore();
 
   useEffect(() => {
-    if (initialImages && initialImages.length > 0) {
+    if (initialImages && Array.isArray(initialImages)) {
       setImages(initialImages);
+      setGaleriImages(initialImages);
     }
-  }, [initialImages]);
+  }, [initialImages, setGaleriImages]);
 
   async function refreshGallery() {
     setIsRefreshing(true);
     try {
       const refreshed = await getGaleriImagesServerFn();
       setImages(refreshed);
+      setGaleriImages(refreshed);
       setSelectedUrls([]);
     } catch (err) {
       console.error("Yenileme hatası:", err);

@@ -249,8 +249,8 @@ export const useAdminStore = create<AdminState>()(
           ),
         })),
 
-      // Galeri
-      galeriImages: galeriImagesJson as string[],
+      // Galeri - Live populated from database (no stale scraped thumbnails)
+      galeriImages: [],
       setGaleriImages: (images) => set({ galeriImages: images }),
       addGaleriImage: (url) =>
         set((state) => ({ galeriImages: [url, ...state.galeriImages] })),

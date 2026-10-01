@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useAdminStore } from "@/lib/admin/adminStore";
 import { AdminLoginPage } from "@/routes/admin/login";
+import { getGaleriImagesServerFn } from "@/lib/server/galeri";
 
 interface Props {
   children: ReactNode;
@@ -40,6 +41,7 @@ export function AdminLayout({
     talepler,
     projeler,
     galeriImages,
+    setGaleriImages,
     checkSession,
     authChecked,
     adminUser,
@@ -50,6 +52,16 @@ export function AdminLayout({
   useEffect(() => {
     setMounted(true);
     checkSession();
+
+    // Live sync actual gallery count from database
+    getGaleriImagesServerFn()
+      .then((imgs) => {
+        if (imgs && Array.isArray(imgs)) {
+          setGaleriImages(imgs);
+        }
+      })
+      .catch(() => {});
+
     // Google ve arama motorlarının admin paneli indekslemesini engelle
     let metaRobots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
     if (!metaRobots) {
