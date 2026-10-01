@@ -111,6 +111,55 @@ export const deleteGaleriImageServerFn = createServerFn({ method: "POST" })
     return { success: true, images: updated };
   });
 
+// Delete multiple images from Gallery (Bulk delete)
+export const deleteGaleriImagesBulkServerFn = createServerFn({ method: "POST" })
+  .validator((d: { urls: string[] }) => d)
+  .handler(async ({ data }): Promise<{ success: boolean; images: string[] }> => {
+    const { urls } = data;
+    if (!urls || urls.length === 0) return { success: true, images: memoryCache || [] };
+
+    try {
+      const { getSql } = await import("@/lib/db");
+      const sql = await getSql();
+
+      for (const url of urls) {
+        await sql`DELETE FROM galeri_images WHERE url = ${url}`;
+      }
+    } catch (err) {
+      console.warn("[galeri] DB bulk delete error:", err);
+    }
+
+    // Try deleting from Cloudflare R2
+    try {
+      const { DeleteObjectsCommand } = await import("@aws-sdk/client-s3");
+      const objectsToDelete = urls
+        .filter((url) => url.startsWith(CDN_URL))
+        .map((url) => ({ Key: url.replace(`${CDN_URL}/`, "").replace(/^\/+/, "") }))
+        .filter((item) => !!item.Key);
+
+      if (objectsToDelete.length > 0) {
+        const client = await getR2Client();
+        await client.send(
+          new DeleteObjectsCommand({
+            Bucket: BUCKET_NAME,
+            Delete: { Objects: objectsToDelete },
+          })
+        );
+      }
+    } catch (r2Err) {
+      console.warn("[galeri] R2 bulk delete notice:", r2Err);
+    }
+
+    if (memoryCache) {
+      const urlSet = new Set(urls);
+      memoryCache = memoryCache.filter((u) => !urlSet.has(u));
+    }
+
+    const updated = await getGaleriImagesServerFn();
+    return { success: true, images: updated };
+  });
+
+
 // Add an image by URL
 export const addGaleriImageServerFn = createServerFn({ method: "POST" })
   .validator((d: { url: string }) => d)
