@@ -151,16 +151,12 @@ const initialTalepler: TalepItem[] = [
 export const useAdminStore = create<AdminState>()(
   persist(
     (set, get) => ({
-      isAuthenticated: true,
+      isAuthenticated: false,
       adminPassword: "parlak1984",
-      adminUser: {
-        name: "Ahmet Parlak",
-        role: "Baş Usta & Yönetici",
-        email: "info@parlakmobilyadekorasyon.com",
-      },
+      adminUser: null,
       login: (password: string) => {
         const currentPassword = get().adminPassword || "parlak1984";
-        if (password === currentPassword || password === "parlak1984" || password === "admin123") {
+        if (password === currentPassword || password === "parlak1984") {
           set({
             isAuthenticated: true,
             adminUser: {

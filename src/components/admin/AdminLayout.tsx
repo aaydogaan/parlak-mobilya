@@ -16,6 +16,7 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { useAdminStore } from "@/lib/admin/adminStore";
+import { AdminLoginPage } from "@/routes/admin/login";
 
 interface Props {
   children: ReactNode;
@@ -44,23 +45,7 @@ export function AdminLayout({ children, title, subtitle, actions }: Props) {
   }, []);
 
   if (mounted && !isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
-        <div className="max-w-md w-full rounded-[24px] bg-[#121215] p-8 text-center text-white border border-white/10 shadow-2xl">
-          <ShieldAlert className="size-14 mx-auto text-white" />
-          <h2 className="mt-4 text-[24px] font-display font-medium">Giriş Yapmalısınız</h2>
-          <p className="mt-2 text-[14px] text-white/70">
-            Admin paneline erişmek için lütfen önce yönetici şifrenizle giriş yapın.
-          </p>
-          <Link
-            to="/admin/login"
-            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-white py-3.5 text-[15px] font-semibold text-black hover:bg-zinc-200 transition"
-          >
-            Giriş Ekranına Git
-          </Link>
-        </div>
-      </div>
-    );
+    return <AdminLoginPage />;
   }
 
   const newTaleplerCount = talepler.filter((t) => t.status === "Yeni").length;

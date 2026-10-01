@@ -148,9 +148,22 @@ export function Footer() {
             ))}
           </div>
 
-          <p className="text-[#524e4e]">
-            Tüm Hakları Saklıdır © Parlak Mobilya ve Dekorasyon — 1984'ten Bugüne
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-[#524e4e]">
+            <p>Tüm Hakları Saklıdır © Parlak Mobilya ve Dekorasyon — 1984'ten Bugüne</p>
+            <a
+              href="https://bromakagency.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 hover:opacity-85 transition-opacity"
+              title="Bromak Agency — Konya Web Tasarım"
+            >
+              <img
+                src="/images/bromak-agency-konya-web-tasarim.png"
+                alt="Bromak Agency - Konya Web Tasarım"
+                className="h-6.5 w-auto object-contain"
+              />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

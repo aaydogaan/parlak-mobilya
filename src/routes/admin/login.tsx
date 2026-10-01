@@ -16,10 +16,8 @@ export const Route = createFileRoute("/admin/login")({
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
-});
-
-export function AdminLoginPage() {
-  const [username, setUsername] = useState("ahmetusta");
+});export function AdminLoginPage() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
@@ -30,7 +28,7 @@ export function AdminLoginPage() {
     e.preventDefault();
     const success = login(password);
     if (success) {
-      navigate({ to: "/admin/talepler" });
+      navigate({ to: "/admin/dashboard" });
     } else {
       setError(true);
     }
@@ -64,7 +62,7 @@ export function AdminLoginPage() {
         {/* Sol Alt: Başlık ve Açıklama Metni */}
         <div className="relative z-10 mt-auto pt-12 max-w-lg">
           <h1 className="text-[30px] sm:text-[38px] md:text-[44px] font-display font-bold leading-[1.15] tracking-tight text-white">
-            Parlak Mobilya & Dekorasyon
+            Parlak Mobilya &amp; Dekorasyon
           </h1>
           <p className="mt-3 text-[14px] sm:text-[15px] text-white/80 leading-relaxed font-light">
             Konya genelinde 40 yılı aşkın üretim tecrübesiyle özel ölçü mutfak, gardırop ve yaşam alanı projeleri.
@@ -89,42 +87,28 @@ export function AdminLoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Kullanıcı Adı */}
+            {/* E-posta Adresi */}
             <div>
               <label className="block text-[13px] font-semibold text-[#09090b] mb-1.5">
-                Kullanıcı Adı
+                E-posta Adresi
               </label>
               <div className="relative">
                 <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Kullanıcı adı"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="info@parlakmobilyadekorasyon.com"
+                  required
                   className="w-full rounded-[16px] bg-[#f7f6f1] border border-black/10 px-4 py-3.5 text-[15px] text-[#09090b] font-medium placeholder-black/30 focus:bg-white focus:border-black focus:outline-none transition"
                 />
-                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 size-6 rounded-full bg-zinc-100 text-black flex items-center justify-center">
-                  <Check className="size-3.5" />
-                </div>
               </div>
             </div>
 
             {/* Yönetici Şifresi */}
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-[13px] font-semibold text-[#09090b]">
-                  Yönetici Şifresi
-                </label>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPassword("parlak1984");
-                    setError(false);
-                  }}
-                  className="text-[12px] text-black/60 font-semibold hover:underline cursor-pointer"
-                >
-                  Şifreyi Doldur
-                </button>
-              </div>
+              <label className="block text-[13px] font-semibold text-[#09090b] mb-1.5">
+                Yönetici Şifresi
+              </label>
 
               <div className="relative">
                 <input
@@ -135,7 +119,6 @@ export function AdminLoginPage() {
                     setError(false);
                   }}
                   placeholder="••••••••••••"
-                  autoFocus
                   required
                   className="w-full rounded-[16px] bg-[#f7f6f1] border border-black/10 px-4 py-3.5 pr-11 text-[15px] text-[#09090b] placeholder-black/30 focus:bg-white focus:border-black focus:outline-none transition"
                 />
@@ -149,18 +132,14 @@ export function AdminLoginPage() {
                 </button>
               </div>
 
-              {error ? (
+              {error && (
                 <p className="mt-2 text-[12.5px] text-red-600 font-medium">
-                  Hatalı şifre! (Varsayılan şifre: <code className="bg-red-50 px-1.5 py-0.5 rounded text-red-700 font-mono font-bold">parlak1984</code>)
-                </p>
-              ) : (
-                <p className="mt-1.5 text-[12px] text-black/40">
-                  Varsayılan şifre: <code className="font-mono text-black/60 font-semibold">parlak1984</code>
+                  Hatalı e-posta veya şifre! Lütfen bilgilerinizi kontrol edin.
                 </p>
               )}
             </div>
 
-            {/* Ultra Modern Giriş Yap Butonu (Monochrome Black & White) */}
+            {/* Ultra Modern Giriş Yap Butonu */}
             <div className="pt-3">
               <button
                 type="submit"
@@ -189,9 +168,21 @@ export function AdminLoginPage() {
           </div>
         </div>
 
-        {/* Alt Telif / Sade Bilgi */}
-        <div className="text-center text-[12px] text-black/40 pt-4">
-          Parlak Mobilya ve Dekorasyon © {new Date().getFullYear()}
+        {/* Alt Telif & Bromak Agency Logosu */}
+        <div className="flex flex-col items-center justify-center gap-2 pt-4 border-t border-black/5">
+          <a
+            href="https://bromakagency.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block transition-opacity hover:opacity-85"
+            title="Bromak Agency — Konya Web Tasarım"
+          >
+            <img
+              src="/images/bromak-agency-konya-web-tasarim.png"
+              alt="Bromak Agency - Konya Web Tasarım"
+              className="h-8 w-auto object-contain"
+            />
+          </a>
         </div>
       </div>
     </div>
