@@ -20,6 +20,7 @@ const TalepInputSchema = z.object({
 function rowToTalep(r: any): TalepItem {
   const dateStr = r.created_at
     ? new Date(r.created_at).toLocaleDateString("tr-TR", {
+        timeZone: "Europe/Istanbul",
         day: "2-digit",
         month: "long",
         hour: "2-digit",

@@ -42,6 +42,23 @@ function AdminDashboardPage() {
       });
   }, [setTalepler]);
 
+  function formatTalepDate(dateStr?: string, timestamp?: number): string {
+    if (timestamp && !isNaN(timestamp)) {
+      try {
+        return new Date(timestamp).toLocaleDateString("tr-TR", {
+          timeZone: "Europe/Istanbul",
+          day: "2-digit",
+          month: "long",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      } catch {
+        // fallback
+      }
+    }
+    return dateStr || "Yeni";
+  }
+
   const newTalepler = talepler.filter((t) => t.status === "Yeni");
 
   return (
@@ -163,7 +180,7 @@ function AdminDashboardPage() {
 
                 <div className="flex items-center gap-3">
                   <span className="text-[12px] text-black/40 hidden sm:inline font-mono">
-                    {t.date}
+                    {formatTalepDate(t.date, t.timestamp)}
                   </span>
                   <span className="px-2.5 py-1 rounded-full text-[11.5px] font-semibold bg-black text-white">
                     {t.status}

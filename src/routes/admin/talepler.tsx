@@ -111,6 +111,23 @@ export function AdminTaleplerPage() {
     return name.slice(0, 2).toUpperCase();
   }
 
+  function formatTalepDate(dateStr?: string, timestamp?: number): string {
+    if (timestamp && !isNaN(timestamp)) {
+      try {
+        return new Date(timestamp).toLocaleDateString("tr-TR", {
+          timeZone: "Europe/Istanbul",
+          day: "2-digit",
+          month: "long",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      } catch {
+        // fallback
+      }
+    }
+    return dateStr || "Yeni";
+  }
+
   function getStatusBadgeClass(status: TalepStatus) {
     switch (status) {
       case "Yeni":
@@ -153,7 +170,7 @@ export function AdminTaleplerPage() {
             onClick={() => {
               const csvData =
                 "ID,Ad Soyad,Telefon,İlçe,Kategori,Tarih,Durum\n" +
-                talepler.map((t) => `"${t.id}","${t.name}","${t.phone}","${t.district}","${t.category}","${t.date}","${t.status}"`).join("\n");
+                talepler.map((t) => `"${t.id}","${t.name}","${t.phone}","${t.district}","${t.category}","${formatTalepDate(t.date, t.timestamp)}","${t.status}"`).join("\n");
               const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
               const url = URL.createObjectURL(blob);
               const a = document.createElement("a");
@@ -351,7 +368,7 @@ export function AdminTaleplerPage() {
                     {/* Right info: Date + Status Pill */}
                     <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1.5 sm:gap-3 shrink-0 text-right">
                       <span className="text-[11.5px] text-black/40 font-mono hidden sm:inline-block">
-                        {item.date}
+                        {formatTalepDate(item.date, item.timestamp)}
                       </span>
 
                       <span
@@ -379,7 +396,7 @@ export function AdminTaleplerPage() {
                   #{selectedTalep.id}
                 </h3>
                 <p className="text-[12px] sm:text-[12.5px] text-black/50 mt-0.5">
-                  Tarih: {selectedTalep.date}
+                  Tarih: {formatTalepDate(selectedTalep.date, selectedTalep.timestamp)}
                 </p>
               </div>
               <span
