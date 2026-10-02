@@ -1,3 +1,16 @@
 {
-  "installCommand": "npm install --omit=dev --no-audit --no-fund"
+  "installCommand": "npm install --omit=dev --no-audit --no-fund",
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler",
+      "destination": "/blog/ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler",
+      "permanent": true
+    },
+    {
+      "source": "/yeni-web-sitemiz-yayinda",
+      "destination": "/blog/yeni-web-sitemiz-yayinda",
+      "permanent": true
+    }
+  ]
 }

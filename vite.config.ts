@@ -207,6 +207,64 @@ function sitemapDevPlugin(): Plugin {
   };
 }
 
+function seoDevPlugin(): Plugin {
+  return {
+    name: "app-builder:seo-dev",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const rawUrl = req.url ?? "";
+        const [pathname, searchWithQ] = rawUrl.split("?");
+        const search = searchWithQ ? `?${searchWithQ}` : "";
+
+        // 1. Spam check
+        if (
+          search.includes("item/") ||
+          search.startsWith("?item") ||
+          search.includes("&item=") ||
+          pathname.startsWith("/item/")
+        ) {
+          res.statusCode = 410;
+          res.setHeader("Content-Type", "text/html; charset=utf-8");
+          res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
+          res.end(
+            '<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><title>410 Gone</title><meta name="robots" content="noindex, nofollow, noarchive"></head><body><h1>410 Gone</h1><p>Bu bağlantı kalıcı olarak silinmiştir.</p></body></html>',
+          );
+          return;
+        }
+
+        // 2. Old WP redirects
+        const cleanPath = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+        if (cleanPath === "/ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler") {
+          res.statusCode = 301;
+          res.setHeader(
+            "Location",
+            `/blog/ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler${search}`,
+          );
+          res.end();
+          return;
+        }
+        if (cleanPath === "/yeni-web-sitemiz-yayinda") {
+          res.statusCode = 301;
+          res.setHeader("Location", `/blog/yeni-web-sitemiz-yayinda${search}`);
+          res.end();
+          return;
+        }
+
+        // 3. Trailing slash normalization
+        if (pathname.length > 1 && pathname.endsWith("/")) {
+          res.statusCode = 301;
+          res.setHeader("Location", `${cleanPath}${search}`);
+          res.end();
+          return;
+        }
+
+        next();
+      });
+    },
+  };
+}
+
 // `0.0.0.0:8080` is the live-preview contract — don't change host/port.
 // The dev server starts once `src/router.tsx` and `src/routes/` exist — see
 // AGENTS.md § "First scaffold".
@@ -226,6 +284,7 @@ export default defineConfig(({ command, isPreview }) => ({
     pgliteBootstrapPlugin(),
     // Before tanstackStart so /auth/popup never falls through to the SPA.
     authPopupPlugin(),
+    seoDevPlugin(),
     sitemapDevPlugin(),
     wpUploadsPlugin(),
     // Dev-only /__app-env, read by scripts/check-auth-invariant.mjs.

@@ -1,10 +1,22 @@
 User-agent: *
 Allow: /
-Disallow: /kvkk
-Disallow: /gizlilik-politikasi
-Disallow: /cerez-politikasi
-Disallow: /privacy-policy
-Disallow: /terms-and-conditions
+
+# Admin ve dahili yollar
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
+
+# Eski WordPress ve spam hack parametrelerini engelle
+Disallow: /*?item*
+Disallow: /*?*item*
+Disallow: /*item/
+Disallow: /item/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+Disallow: /xmlrpc.php
+Disallow: /wp-login.php
 Disallow: /404
 
 Sitemap: https://www.parlakmobilyadekorasyon.com/sitemap.xml
