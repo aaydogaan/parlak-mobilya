@@ -117,3 +117,61 @@ test("SEO Middleware: lets clean requests proceed to next()", async () => {
 
   assert.strictEqual(nextCalled, true);
 });
+
+test("SEO Middleware: blocks /admin on main domain and redirects directly to /", async () => {
+  const eventMain = {
+    url: new URL("https://parlakmobilyadekorasyon.com/admin"),
+    req: { method: "GET", headers: new Headers({ host: "parlakmobilyadekorasyon.com" }) },
+  };
+
+  let nextCalled = false;
+  const resMain = await seoRedirectsMiddleware(eventMain, () => {
+    nextCalled = true;
+  });
+
+  assert.strictEqual(nextCalled, false);
+  assert.ok(resMain instanceof Response);
+  assert.strictEqual(resMain.status, 302);
+  assert.strictEqual(resMain.headers.get("Location"), "/");
+
+  const eventMainSubpath = {
+    url: new URL("https://www.parlakmobilyadekorasyon.com/admin/dashboard"),
+    req: { method: "GET", headers: new Headers({ host: "www.parlakmobilyadekorasyon.com" }) },
+  };
+
+  let nextCalled2 = false;
+  const resSub = await seoRedirectsMiddleware(eventMainSubpath, () => {
+    nextCalled2 = true;
+  });
+
+  assert.strictEqual(nextCalled2, false);
+  assert.ok(resSub instanceof Response);
+  assert.strictEqual(resSub.status, 302);
+  assert.strictEqual(resSub.headers.get("Location"), "/");
+});
+
+test("SEO Middleware: allows /admin on admin subdomain and localhost", async () => {
+  const eventAdminSubdomain = {
+    url: new URL("https://admin.parlakmobilyadekorasyon.com/admin"),
+    req: { method: "GET", headers: new Headers({ host: "admin.parlakmobilyadekorasyon.com" }) },
+  };
+
+  let nextCalled = false;
+  await seoRedirectsMiddleware(eventAdminSubdomain, () => {
+    nextCalled = true;
+    return new Response("Admin OK", { status: 200 });
+  });
+  assert.strictEqual(nextCalled, true);
+
+  const eventLocalhost = {
+    url: new URL("http://localhost:8080/admin"),
+    req: { method: "GET", headers: new Headers({ host: "localhost:8080" }) },
+  };
+
+  let nextCalledLocal = false;
+  await seoRedirectsMiddleware(eventLocalhost, () => {
+    nextCalledLocal = true;
+    return new Response("Local OK", { status: 200 });
+  });
+  assert.strictEqual(nextCalledLocal, true);
+});

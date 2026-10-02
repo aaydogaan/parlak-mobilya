@@ -1,6 +1,18 @@
 interface EventLike {
   url: URL;
-  req: { method?: string; headers?: Headers };
+  req: { method?: string; headers?: Headers | Record<string, string | string[] | undefined> };
+}
+
+function getHeader(
+  headers: Headers | Record<string, string | string[] | undefined> | undefined,
+  name: string,
+): string | undefined {
+  if (!headers) return undefined;
+  if (typeof (headers as Headers).get === "function") {
+    return (headers as Headers).get(name) ?? undefined;
+  }
+  const val = (headers as Record<string, string | string[] | undefined>)[name.toLowerCase()];
+  return Array.isArray(val) ? val[0] : val;
 }
 
 /**
@@ -55,7 +67,29 @@ export default async function seoRedirectsMiddleware(
   const pathname = url.pathname;
   const search = url.search;
 
-  // 1. Immediately drop spam/hacked URLs with HTTP 410 Gone (Permanently Removed)
+  const rawHost =
+    getHeader(event.req?.headers, "x-forwarded-host") ??
+    getHeader(event.req?.headers, "host") ??
+    url.host ??
+    "";
+  const host = rawHost.toLowerCase().split(":")[0];
+  const isAdminSubdomain = host.startsWith("admin.");
+  const isLocal = host === "localhost" || host === "127.0.0.1";
+
+  // 1. If accessing /admin on the main domain (parlakmobilyadekorasyon.com or www.),
+  // do not open the admin panel or redirect to dashboard: redirect directly to home (/)
+  // The admin panel remains exclusively accessible via admin.parlakmobilyadekorasyon.com
+  if (!isAdminSubdomain && !isLocal && (pathname === "/admin" || pathname.startsWith("/admin/"))) {
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: "/",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+      },
+    });
+  }
+
+  // 2. Immediately drop spam/hacked URLs with HTTP 410 Gone (Permanently Removed)
   // Googlebot prioritizes 410 over 404 to rapidly purge dead URLs from the index.
   if (isSpamRequest(url)) {
     return new Response(
@@ -72,7 +106,7 @@ export default async function seoRedirectsMiddleware(
     );
   }
 
-  // 2. Legacy WordPress post slug redirects (301 Permanent Redirect)
+  // 3. Legacy WordPress post slug redirects (301 Permanent Redirect)
   const cleanPath = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
   if (cleanPath === "/ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler") {
     return new Response(null, {
@@ -93,7 +127,7 @@ export default async function seoRedirectsMiddleware(
     });
   }
 
-  // 3. Trailing slash normalization: /projeler/ -> /projeler, /hakkimizda/ -> /hakkimizda
+  // 4. Trailing slash normalization: /projeler/ -> /projeler, /hakkimizda/ -> /hakkimizda
   // Ensures Googlebot consolidates link equity to the canonical non-trailing-slash URL.
   if (pathname.length > 1 && pathname.endsWith("/")) {
     return new Response(null, {

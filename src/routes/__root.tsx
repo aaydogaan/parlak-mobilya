@@ -126,10 +126,16 @@ export const Route = createRootRoute({
 
 function RootDocument() {
   if (typeof window !== "undefined") {
-    const isAdminHost = window.location.hostname.startsWith("admin.");
+    const hostname = window.location.hostname;
+    const isAdminHost = hostname.startsWith("admin.");
+    const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
     const isPathAdmin = window.location.pathname.startsWith("/admin");
+
     if (isAdminHost && !isPathAdmin) {
       window.location.replace("/admin/talepler");
+    }
+    if (!isAdminHost && !isLocal && isPathAdmin) {
+      window.location.replace("/");
     }
   }
 
