@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { useAdminStore } from "@/lib/admin/adminStore";
+import { getTaleplerServerFn } from "@/lib/server/talepler";
 import {
   Inbox,
   FolderKanban,
@@ -26,7 +28,19 @@ export const Route = createFileRoute("/admin/dashboard")({
 });
 
 function AdminDashboardPage() {
-  const { talepler, projeler, blogPosts, galeriImages } = useAdminStore();
+  const { talepler, setTalepler, projeler, blogPosts, galeriImages } = useAdminStore();
+
+  useEffect(() => {
+    getTaleplerServerFn()
+      .then((res) => {
+        if (res?.talepler) {
+          setTalepler(res.talepler);
+        }
+      })
+      .catch((err) => {
+        console.error("Dashboard talepleri yüklenemedi:", err);
+      });
+  }, [setTalepler]);
 
   const newTalepler = talepler.filter((t) => t.status === "Yeni");
 

@@ -1,10 +1,12 @@
 import { useState, type FormEvent } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, MapPin, Phone, MessageCircle, ArrowUpRight, Clock } from "lucide-react";
+import { Mail, MapPin, Phone, MessageCircle, ArrowUpRight, Clock, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { Reveal } from "@/components/motion/Reveal";
 import { services, site } from "@/data/site";
+import { submitTalepServerFn } from "@/lib/server/talepler";
+import { useAdminStore } from "@/lib/admin/adminStore";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
@@ -25,33 +27,63 @@ export const Route = createFileRoute("/contact")({
   }),
 });
 
-import { useAdminStore } from "@/lib/admin/adminStore";
-
 export function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [trackingId, setTrackingId] = useState<string | null>(null);
   const addTalep = useAdminStore((s) => s.addTalep);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrorMessage(null);
+    setLoading(true);
+
     const fd = new FormData(e.currentTarget);
-    const name = fd.get("name") as string;
-    const phone = fd.get("phone") as string;
-    const email = fd.get("email") as string;
+    const name = (fd.get("name") as string)?.trim();
+    const phone = (fd.get("phone") as string)?.trim();
+    const email = (fd.get("email") as string)?.trim();
+    const district = (fd.get("district") as string)?.trim() || "Konya / Selçuklu";
     const serviceSlug = fd.get("service") as string;
-    const message = fd.get("message") as string;
+    const message = (fd.get("message") as string)?.trim();
 
     const matchedService = services.find((s) => s.slug === serviceSlug);
+    const category = matchedService?.title || "Özel Mobilya Keşif Talebi";
 
-    addTalep({
-      name: name || "İletişim Formu Müşterisi",
-      phone: phone || "05XX XXX XX XX",
-      email: email || undefined,
-      district: "Konya / Merkez",
-      category: matchedService?.title || "Özel Mobilya Keşif Talebi",
-      message: message || `${name} iletişim sayfasından keşif ve bilgi talebinde bulundu.`,
-    });
+    try {
+      const res = await submitTalepServerFn({
+        data: {
+          name: name || "İletişim Formu Müşterisi",
+          phone: phone || "05XX XXX XX XX",
+          email: email || undefined,
+          district: district,
+          category: category,
+          message: message || `${name} iletişim sayfasından keşif ve bilgi talebinde bulundu.`,
+        },
+      });
 
-    setSent(true);
+      const assignedTrackingId = res?.trackingId || `TLP-${Math.floor(1000 + Math.random() * 9000)}`;
+      setTrackingId(assignedTrackingId);
+
+      // Local store'a da senkronize et
+      addTalep({
+        name: name || "İletişim Formu Müşterisi",
+        phone: phone || "05XX XXX XX XX",
+        email: email || undefined,
+        district: district,
+        category: category,
+        message: message || `${name} iletişim sayfasından keşif ve bilgi talebinde bulundu.`,
+      });
+
+      setSent(true);
+    } catch (err: any) {
+      console.error("İletişim formu gönderim hatası:", err);
+      setErrorMessage(
+        err?.message || "Mesajınız iletilirken bir hata oluştu. Lütfen tekrar deneyiniz veya doğrudan bizi arayınız."
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -202,49 +234,108 @@ export function ContactPage() {
               </p>
 
               {sent ? (
-                <div className="mt-8 rounded-2xl bg-white/10 p-6 text-white/95">
-                  <p className="font-medium text-[16px] text-white">Mesajınız Alındı!</p>
-                  <p className="mt-2 text-[14.5px] leading-relaxed text-white/80">
-                    En kısa sürede sizinle iletişime geçeceğiz. Dilerseniz hemen WhatsApp üzerinden projenizi aktarabilirsiniz.
+                <div className="mt-8 rounded-2xl bg-white/10 p-6 text-white/95 border border-white/10 animate-in fade-in zoom-in-95 duration-200">
+                  <div className="flex items-center gap-2.5 text-emerald-400">
+                    <CheckCircle2 className="size-6" />
+                    <span className="font-semibold text-[17px] text-white">Talebiniz Başarıyla Alındı!</span>
+                  </div>
+                  {trackingId && (
+                    <div className="mt-3 inline-block rounded-lg bg-white/15 px-3 py-1 font-mono text-[13px] text-white font-semibold">
+                      Takip Kodu: {trackingId}
+                    </div>
+                  )}
+                  <p className="mt-3 text-[14.5px] leading-relaxed text-white/80">
+                    Ahmet Usta ve ekibimiz mesajınızı inceleyip en kısa sürede (genellikle aynı gün içinde) sizi arayacaktır.
                   </p>
-                  <a
-                    href={site.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-[14px] font-medium text-white transition hover:brightness-110"
-                  >
-                    <span>WhatsApp ile Yazın</span>
-                    <span>→</span>
-                  </a>
+                  <p className="mt-2 text-[13.5px] text-white/70">
+                    Dilerseniz mekanınızın fotoğraf veya ölçülerini hemen WhatsApp üzerinden de iletebilirsiniz:
+                  </p>
+                  <div className="mt-5 flex flex-wrap items-center gap-3">
+                    <a
+                      href={site.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-[14px] font-medium text-white transition hover:brightness-110 shadow-sm"
+                    >
+                      <MessageCircle className="size-4" />
+                      <span>WhatsApp ile Hemen Yazın</span>
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => setSent(false)}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-[13px] font-medium text-white/80 hover:bg-white/10 transition cursor-pointer"
+                    >
+                      Yeni Talep Gönder
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={onSubmit} className="mt-7 space-y-4">
+                  {errorMessage && (
+                    <div className="rounded-xl bg-red-500/20 border border-red-500/30 p-3.5 text-[13.5px] text-red-100 flex items-start gap-2.5">
+                      <AlertCircle className="size-4.5 text-red-300 shrink-0 mt-0.5" />
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
+
                   <label className="block">
-                    <span className="mb-2 block text-[13.5px] text-white/90">Adınız Soyadınız</span>
-                    <input required name="name" placeholder="Ad Soyad" className="c-field" autoComplete="name" />
+                    <span className="mb-2 block text-[13.5px] text-white/90">Adınız Soyadınız *</span>
+                    <input required name="name" placeholder="Örn: Mehmet Yılmaz" className="c-field" autoComplete="name" />
                   </label>
-                  <label className="block">
-                    <span className="mb-2 block text-[13.5px] text-white/90">Telefon Numaranız</span>
-                    <input required type="tel" name="phone" placeholder="05XX XXX XX XX" className="c-field" autoComplete="tel" />
-                  </label>
-                  <label className="block">
-                    <span className="mb-2 block text-[13.5px] text-white/90">İlgilendiğiniz Hizmet</span>
-                    <select required name="service" className="c-field" defaultValue="">
-                      <option value="" disabled>Lütfen bir hizmet seçiniz</option>
-                      {services.map((s) => (
-                        <option key={s.slug} value={s.slug}>{s.title}</option>
-                      ))}
-                    </select>
-                  </label>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <label className="block">
+                      <span className="mb-2 block text-[13.5px] text-white/90">Telefon Numaranız *</span>
+                      <input required type="tel" name="phone" placeholder="05XX XXX XX XX" className="c-field" autoComplete="tel" />
+                    </label>
+
+                    <label className="block">
+                      <span className="mb-2 block text-[13.5px] text-white/90">Konya / İlçe</span>
+                      <select name="district" className="c-field" defaultValue="Selçuklu">
+                        <option value="Selçuklu">Selçuklu</option>
+                        <option value="Meram">Meram</option>
+                        <option value="Karatay">Karatay</option>
+                        <option value="Diğer Konya İlçesi">Diğer Konya İlçesi</option>
+                        <option value="Konya Dışı">Konya Dışı</option>
+                      </select>
+                    </label>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <label className="block">
+                      <span className="mb-2 block text-[13.5px] text-white/90">İlgilendiğiniz Hizmet *</span>
+                      <select required name="service" className="c-field" defaultValue="">
+                        <option value="" disabled>Lütfen bir hizmet seçiniz</option>
+                        {services.map((s) => (
+                          <option key={s.slug} value={s.slug}>{s.title}</option>
+                        ))}
+                      </select>
+                    </label>
+
+                    <label className="block">
+                      <span className="mb-2 block text-[13.5px] text-white/90">E-Posta (Opsiyonel)</span>
+                      <input type="email" name="email" placeholder="ornek@email.com" className="c-field" autoComplete="email" />
+                    </label>
+                  </div>
+
                   <label className="block">
                     <span className="mb-2 block text-[13.5px] text-white/90">Mesajınız / Notunuz (Opsiyonel)</span>
                     <textarea rows={3} name="message" placeholder="Mekanınızın yaklaşık ölçüleri veya istediğiniz model detayları..." className="c-field resize-none" />
                   </label>
+
                   <button
                     type="submit"
-                    className="mt-2 w-full justify-center inline-flex items-center rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-ink hover:bg-white/90 transition shadow-sm cursor-pointer"
+                    disabled={loading}
+                    className="mt-2 w-full justify-center inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-semibold text-ink hover:bg-white/90 transition shadow-sm cursor-pointer disabled:opacity-60"
                   >
-                    Mesajı Gönder
+                    {loading ? (
+                      <>
+                        <RefreshCw className="size-4 animate-spin text-ink" />
+                        <span>Talebiniz Gönderiliyor...</span>
+                      </>
+                    ) : (
+                      <span>Mesajı Gönder (Ücretsiz Keşif İste)</span>
+                    )}
                   </button>
                 </form>
               )}

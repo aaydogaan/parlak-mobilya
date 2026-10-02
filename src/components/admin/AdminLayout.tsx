@@ -18,6 +18,7 @@ import {
 import { useAdminStore } from "@/lib/admin/adminStore";
 import { AdminLoginPage } from "@/routes/admin/login";
 import { getGaleriImagesServerFn } from "@/lib/server/galeri";
+import { getTaleplerServerFn } from "@/lib/server/talepler";
 
 interface Props {
   children: ReactNode;
@@ -39,6 +40,7 @@ export function AdminLayout({
     isAuthenticated,
     logout,
     talepler,
+    setTalepler,
     projeler,
     galeriImages,
     setGaleriImages,
@@ -58,6 +60,15 @@ export function AdminLayout({
       .then((imgs) => {
         if (imgs && Array.isArray(imgs)) {
           setGaleriImages(imgs);
+        }
+      })
+      .catch(() => {});
+
+    // Live sync customer requests (talepler) from database
+    getTaleplerServerFn()
+      .then((res) => {
+        if (res?.talepler) {
+          setTalepler(res.talepler);
         }
       })
       .catch(() => {});

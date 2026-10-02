@@ -18,6 +18,15 @@ const TalepInputSchema = z.object({
 });
 
 function rowToTalep(r: any): TalepItem {
+  const dateStr = r.created_at
+    ? new Date(r.created_at).toLocaleDateString("tr-TR", {
+        day: "2-digit",
+        month: "long",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : "Yeni";
+
   return {
     id: r.tracking_id || `TLP-${r.id}`,
     name: r.name,
@@ -29,13 +38,8 @@ function rowToTalep(r: any): TalepItem {
     status: (r.status as TalepStatus) || "Yeni",
     notes: r.notes || undefined,
     estimatedBudget: r.estimated_budget || undefined,
-    date: new Date(r.created_at).toLocaleDateString("tr-TR", {
-      day: "2-digit",
-      month: "long",
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
-    timestamp: new Date(r.created_at).getTime(),
+    date: dateStr,
+    timestamp: r.created_at ? new Date(r.created_at).getTime() : Date.now(),
   };
 }
 
@@ -47,10 +51,10 @@ export const submitTalepServerFn = createServerFn({ method: "POST" })
     const req = getRequest();
     const ip = getClientIp(req);
 
-    // Rate limit: max 5 quote requests per IP per hour
-    const limit = checkRateLimit(`quote:${ip}`, 5, 60 * 60 * 1000);
+    // Rate limit: max 10 quote requests per IP per hour (prevents abuse while allowing legitimate testing)
+    const limit = checkRateLimit(`quote:${ip}`, 10, 60 * 60 * 1000);
     if (!limit.allowed) {
-      throw new Error("Kısa sürede çok fazla talep gönderildi. Lütfen biraz sonra tekrar deneyin.");
+      throw new Error("Kısa sürede çok fazla talep gönderildi. Lütfen biraz sonra tekrar deneyin veya bizi doğrudan arayın.");
     }
 
     const cleanName = sanitizeText(data.name, 100);
@@ -92,9 +96,9 @@ export const submitTalepServerFn = createServerFn({ method: "POST" })
       )`;
 
       return { success: true, trackingId };
-    } catch (err) {
+    } catch (err: any) {
       console.error("[talepler] DB submit error:", err);
-      return { success: true, trackingId };
+      throw new Error("Talebiniz kaydedilirken bir veritabanı hatası oluştu: " + (err?.message || "Lütfen tekrar deneyin."));
     }
   });
 

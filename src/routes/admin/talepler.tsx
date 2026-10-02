@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { useAdminStore, type TalepItem, type TalepStatus } from "@/lib/admin/adminStore";
@@ -24,6 +24,7 @@ import {
   ChevronDown,
   Sparkles,
   Download,
+  RefreshCw,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/talepler")({
@@ -54,22 +55,30 @@ export function AdminTaleplerPage() {
   const [editingNotes, setEditingNotes] = useState(false);
   const [noteText, setNoteText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const fetchTalepler = useCallback(async (silent = false) => {
+    if (!silent) setIsRefreshing(true);
+    try {
+      const res = await getTaleplerServerFn();
+      if (res?.talepler) {
+        setTalepler(res.talepler);
+      }
+    } catch (err) {
+      console.error("Talepler sunucudan yüklenemedi:", err);
+    } finally {
+      if (!silent) setIsRefreshing(false);
+    }
+  }, [setTalepler]);
 
   useEffect(() => {
-    let mounted = true;
-    getTaleplerServerFn()
-      .then((res) => {
-        if (mounted && res?.talepler?.length) {
-          setTalepler(res.talepler);
-        }
-      })
-      .catch((err) => {
-        console.error("Talepler sunucudan yüklenemedi:", err);
-      });
-    return () => {
-      mounted = false;
-    };
-  }, [setTalepler]);
+    fetchTalepler();
+    // 20 saniyede bir yeni gelen talepleri arka planda kontrol et
+    const interval = setInterval(() => {
+      fetchTalepler(true);
+    }, 20000);
+    return () => clearInterval(interval);
+  }, [fetchTalepler]);
 
   const filteredTalepler = useMemo(() => {
     return talepler.filter((t) => {
@@ -129,6 +138,17 @@ export function AdminTaleplerPage() {
       subtitle="Web sitesi ve iletişim formlarından gelen tüm müşteri taleplerini buradan yönetin."
       actions={
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => fetchTalepler(false)}
+            disabled={isRefreshing}
+            className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 sm:px-5 py-2 sm:py-2.5 text-[13px] sm:text-[13.5px] font-medium text-black shadow-xs hover:bg-black/5 transition cursor-pointer disabled:opacity-50"
+            title="Talepleri Sunucudan Yenile"
+          >
+            <RefreshCw className={`size-4 ${isRefreshing ? "animate-spin" : ""}`} />
+            <span>{isRefreshing ? "Yenileniyor..." : "Yenile"}</span>
+          </button>
+
           <button
             onClick={() => {
               const csvData =
