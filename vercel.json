@@ -1,6 +1,26 @@
 {
   "installCommand": "npm install --omit=dev --no-audit --no-fund",
   "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(images|assets|videos|fonts)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(png|jpg|jpeg|webp|svg|ico|mp4|webm|woff|woff2|ttf|css|js)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/ozel-olcu-mobilya-yaptirmadan-once-dikkat-edilmesi-gerekenler",

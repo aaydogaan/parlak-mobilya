@@ -37,7 +37,7 @@ export const Route = createFileRoute("/admin/ayarlar")({
   }),
 });
 
-export function AdminAyarlarPage() {
+function AdminAyarlarPage() {
   const { settings, updateSettings } = useAdminStore();
   const [saved, setSaved] = useState(false);
   const [passwordSaved, setPasswordSaved] = useState(false);

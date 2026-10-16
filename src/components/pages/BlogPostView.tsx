@@ -216,8 +216,10 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
               <div className="flex items-center gap-3">
                 <div className="size-10 rounded-full overflow-hidden bg-black text-white border border-black/10 shrink-0 flex items-center justify-center font-display font-semibold text-[13px] shadow-2xs">
                   <img
-                    src="/images/ahmet-parlak-mobilyaa-1.jpg"
+                    src="/images/ahmet-parlak-mobilyaa-1.webp"
                     alt={authorName}
+                    width={40}
+                    height={40}
                     className="size-full object-cover object-top"
                     onError={(e) => {
                       (e.target as HTMLElement).style.display = "none";
@@ -269,7 +271,7 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
                   href={whatsappShareUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-[#25D366] text-white text-[12.5px] font-semibold shadow-2xs hover:brightness-105 transition cursor-pointer"
+                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-[#128C7E] text-white text-[12.5px] font-semibold shadow-2xs hover:brightness-105 transition cursor-pointer"
                   title="WhatsApp'ta Paylaş"
                 >
                   <MessageCircle className="size-3.5" />
@@ -322,7 +324,7 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-[13.5px] font-semibold text-white shadow-md hover:brightness-110 transition cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#128C7E] px-5 py-2.5 text-[13.5px] font-semibold text-white shadow-md hover:brightness-110 transition cursor-pointer"
                 >
                   <MessageCircle className="size-4" />
                   <span>WhatsApp'tan Yazın</span>

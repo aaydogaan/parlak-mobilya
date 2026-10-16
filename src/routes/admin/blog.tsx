@@ -133,7 +133,7 @@ const CATEGORY_OPTIONS = [
   "Bakım & Temizlik",
 ];
 
-export function AdminBlogPage() {
+function AdminBlogPage() {
   const loaderData = Route.useLoaderData();
   const { blogPosts, setBlogPosts } = useAdminStore();
 

@@ -15,10 +15,13 @@ export function AboutSplit() {
           {/* Sol: Ahmet Usta / Atölye Görseli */}
           <div className="w-full lg:w-1/2 overflow-hidden rounded-[20px] aspect-[1.09/1] max-w-[580px] shadow-sm">
             <img
-              src="/images/ahmet-parlak-mobilyaa-1.jpg"
+              src="/images/ahmet-parlak-mobilyaa-1.webp"
               alt="Ahmet Parlak - Parlak Mobilya Kurucusu & Baş Marangoz Ustası"
+              width={580}
+              height={532}
               className="w-full h-full object-cover object-top"
               loading="lazy"
+              decoding="async"
             />
           </div>
 

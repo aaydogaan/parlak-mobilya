@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AboutPage } from "./about";
+import { AboutPageView } from "@/components/pages/AboutPageView";
 
 export const Route = createFileRoute("/hakkimizda")({
-  component: HakkimizdaPage,
+  component: AboutPageView,
   head: () => ({
     meta: [
       { title: "Hakkımızda - Parlak Mobilya ve Dekorasyon" },
@@ -19,7 +19,3 @@ export const Route = createFileRoute("/hakkimizda")({
     ],
   }),
 });
-
-function HakkimizdaPage() {
-  return <AboutPage />;
-}

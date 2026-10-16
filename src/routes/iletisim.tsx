@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContactPage } from "./contact";
+import { ContactPageView } from "@/components/pages/ContactPageView";
 
 export const Route = createFileRoute("/iletisim")({
-  component: IletisimPage,
+  component: ContactPageView,
   head: () => ({
     meta: [
       { title: "İletişim - Parlak Mobilya ve Dekorasyon" },
@@ -19,7 +19,3 @@ export const Route = createFileRoute("/iletisim")({
     ],
   }),
 });
-
-function IletisimPage() {
-  return <ContactPage />;
-}

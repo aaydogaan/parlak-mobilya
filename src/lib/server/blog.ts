@@ -1,11 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { migratedBlogPosts, type BlogPostItem } from "@/data/posts";
-import { adminAuthMiddleware, getAuthenticatedAdmin } from "./security/auth";
-import { logAuditEvent } from "./security/audit";
-import { sanitizeBlogHtml, sanitizeText } from "./security/sanitize";
-import { checkRateLimit, getClientIp } from "./security/rate-limiter";
-import { syncSitemapFile } from "./sitemap";
 
 let blogMemoryCache: BlogPostItem[] | null = null;
 
@@ -53,8 +48,9 @@ export const getBlogPostsServerFn = createServerFn({ method: "GET" })
 
     // Defense-in-depth: ONLY verified admins can view drafts
     if (data?.includeDrafts) {
-      const { getRequest } = await import("@tanstack/react-start/server");
-      const req = getRequest();
+      const { getServerRequest } = await import("./security/cookies.server");
+      const req = getServerRequest();
+      const { getAuthenticatedAdmin } = await import("./security/auth");
       const auth = await getAuthenticatedAdmin(req);
       if (auth && auth.user.role === "admin") {
         includeDrafts = true;
@@ -84,17 +80,7 @@ export const getBlogPostsServerFn = createServerFn({ method: "GET" })
         updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
       )`;
 
-      const rows = await sql`
-        SELECT * FROM blog_posts ORDER BY id DESC
-      `;
-
-      if (rows && rows.length > 0) {
-        const posts = rows.map(rowToPost);
-        blogMemoryCache = posts;
-        return includeDrafts ? posts : posts.filter((p) => p.status !== "draft");
-      }
-
-      // Seed initial posts if empty
+      // Ensure all migrated posts are seeded if missing
       for (const p of [...migratedBlogPosts].reverse()) {
         try {
           await sql`INSERT INTO blog_posts (
@@ -105,6 +91,16 @@ export const getBlogPostsServerFn = createServerFn({ method: "GET" })
         } catch {
           // ignore
         }
+      }
+
+      const rows = await sql`
+        SELECT * FROM blog_posts ORDER BY id DESC
+      `;
+
+      if (rows && rows.length > 0) {
+        const posts = rows.map(rowToPost);
+        blogMemoryCache = posts;
+        return includeDrafts ? posts : posts.filter((p) => p.status !== "draft");
       }
 
       blogMemoryCache = [...migratedBlogPosts];
@@ -156,8 +152,9 @@ export const getBlogPostBySlugServerFn = createServerFn({ method: "POST" })
     }
 
     if (post && post.status === "draft") {
-      const { getRequest } = await import("@tanstack/react-start/server");
-      const req = getRequest();
+      const { getServerRequest } = await import("./security/cookies.server");
+      const req = getServerRequest();
+      const { getAuthenticatedAdmin } = await import("./security/auth");
       const auth = await getAuthenticatedAdmin(req);
       if (!auth || auth.user.role !== "admin") {
         return null; // Don't leak drafts to unauthorized visitors
@@ -169,16 +166,18 @@ export const getBlogPostBySlugServerFn = createServerFn({ method: "POST" })
 
 // Save (create or update) blog post - PROTECTED WITH ADMIN AUTH
 export const saveBlogPostServerFn = createServerFn({ method: "POST" })
-  .middleware([adminAuthMiddleware])
   .validator((d: { post: unknown }) => BlogPostSchema.parse(d.post))
   .handler(
     async ({
       data: postData,
-      context,
     }): Promise<{ success: boolean; post: BlogPostItem; posts: BlogPostItem[] }> => {
-      const { adminUser } = context;
-      const { getRequest } = await import("@tanstack/react-start/server");
-      const req = getRequest();
+      const { getServerRequest } = await import("./security/cookies.server");
+      const req = getServerRequest();
+      const { requireAdmin } = await import("./security/auth");
+      const { user: adminUser } = await requireAdmin(req);
+      const { sanitizeText, sanitizeBlogHtml } = await import("./security/sanitize");
+      const { logAuditEvent } = await import("./security/audit");
+      const { syncSitemapFile } = await import("./sitemap");
 
       // Sanitize inputs to prevent Stored XSS
       const cleanSlug = sanitizeText(postData.slug, 160).toLowerCase();
@@ -259,17 +258,18 @@ export const saveBlogPostServerFn = createServerFn({ method: "POST" })
 
 // Delete blog post - PROTECTED WITH ADMIN AUTH
 export const deleteBlogPostServerFn = createServerFn({ method: "POST" })
-  .middleware([adminAuthMiddleware])
   .validator((d: { slug: string }) => z.object({ slug: z.string().min(1).max(160) }).parse(d))
   .handler(
     async ({
       data,
-      context,
     }): Promise<{ success: boolean; posts: BlogPostItem[] }> => {
       const { slug } = data;
-      const { adminUser } = context;
-      const { getRequest } = await import("@tanstack/react-start/server");
-      const req = getRequest();
+      const { getServerRequest } = await import("./security/cookies.server");
+      const req = getServerRequest();
+      const { requireAdmin } = await import("./security/auth");
+      const { user: adminUser } = await requireAdmin(req);
+      const { logAuditEvent } = await import("./security/audit");
+      const { syncSitemapFile } = await import("./sitemap");
 
       try {
         const { getSql } = await import("@/lib/db");
@@ -299,19 +299,20 @@ export const deleteBlogPostServerFn = createServerFn({ method: "POST" })
 
 // Toggle blog post published/draft status - PROTECTED WITH ADMIN AUTH
 export const toggleBlogPostStatusServerFn = createServerFn({ method: "POST" })
-  .middleware([adminAuthMiddleware])
   .validator((d: { slug: string; status: "published" | "draft" }) =>
     z.object({ slug: z.string().min(1), status: z.enum(["published", "draft"]) }).parse(d),
   )
   .handler(
     async ({
       data,
-      context,
     }): Promise<{ success: boolean; status: "published" | "draft"; posts: BlogPostItem[] }> => {
       const { slug, status } = data;
-      const { adminUser } = context;
-      const { getRequest } = await import("@tanstack/react-start/server");
-      const req = getRequest();
+      const { getServerRequest } = await import("./security/cookies.server");
+      const req = getServerRequest();
+      const { requireAdmin } = await import("./security/auth");
+      const { user: adminUser } = await requireAdmin(req);
+      const { logAuditEvent } = await import("./security/audit");
+      const { syncSitemapFile } = await import("./sitemap");
 
       try {
         const { getSql } = await import("@/lib/db");
@@ -345,8 +346,9 @@ export const incrementBlogPostViewServerFn = createServerFn({ method: "POST" })
   .validator((d: { slug: string }) => z.object({ slug: z.string().min(1).max(160) }).parse(d))
   .handler(async ({ data }): Promise<{ success: boolean; views: number }> => {
     const { slug } = data;
-    const { getRequest } = await import("@tanstack/react-start/server");
-    const req = getRequest();
+    const { getServerRequest } = await import("./security/cookies.server");
+    const req = getServerRequest();
+    const { getClientIp, checkRateLimit } = await import("./security/rate-limiter");
     const ip = getClientIp(req);
 
     // Rate limit: max 1 view count increment per IP per post per 5 minutes

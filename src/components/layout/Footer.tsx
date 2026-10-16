@@ -42,7 +42,7 @@ export function Footer() {
                 href={site.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-[13.5px] font-medium text-white shadow-sm hover:brightness-110 transition"
+                className="inline-flex items-center gap-2 rounded-full bg-[#128C7E] px-4 py-2 text-[13.5px] font-medium text-white shadow-sm hover:brightness-110 transition"
               >
                 <MessageCircle className="h-4 w-4" />
                 <span>WhatsApp Danışma</span>

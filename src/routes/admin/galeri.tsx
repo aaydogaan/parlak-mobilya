@@ -52,7 +52,7 @@ interface UploadQueueItem {
   finalUrl?: string;
 }
 
-export function AdminGaleriPage() {
+function AdminGaleriPage() {
   const { initialImages } = Route.useLoaderData();
   const [images, setImages] = useState<string[]>(initialImages || []);
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);

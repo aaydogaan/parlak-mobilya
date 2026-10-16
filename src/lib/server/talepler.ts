@@ -48,8 +48,8 @@ function rowToTalep(r: any): TalepItem {
 export const submitTalepServerFn = createServerFn({ method: "POST" })
   .validator((d: unknown) => TalepInputSchema.parse(d))
   .handler(async ({ data }): Promise<{ success: boolean; trackingId: string }> => {
-    const { getRequest } = await import("@tanstack/react-start/server");
-    const req = getRequest();
+    const { getServerRequest } = await import("./security/cookies.server");
+    const req = getServerRequest();
     const ip = getClientIp(req);
 
     // Rate limit: max 10 quote requests per IP per hour (prevents abuse while allowing legitimate testing)

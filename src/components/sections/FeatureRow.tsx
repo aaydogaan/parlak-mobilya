@@ -36,9 +36,9 @@ export function FeatureRow() {
                   <Icon className="size-5 text-[#271d12]" strokeWidth={2} />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <h3 className="font-['Lexend'] text-[18px] md:text-[20px] font-semibold tracking-[-0.5px] text-[#0d0100]">
+                  <h2 className="font-['Lexend'] text-[18px] md:text-[20px] font-semibold tracking-[-0.5px] text-[#0d0100]">
                     {item.title}
-                  </h3>
+                  </h2>
                   <p className="font-['Lexend'] text-[14px] md:text-[15px] font-light leading-[1.6] text-[#524e4e] max-w-[320px]">
                     {item.body}
                   </p>

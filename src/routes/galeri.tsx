@@ -50,10 +50,14 @@ function GaleriPage() {
                 muted
                 playsInline
                 autoPlay
+                preload="none"
+                poster="/images/DSCF4566-2-scaled.webp"
                 disablePictureInPicture
                 disableRemotePlayback
                 className="h-full w-full object-cover pointer-events-none"
-              />
+              >
+                <track kind="captions" src="data:text/vtt,WEBVTT" label="Türkçe" default />
+              </video>
             </div>
             <div className="p-6 md:p-8 bg-gradient-to-t from-black via-black/80 to-transparent text-white">
               <h2 className="font-display text-[22px] md:text-[26px] font-medium">

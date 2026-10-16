@@ -47,7 +47,7 @@ const avatarBgColors = [
   "bg-[#34d399] text-[#0d1a15]",
 ];
 
-export function AdminTaleplerPage() {
+function AdminTaleplerPage() {
   const { talepler, setTalepler, updateTalepStatus, updateTalepNotes, deleteTalep } = useAdminStore();
   const [selectedId, setSelectedId] = useState<string>(talepler[0]?.id ?? "");
   const [searchQuery, setSearchQuery] = useState("");

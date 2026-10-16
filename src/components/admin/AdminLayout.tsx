@@ -16,7 +16,7 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { useAdminStore } from "@/lib/admin/adminStore";
-import { AdminLoginPage } from "@/routes/admin/login";
+import { AdminLoginPage } from "@/components/admin/AdminLoginPage";
 import { getGaleriImagesServerFn } from "@/lib/server/galeri";
 import { getTaleplerServerFn } from "@/lib/server/talepler";
 

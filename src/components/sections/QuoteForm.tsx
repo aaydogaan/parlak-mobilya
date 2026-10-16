@@ -76,7 +76,7 @@ export function QuoteForm({ className, compact, defaultService }: Props) {
             href={site.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-[14px] font-medium text-white transition hover:brightness-110"
+            className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#128C7E] px-5 py-2.5 text-[14px] font-medium text-white transition hover:brightness-110"
           >
             <span>WhatsApp ile Hemen Yazın</span>
             <span>→</span>

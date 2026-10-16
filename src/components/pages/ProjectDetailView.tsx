@@ -172,7 +172,7 @@ export function ProjectDetailView({ project }: Props) {
                     href={site.whatsapp}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-[14.5px] font-medium text-white shadow-md hover:brightness-110 transition"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#128C7E] px-5 py-3 text-[14.5px] font-medium text-white shadow-md hover:brightness-110 transition"
                   >
                     <MessageCircle className="h-4 w-4" />
                     <span>WhatsApp</span>

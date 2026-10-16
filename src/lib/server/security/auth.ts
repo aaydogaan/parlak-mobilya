@@ -93,10 +93,10 @@ export function validateCsrfOrigin(req?: Request | null): void {
 export async function getAuthenticatedAdmin(
   req?: Request | null,
 ): Promise<{ user: AdminUserRecord; session: AdminSessionRecord } | null> {
-  const { getCookie } = await import("@tanstack/react-start/server");
+  const { getServerCookie } = await import("./cookies.server");
   const token =
-    getCookie("__Host-admin_session") ||
-    getCookie("admin_session") ||
+    getServerCookie("__Host-admin_session") ||
+    getServerCookie("admin_session") ||
     (req ? req.headers.get("cookie")?.match(/(?:^|;\s*)(?:__Host-admin_session|admin_session)=([^;]+)/)?.[1] : null);
 
   if (!token) {
@@ -124,9 +124,9 @@ export async function requireAdmin(
  * Sets the hardened HTTP-only admin session cookie.
  */
 export async function setAdminSessionCookie(rawToken: string): Promise<void> {
-  const { setCookie } = await import("@tanstack/react-start/server");
+  const { setServerCookie } = await import("./cookies.server");
   // Use __Host- prefix in production HTTPS
-  setCookie(SESSION_COOKIE_NAME, rawToken, {
+  setServerCookie(SESSION_COOKIE_NAME, rawToken, {
     httpOnly: true,
     secure: isProduction,
     sameSite: "strict",
@@ -136,7 +136,7 @@ export async function setAdminSessionCookie(rawToken: string): Promise<void> {
 
   // If in dev and not __Host-, ensure standard cookie is set
   if (!isProduction && SESSION_COOKIE_NAME !== "admin_session") {
-    setCookie("admin_session", rawToken, {
+    setServerCookie("admin_session", rawToken, {
       httpOnly: true,
       secure: false,
       sameSite: "strict",
@@ -150,14 +150,14 @@ export async function setAdminSessionCookie(rawToken: string): Promise<void> {
  * Clear the admin session cookie on logout or invalidation.
  */
 export async function clearAdminSessionCookie(): Promise<void> {
-  const { deleteCookie } = await import("@tanstack/react-start/server");
-  deleteCookie(SESSION_COOKIE_NAME, {
+  const { deleteServerCookie } = await import("./cookies.server");
+  deleteServerCookie(SESSION_COOKIE_NAME, {
     path: "/",
   });
-  deleteCookie("__Host-admin_session", {
+  deleteServerCookie("__Host-admin_session", {
     path: "/",
   });
-  deleteCookie("admin_session", {
+  deleteServerCookie("admin_session", {
     path: "/",
   });
 }
@@ -172,8 +172,8 @@ export async function clearAdminSessionCookie(): Promise<void> {
  */
 export const adminAuthMiddleware = createMiddleware({ type: "function" })
   .server(async ({ next }) => {
-    const { getRequest } = await import("@tanstack/react-start/server");
-    const req = getRequest();
+    const { getServerRequest } = await import("./cookies.server");
+    const req = getServerRequest();
 
     // 1. Strict CSRF & Fetch-Metadata verification
     validateCsrfOrigin(req);

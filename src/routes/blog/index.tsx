@@ -27,7 +27,7 @@ export const Route = createFileRoute("/blog/")({
   }),
 });
 
-export function BlogIndexPage() {
+function BlogIndexPage() {
   const { posts } = Route.useLoaderData();
   return (
     <SiteLayout

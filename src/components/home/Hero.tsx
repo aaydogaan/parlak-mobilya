@@ -5,16 +5,28 @@ export function Hero() {
     <section className="relative w-full h-screen min-h-[700px] p-4 sm:p-5 md:p-6 flex items-center justify-center bg-white overflow-hidden">
       {/* Kart Kapsayıcı (Framer: border-radius: 20px, height: 100%, relative) */}
       <div className="relative w-full h-full rounded-[20px] overflow-hidden flex items-center px-6 sm:px-12 md:px-16 lg:px-20">
-        {/* Kullanıcının WordPress'teki Gerçek Tanıtım Videosu */}
+        {/* LCP Optimize Arka Plan Görseli (Mobilde anında yüklenir, 50MB video indirmesini engeller) */}
+        <img
+          src="/images/DSCF4566-2-scaled.webp"
+          alt="Parlak Mobilya ve Dekorasyon Konya Atölye"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+
+        {/* Masaüstünde zarif video arka plan (preload="none" ve hidden md:block ile mobilde bağlantı kopmasını önler) */}
         <video
-          src="/videos/konya_parlak_mobilya_dekorasyon.mp4"
           autoPlay
           loop
           muted
           playsInline
+          preload="none"
           poster="/images/DSCF4566-2-scaled.webp"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+          className="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
+        >
+          <source src="/videos/konya_parlak_mobilya_dekorasyon.mp4" type="video/mp4" />
+          <track kind="captions" src="data:text/vtt,WEBVTT" label="Türkçe" default />
+        </video>
 
         {/* Orijinal Framer Karartma Lineer Gradyanı (.framer-k2e2m4) */}
         <div

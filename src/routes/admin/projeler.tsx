@@ -27,7 +27,7 @@ export const Route = createFileRoute("/admin/projeler")({
   }),
 });
 
-export function AdminProjelerPage() {
+function AdminProjelerPage() {
   const { projeler, addProje, updateProje, deleteProje } = useAdminStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
