@@ -160,7 +160,11 @@ export function Footer() {
             <img
               src="/images/bromak-agency-konya-web-tasarim.png"
               alt="Bromak Agency - Konya Web Tasarım"
+              width={140}
+              height={36}
               className="h-8 md:h-9 w-auto object-contain"
+              loading="lazy"
+              decoding="async"
             />
           </a>
 

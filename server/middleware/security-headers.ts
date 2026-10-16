@@ -16,6 +16,17 @@ export default async function securityHeadersMiddleware(
     headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
     headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
 
+    const pathname = event.url?.pathname || "";
+    if (
+      pathname.startsWith("/images/") ||
+      pathname.startsWith("/assets/") ||
+      pathname.startsWith("/videos/") ||
+      pathname.startsWith("/fonts/") ||
+      /\.(webp|png|jpg|jpeg|svg|ico|mp4|webm|woff2|woff|css|js)$/i.test(pathname)
+    ) {
+      headers.set("Cache-Control", "public, max-age=31536000, immutable");
+    }
+
     const cspDirectives = [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://grok.com https://static.cloudflareinsights.com",

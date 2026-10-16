@@ -50,8 +50,11 @@ export function Ideas() {
               <img
                 src="/images/DSCF4566-2-scaled.webp"
                 alt="Parlak Mobilya Atölye ve Özel Ahşap Üretimi"
+                width={480}
+                height={416}
                 className="w-full h-full object-cover"
                 loading="lazy"
+                decoding="async"
               />
             </div>
 
@@ -60,8 +63,11 @@ export function Ideas() {
               <img
                 src="/images/mutfak-dolaplari.webp"
                 alt="Özel Ölçü Mutfak ve Ahşap Detayı"
+                width={150}
+                height={150}
                 className="w-full h-full object-cover"
                 loading="lazy"
+                decoding="async"
               />
             </div>
 

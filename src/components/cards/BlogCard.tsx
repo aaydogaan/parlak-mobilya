@@ -15,8 +15,11 @@ export function BlogCard({ post }: { post: BlogPost | BlogPostItem }) {
         <img
           src={post.image}
           alt={post.title}
+          width={400}
+          height={363}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
+          decoding="async"
         />
       ) : (
         <div className="w-full h-full bg-[#f6f5f5]" />

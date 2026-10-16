@@ -13,8 +13,11 @@ export function ServiceCard({ service }: { service: Service }) {
         <img
           src={service.image}
           alt={service.title}
+          width={400}
+          height={388}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
+          decoding="async"
         />
       ) : (
         <div className="w-full h-full bg-[#271d12]" />

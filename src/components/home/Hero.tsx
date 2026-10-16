@@ -5,14 +5,19 @@ export function Hero() {
     <section className="relative w-full h-screen min-h-[700px] p-4 sm:p-5 md:p-6 flex items-center justify-center bg-white overflow-hidden">
       {/* Kart Kapsayıcı (Framer: border-radius: 20px, height: 100%, relative) */}
       <div className="relative w-full h-full rounded-[20px] overflow-hidden flex items-center px-6 sm:px-12 md:px-16 lg:px-20">
-        {/* LCP Optimize Arka Plan Görseli (Mobilde anında yüklenir, 50MB video indirmesini engeller) */}
-        <img
-          src="/images/DSCF4566-2-scaled.webp"
-          alt="Parlak Mobilya ve Dekorasyon Konya Atölye"
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+        {/* LCP Optimize Arka Plan Görseli - Mobilde 23 KB retina, masaüstünde tam boy */}
+        <picture className="absolute inset-0 w-full h-full">
+          <source media="(max-width: 640px)" srcSet="/images/DSCF4566-hero-mobile.webp" type="image/webp" />
+          <img
+            src="/images/DSCF4566-2-scaled.webp"
+            alt="Parlak Mobilya ve Dekorasyon Konya Atölye"
+            fetchPriority="high"
+            decoding="async"
+            width={800}
+            height={450}
+            className="w-full h-full object-cover object-center"
+          />
+        </picture>
 
         {/* Masaüstünde zarif video arka plan (preload="none" ve hidden md:block ile mobilde bağlantı kopmasını önler) */}
         <video
