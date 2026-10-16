@@ -93,7 +93,7 @@ export function validateCsrfOrigin(req?: Request | null): void {
 export async function getAuthenticatedAdmin(
   req?: Request | null,
 ): Promise<{ user: AdminUserRecord; session: AdminSessionRecord } | null> {
-  const { getServerCookie } = await import("./cookies.server");
+  const { getServerCookie } = await import("./cookies");
   const token =
     getServerCookie("__Host-admin_session") ||
     getServerCookie("admin_session") ||
@@ -124,7 +124,7 @@ export async function requireAdmin(
  * Sets the hardened HTTP-only admin session cookie.
  */
 export async function setAdminSessionCookie(rawToken: string): Promise<void> {
-  const { setServerCookie } = await import("./cookies.server");
+  const { setServerCookie } = await import("./cookies");
   // Use __Host- prefix in production HTTPS
   setServerCookie(SESSION_COOKIE_NAME, rawToken, {
     httpOnly: true,
@@ -150,7 +150,7 @@ export async function setAdminSessionCookie(rawToken: string): Promise<void> {
  * Clear the admin session cookie on logout or invalidation.
  */
 export async function clearAdminSessionCookie(): Promise<void> {
-  const { deleteServerCookie } = await import("./cookies.server");
+  const { deleteServerCookie } = await import("./cookies");
   deleteServerCookie(SESSION_COOKIE_NAME, {
     path: "/",
   });
@@ -172,7 +172,7 @@ export async function clearAdminSessionCookie(): Promise<void> {
  */
 export const adminAuthMiddleware = createMiddleware({ type: "function" })
   .server(async ({ next }) => {
-    const { getServerRequest } = await import("./cookies.server");
+    const { getServerRequest } = await import("./cookies");
     const req = getServerRequest();
 
     // 1. Strict CSRF & Fetch-Metadata verification

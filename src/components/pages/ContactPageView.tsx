@@ -316,15 +316,30 @@ export function ContactPageView() {
           <Reveal>
             <div className="w-full overflow-hidden rounded-[24px] border border-black/10 bg-[#faf7f2] shadow-md">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3147.883588439275!2d32.5066647!3d37.9097836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d08f102bd1f767%3A0xff4e508c71eb11f0!2sParlak%20Mobilya%20%26%20Dekorasyon!5e0!3m2!1str!2sbf!4v1790861914337!5m2!1str!2sbf"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3147.883588439275!2d32.5066647!3d37.9097836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d08f102bd1f767%3A0xff4e508c71eb11f0!2sParlak%20Mobilya%20%26%20Dekorasyon!5e0!3m2!1str!2str!4v1790861914337!5m2!1str!2str"
                 width="100%"
                 height="450"
                 style={{ border: 0 }}
                 allowFullScreen={true}
                 loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
+                referrerPolicy="no-referrer-when-downgrade"
                 title="Parlak Mobilya ve Dekorasyon Google Harita Konumu"
               />
+            </div>
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-[14px] text-[#524e4e]">
+              <p className="flex items-center gap-1.5 font-medium">
+                <MapPin className="size-4 text-amber-700 shrink-0" />
+                <span>Horozluhan Mah. Saraycık Sok. No:50, Selçuklu / Konya</span>
+              </p>
+              <a
+                href="https://maps.google.com/?q=Parlak+Mobilya+ve+Dekorasyon+Horozluhan+Mah.+Sarayc%C4%B1k+Sok.+No:50+Sel%C3%A7uklu+Konya"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#271d12] text-white text-[13px] font-medium hover:bg-black transition-colors"
+              >
+                <span>Google Haritalar'da Aç / Yol Tarifi</span>
+                <ArrowUpRight className="size-3.5" />
+              </a>
             </div>
           </Reveal>
         </div>

@@ -48,7 +48,7 @@ function rowToTalep(r: any): TalepItem {
 export const submitTalepServerFn = createServerFn({ method: "POST" })
   .validator((d: unknown) => TalepInputSchema.parse(d))
   .handler(async ({ data }): Promise<{ success: boolean; trackingId: string }> => {
-    const { getServerRequest } = await import("./security/cookies.server");
+    const { getServerRequest } = await import("./security/cookies");
     const req = getServerRequest();
     const ip = getClientIp(req);
 

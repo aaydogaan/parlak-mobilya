@@ -48,7 +48,7 @@ export const getBlogPostsServerFn = createServerFn({ method: "GET" })
 
     // Defense-in-depth: ONLY verified admins can view drafts
     if (data?.includeDrafts) {
-      const { getServerRequest } = await import("./security/cookies.server");
+      const { getServerRequest } = await import("./security/cookies");
       const req = getServerRequest();
       const { getAuthenticatedAdmin } = await import("./security/auth");
       const auth = await getAuthenticatedAdmin(req);
@@ -152,7 +152,7 @@ export const getBlogPostBySlugServerFn = createServerFn({ method: "POST" })
     }
 
     if (post && post.status === "draft") {
-      const { getServerRequest } = await import("./security/cookies.server");
+      const { getServerRequest } = await import("./security/cookies");
       const req = getServerRequest();
       const { getAuthenticatedAdmin } = await import("./security/auth");
       const auth = await getAuthenticatedAdmin(req);
@@ -171,7 +171,7 @@ export const saveBlogPostServerFn = createServerFn({ method: "POST" })
     async ({
       data: postData,
     }): Promise<{ success: boolean; post: BlogPostItem; posts: BlogPostItem[] }> => {
-      const { getServerRequest } = await import("./security/cookies.server");
+      const { getServerRequest } = await import("./security/cookies");
       const req = getServerRequest();
       const { requireAdmin } = await import("./security/auth");
       const { user: adminUser } = await requireAdmin(req);
@@ -264,7 +264,7 @@ export const deleteBlogPostServerFn = createServerFn({ method: "POST" })
       data,
     }): Promise<{ success: boolean; posts: BlogPostItem[] }> => {
       const { slug } = data;
-      const { getServerRequest } = await import("./security/cookies.server");
+      const { getServerRequest } = await import("./security/cookies");
       const req = getServerRequest();
       const { requireAdmin } = await import("./security/auth");
       const { user: adminUser } = await requireAdmin(req);
@@ -307,7 +307,7 @@ export const toggleBlogPostStatusServerFn = createServerFn({ method: "POST" })
       data,
     }): Promise<{ success: boolean; status: "published" | "draft"; posts: BlogPostItem[] }> => {
       const { slug, status } = data;
-      const { getServerRequest } = await import("./security/cookies.server");
+      const { getServerRequest } = await import("./security/cookies");
       const req = getServerRequest();
       const { requireAdmin } = await import("./security/auth");
       const { user: adminUser } = await requireAdmin(req);
@@ -346,7 +346,7 @@ export const incrementBlogPostViewServerFn = createServerFn({ method: "POST" })
   .validator((d: { slug: string }) => z.object({ slug: z.string().min(1).max(160) }).parse(d))
   .handler(async ({ data }): Promise<{ success: boolean; views: number }> => {
     const { slug } = data;
-    const { getServerRequest } = await import("./security/cookies.server");
+    const { getServerRequest } = await import("./security/cookies");
     const req = getServerRequest();
     const { getClientIp, checkRateLimit } = await import("./security/rate-limiter");
     const ip = getClientIp(req);

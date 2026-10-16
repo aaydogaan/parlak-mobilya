@@ -34,7 +34,7 @@ export default async function securityHeadersMiddleware(
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: blob: https://cdn.parlakmobilyadekorasyon.com https://*.r2.dev https://*.r2.cloudflarestorage.com https://challenges.cloudflare.com",
       "connect-src 'self' https://challenges.cloudflare.com https://cdn.parlakmobilyadekorasyon.com https://*.r2.cloudflarestorage.com https://cloudflareinsights.com",
-      "frame-src 'self' https://challenges.cloudflare.com",
+      "frame-src 'self' https://challenges.cloudflare.com https://www.google.com https://maps.google.com https://*.google.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
