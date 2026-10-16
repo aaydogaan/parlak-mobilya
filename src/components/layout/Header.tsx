@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight, Phone } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { GoldButton } from "@/components/ui/GoldButton";
+import { site } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -136,39 +137,63 @@ export function Header({ variant = "light" }: Props) {
         </div>
       </div>
 
-      {/* Mobile Menü: WordPress Menüsü ile Birebir Aynı */}
+      {/* Mobile Menü: Tam Ekran Kusursuz Siyah Panel (Üstte boşluk kalmaz, logo ve butonlar siyah zeminle bütünleşir) */}
       {open ? (
-        <div
-          className={cn(
-            "absolute inset-x-0 top-full max-h-[calc(100vh-78px)] overflow-y-auto border-t lg:hidden shadow-2xl",
-            light ? "border-line bg-white" : "border-white/10 bg-[#271d12]",
-          )}
-        >
-          <div className="container-site flex flex-col gap-1 py-5 font-['Lexend']">
-            {navItems.map((item) => {
-              const active = isActive(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className={cn(
-                    "py-3 text-[16px] font-medium border-b border-black/5 transition-colors",
-                    active
-                      ? light
-                        ? "text-ink font-bold"
-                        : "text-white font-bold"
-                      : light
-                      ? "text-ink/80 hover:text-ink"
-                      : "text-white/80 hover:text-white"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-            <GoldButton to="/iletisim" className="mt-4 w-full justify-center">
-              Hızlı Teklif Al
-            </GoldButton>
+        <div className="fixed inset-0 z-[100] bg-black text-white flex flex-col lg:hidden animate-in fade-in duration-200">
+          {/* Üst Bar: Logo ve Kapat Butonu */}
+          <div className="container-site flex items-center justify-between py-5 border-b border-white/10">
+            <Logo light={true} />
+            <button
+              type="button"
+              className="inline-flex size-10 items-center justify-center rounded-full text-white hover:bg-white/10 transition-colors cursor-pointer"
+              aria-label="Menüyü Kapat"
+              onClick={() => setOpen(false)}
+            >
+              <X className="size-6 text-white" />
+            </button>
+          </div>
+
+          {/* Menü Linkleri */}
+          <div className="container-site flex-1 flex flex-col justify-between py-6 overflow-y-auto font-['Lexend']">
+            <div className="flex flex-col gap-1">
+              {navItems.map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "py-3.5 text-[18px] sm:text-[20px] font-medium tracking-tight transition-all duration-200 border-b border-white/10 flex items-center justify-between",
+                      active
+                        ? "text-white font-bold pl-2 border-l-2 border-l-amber-500"
+                        : "text-white/80 hover:text-white hover:pl-2"
+                    )}
+                  >
+                    <span>{item.label}</span>
+                    <ArrowRight className="size-4 opacity-40" />
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Alt Butonlar & İletişim */}
+            <div className="mt-6 pt-4 flex flex-col gap-3">
+              <GoldButton
+                to="/iletisim"
+                onClick={() => setOpen(false)}
+                className="w-full justify-center py-4 text-[15px] font-semibold"
+              >
+                Hızlı Teklif Al
+              </GoldButton>
+              <a
+                href={`tel:${site.phoneRaw}`}
+                className="inline-flex items-center justify-center gap-2 py-3 rounded-full border border-white/15 text-[14px] text-white/85 hover:text-white hover:border-white/30 transition font-medium"
+              >
+                <Phone className="size-4 text-amber-500" />
+                <span>Hemen Ara: {site.phone}</span>
+              </a>
+            </div>
           </div>
         </div>
       ) : null}

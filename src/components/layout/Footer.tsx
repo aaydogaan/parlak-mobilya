@@ -170,7 +170,7 @@ export function Footer() {
 
           {/* Telif Yazısı */}
           <p className="text-[#524e4e] text-center md:text-right">
-            Tüm Hakları Saklıdır © Parlak Mobilya ve Dekorasyon — 1984'ten Bugüne
+            Tüm Hakları Saklıdır © Parlak Mobilya ve Dekorasyon
           </p>
         </div>
       </div>
