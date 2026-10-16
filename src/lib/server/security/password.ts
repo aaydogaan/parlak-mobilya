@@ -1,11 +1,14 @@
-import { scrypt, randomBytes, timingSafeEqual } from "node:crypto";
+async function getCrypto() {
+  return await import("node:crypto");
+}
 
-function scryptAsync(
+async function scryptAsync(
   password: string,
   salt: string,
   keylen: number,
   options: { N: number; r: number; p: number; maxmem: number },
 ): Promise<Buffer> {
+  const { scrypt } = await getCrypto();
   return new Promise((resolve, reject) => {
     scrypt(password, salt, keylen, options, (err, derivedKey) => {
       if (err) reject(err);
@@ -28,6 +31,7 @@ export async function hashPassword(password: string): Promise<string> {
     throw new Error("Password must be a non-empty string");
   }
 
+  const { randomBytes } = await getCrypto();
   const salt = randomBytes(16).toString("hex");
   const derivedKey = await scryptAsync(password, salt, KEY_LEN, {
     N: SCRYPT_N,
@@ -62,6 +66,7 @@ export async function verifyPassword(password: string, storedHash: string): Prom
   }
 
   try {
+    const { timingSafeEqual } = await getCrypto();
     const derivedKey = (await scryptAsync(password, saltHex, hashHex.length / 2, {
       N,
       r,

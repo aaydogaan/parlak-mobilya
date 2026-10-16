@@ -109,28 +109,28 @@ export const projectsData: Record<string, ProjectDetail> = {
     ],
     "faqs": [
       {
-        "question": "Konya'da mutfak dolabı fiyatları ne kadar?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Konya'da mutfak dolabı fiyatları neye göre belirlenir?",
+        "answer": "Mutfak dolabı fiyatları; mutfağınızın tülmetresine (uzunluğuna), kapak malzemesine (Lake, Akrilik, Membran veya High Gloss), 1. sınıf MDFLam gövde kalitesine ve frenli çekmece/kiler mekanizmalarına (Blum, Samet) göre belirlenir. Yerinde ücretsiz keşif sonrası net fiyat sunuyoruz."
       },
       {
-        "question": "Mutfak dolabı metrekare fiyatı nasıl hesaplanır?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Mutfak dolabı metretül fiyatı nasıl hesaplanır?",
+        "answer": "Metretül hesabı; alt dolap ve üst dolapların mutfak duvarı boyunca toplam uzunluğuna göre yapılır. Boy kiler dolapları ve ada mutfak modülleri projenin metrajına ayrıca dahil edilir."
       },
       {
-        "question": "Ölçüye özel mutfak dolabı yapıyor musunuz?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Özel ölçü mutfak dolabı imalatı ne kadar sürer?",
+        "answer": "Yerinde keşif ve 3D çizim onayının ardından ortalama 15 ila 25 iş günü içerisinde atölyemizde imalat tamamlanır. Konya içi adresinizde montaj ise 1-2 iş günü içinde kusursuzca bitirilir."
       },
       {
-        "question": "Mutfak dolabı yapımı ne kadar sürer?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Mutfak dolaplarında hangi kapak modelini tavsiye edersiniz?",
+        "answer": "Yüksek çizilme direnci ve pratik temizlik için Akrilik ve High Gloss kapaklar; klasik, country veya modern rustik detaylar isteyenler için ise zengin renk seçeneği sunan fırın boyalı Lake kapaklar Konya'daki müşterilerimizce en çok tercih edilen modellerdir."
       },
       {
-        "question": "Mutfak dolabı yaptırmadan önce ölçü alınması gerekir mi?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Konya içi keşif ve 3D mutfak tasarımı ücretli mi?",
+        "answer": "Hayır. Konya merkez, Selçuklu, Meram ve Karatay ilçelerinde yerinde lazerli ölçü alımı, teknik keşif ve 3D mutfak projelendirme hizmetimiz tamamen ücretsizdir."
       },
       {
-        "question": "Hangi mutfak dolabı modeli daha kullanışlıdır?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Köşe kör noktalar ve kiler alanları nasıl değerlendirilir?",
+        "answer": "L ve U tipi mutfaklarda kör açıların atıl kalmaması için frenli fasulye kiler mekanizmaları, döner köşe sepetleri ve tam açılır çekmeceler kullanarak mutfaktaki her santimetreyi işlevsel kılıyoruz."
       }
     ]
   },
@@ -256,28 +256,28 @@ export const projectsData: Record<string, ProjectDetail> = {
     ],
     "faqs": [
       {
-        "question": "Konya'da gardırop fiyatları ne kadar?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Konya'da özel ölçü gardırop fiyatları neye göre değişir?",
+        "answer": "Gardırobun genişlik ve tavan yüksekliği, kapak sistemi (sürgülü mekanizma, menteşeli kapak veya reflekte cam), iç donanım (pantolonluk, kravatlık, gizli çekmece, LED askı boruları) ve gövdede kullanılan MDF kalitesine göre belirlenir."
       },
       {
-        "question": "Konya'da özel ölçü gardırop yapılıyor mu?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Sürgülü gardırop mu yoksa menteşeli (açılır) kapak mı daha kullanışlıdır?",
+        "answer": "Dar yatak odalarında kapak açılma payı gerektirmediği için frenli sürgülü sistemler idealdir. Geniş odalarda ise tüm dolap içini aynı anda görebilme avantajı sağlayan menteşeli veya akordiyon kapaklı modeller tercih edilir."
       },
       {
-        "question": "LED'li modern gardırop fiyatları ne kadar?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Gardırop içine entegre LED aydınlatma yapıyor musunuz?",
+        "answer": "Evet. Kapak açıldığında otomatik devreye giren sensörlü LED askı boruları, çekmece içi aydınlatmalar ve füme reflekte cam arkası gizli şerit LED uygulamaları standart atölye üretim seçeneklerimiz arasındadır."
       },
       {
-        "question": "Gardırop yaptırmak ne kadar sürer?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Tavana kadar sıfır gardırop imalatı mümkün mü?",
+        "answer": "Kesinlikle. Odanızın tavan yüksekliğine tam sıfır, üstte boşluk ve toz birikintisi bırakmayan, köşe ve kirişleri gizleyen özel ölçü dolaplar üretiyoruz."
       },
       {
-        "question": "Sürgülü gardırop mu, kapaklı gardırop mu daha kullanışlıdır?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Gardırobun iç düzenini ihtiyacımıza göre tasarlayabiliyor muyuz?",
+        "answer": "Evet, uzun elbise askılıkları, gömleklik bölümler, pantolonluklar, takı & saat çekmeceleri ve gizli kasa bölmelerini tamamen sizin kıyafet yoğunluğunuza göre özel planlıyoruz."
       },
       {
-        "question": "Gardırop içerisine sonradan LED aydınlatma eklenebilir mi?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Gardırop teslimat ve montaj süresi nedir?",
+        "answer": "Ölçü alımı ve iç yerleşim onayından sonra 15-20 gün içinde atölyemizde üretilir, Konya içi adresinize kendi montaj ustalarımız tarafından 1 günde kurulur."
       }
     ]
   },
@@ -403,28 +403,28 @@ export const projectsData: Record<string, ProjectDetail> = {
     ],
     "faqs": [
       {
-        "question": "Konya'da vestiyer fiyatları ne kadar?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Konya'da vestiyer ve portmanto fiyatları nasıl hesaplanır?",
+        "answer": "Antrenizin genişliği, dolabın derinliği, oturma pufu/bankı, boy aynası, gizli LED detayları ve ayakkabılık raf adetlerine göre metraj bazlı fiyatlandırılır. Yerinde keşif sonrası net bütçe sunulur."
       },
       {
-        "question": "Özel ölçü vestiyer imalatı yapılıyor mu?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Dar veya kolonlu antrelere özel vestiyer yapılabilir mi?",
+        "answer": "Evet, atölye imalatımızın en büyük avantajı budur. Antrenizdeki elektrik panoları, doğalgaz sayaçları, kolon ve kiriş çıkıntıları kusursuzca gizlenerek mimari bir bütünlük sağlanır."
       },
       {
-        "question": "Vestiyer imalatı fiyatları nasıl belirlenir?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Vestiyerlerde ayakkabılık havalandırması nasıl sağlanıyor?",
+        "answer": "Koku ve nem oluşumunu engellemek amacıyla ayakkabılık modüllerinin arka panellerine veya süpürgelik kısımlarına estetik gizli hava menfezleri entegre ediyoruz."
       },
       {
-        "question": "Modern vestiyer modellerinde hangi özellikler tercih edilebilir?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Vestiyer kapaklarında hangi modeller tercih ediliyor?",
+        "answer": "Son yıllarda Konya'da füme veya bronz reflekte aynalı kapaklar, çıtalı lake modeller ve ahşap sıcaklığı katan meşe/ceviz melamin kapaklar oldukça popülerdir."
       },
       {
-        "question": "Küçük antreler için özel vestiyer yapılabilir mi?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Oturma pufu ve gizli çekmeceler ekleniyor mu?",
+        "answer": "İsteğe bağlı olarak deri veya kumaş kaplamalı gömme oturma bankı, bank altı ayakkabı çekmecesi ve anahtar/cüzdan için gizli bölmeler projeye dahil edilir."
       },
       {
-        "question": "Vestiyer yapımı ne kadar sürer?",
-        "answer": "Konya'da özel ölçü tasarlanan, köşe kiler sistemiyle her santimetresi değerlendirilmiş bir mutfak projesi."
+        "question": "Vestiyer montajı evde ne kadar sürer?",
+        "answer": "Atölyemizde ön montajı ve kontrolleri eksiksiz yapılan vestiyerler, evinizde temiz bir işçilikle genellikle yarım gün ile 1 gün arasında tamamlanır."
       }
     ]
   },
@@ -507,7 +507,32 @@ export const projectsData: Record<string, ProjectDetail> = {
       "Özel Ölçü Konya Mobilya Uygulamaları",
       "Konya'da Komple Ev Yenileme Hizmeti"
     ],
-    "faqs": []
+    "faqs": [
+      {
+        "question": "Konya'da anahtar teslim ev yenileme neleri kapsar?",
+        "answer": "Mutfak dolabı, banyo dolapları, vestiyer, iç oda kapıları, gardırop, laminat parke, alçıpan/asma tavan, elektrik-su tesisat yenileme, boya-badana ve seramik işçilikleri tek elden yönetilir."
+      },
+      {
+        "question": "Komple daire tadilat süreci ne kadar sürer?",
+        "answer": "Dairenin büyüklüğüne ve yapılacak revizyonların kapsamına göre anahtar teslim daire yenileme projelerimiz ortalama 30 ile 45 gün arasında tamamlanarak teslime hazır hale getirilir."
+      },
+      {
+        "question": "İşçilik ve malzemelerde sözleşme yapılıyor mu?",
+        "answer": "Evet, kullanılacak tüm malzeme markaları (MDF, boya, bataryalar, ray sistemleri) ve teslim tarihi yazılı sözleşmeye bağlanarak güvence altına alınır."
+      },
+      {
+        "question": "Kırım ve moloz atım işlerini de siz mi üstleniyorsunuz?",
+        "answer": "Evet, eski dolaplar, fayans ve duvar kırımından molozların belediye döküm sahasına taşınmasına kadar tüm hafriyat işlemleri ekibimizce yürütülür."
+      },
+      {
+        "question": "Tadilat sırasında ev sahibi başında beklemek zorunda mı?",
+        "answer": "Hayır, 40 yıllık tecrübemiz ve şantiye koordinasyonumuzla ustalarımızın takibini biz sağlar, süreci düzenli fotoğraf ve videolarla tarafınıza raporlarız."
+      },
+      {
+        "question": "Komple ev yenilemede ödeme planı nasıl işliyor?",
+        "answer": "Başlangıçta sözleşme avansı, iş aşamalarına paralel ara hakedişler ve nihai teslimatta müşteri memnuniyeti sağlandıktan sonra kalan bakiye şeklinde esnek ödeme planı sunulur."
+      }
+    ]
   },
   "konya-tv-unitesi": {
     "slug": "konya-tv-unitesi",
@@ -629,28 +654,28 @@ export const projectsData: Record<string, ProjectDetail> = {
     ],
     "faqs": [
       {
-        "question": "Konya'da TV ünitesi fiyatları ne kadar?",
-        "answer": "Konya'da özel ölçü tasarlanan, modern ve işlevsel detaylarıyla yaşam alanına uyum sağlayan bir TV ünitesi projesi."
+        "question": "Konya'da özel ölçü TV ünitesi fiyatları neye göre belirlenir?",
+        "answer": "Ünitenin alt konsol genişliği, arkasındaki ahşap çıta veya mermer desen duvar kaplama paneli, gizli LED kanalları ve vitrin/dolap eklentilerine göre hesaplanır."
       },
       {
-        "question": "Özel ölçü TV ünitesi yapılıyor mu?",
-        "answer": "Konya'da özel ölçü tasarlanan, modern ve işlevsel detaylarıyla yaşam alanına uyum sağlayan bir TV ünitesi projesi."
+        "question": "TV arkasındaki kablo karmaşası nasıl gizlenir?",
+        "answer": "TV arkasına uyguladığımız özel duvar panelleri ve gizli kablo geçiş kanalları sayesinde prizler, uydu ve HDMI kabloları tamamen gizlenir; dışarıdan hiçbir kablo görünmez."
       },
       {
-        "question": "TV ünitesi fiyatları nasıl belirlenir?",
-        "answer": "Konya'da özel ölçü tasarlanan, modern ve işlevsel detaylarıyla yaşam alanına uyum sağlayan bir TV ünitesi projesi."
+        "question": "Akustik ahşap çıta panelli TV ünitesi yapıyor musunuz?",
+        "answer": "Evet, hem salona modern bir derinlik katan hem de ses yankısını azaltan meşe, ceviz veya antrasit lake akustik çıta panelleri kendi CNC atölyemizde üretiyoruz."
       },
       {
-        "question": "Modern TV ünitesi modellerinde hangi özellikler tercih edilebilir?",
-        "answer": "Konya'da özel ölçü tasarlanan, modern ve işlevsel detaylarıyla yaşam alanına uyum sağlayan bir TV ünitesi projesi."
+        "question": "Şömineli TV ünitesi yaptırabilir miyiz?",
+        "answer": "Elektrikli buharlı veya dekoratif LED alevli şöminelere tam uyumlu, ısı yalıtımlı özel şömine yuvalı TV konsolları tasarlayıp imal ediyoruz."
       },
       {
-        "question": "LED aydınlatmalı TV ünitesi yapılabilir mi?",
-        "answer": "Konya'da özel ölçü tasarlanan, modern ve işlevsel detaylarıyla yaşam alanına uyum sağlayan bir TV ünitesi projesi."
+        "question": "TV ünitesi duvara sağlam monte ediliyor mu?",
+        "answer": "Evet, asma konsollar ve ağır duvar panelleri kimyasal dübel ve çelik askı elemanları kullanılarak güvenli şekilde duvara sabitlenir."
       },
       {
-        "question": "TV ünitesinde kablolar gizlenebilir mi?",
-        "answer": "Konya'da özel ölçü tasarlanan, modern ve işlevsel detaylarıyla yaşam alanına uyum sağlayan bir TV ünitesi projesi."
+        "question": "Teslimat ve montaj süresi ne kadardır?",
+        "answer": "3D modelleme onayından sonra ortalama 10-15 iş günü içinde atölyede üretilir ve 1 günde Konya içi adresinizde montajı yapılır."
       }
     ]
   },
@@ -783,28 +808,28 @@ export const projectsData: Record<string, ProjectDetail> = {
     ],
     "faqs": [
       {
-        "question": "Konya'da çocuk odası fiyatları ne kadar?",
-        "answer": "Konya'da özel ölçü üretilen çocuk odası mobilyalarıyla güvenli, düzenli ve fonksiyonel yaşam alanları tasarlıyoruz."
+        "question": "Çocuk odası mobilyalarında kullanılan malzemeler sağlığa zararlı mıdır?",
+        "answer": "Kesinlikle hayır. Çocuk odası mobilyalarımızda formaldehit salınımı yapmayan E1 sertifikalı MDF lam ve su bazlı, kurşunsuz, kokusuz sertifikalı lake boyalar kullanıyoruz."
       },
       {
-        "question": "Özel ölçü çocuk odası mobilyası yapılıyor mu?",
-        "answer": "Konya'da özel ölçü üretilen çocuk odası mobilyalarıyla güvenli, düzenli ve fonksiyonel yaşam alanları tasarlıyoruz."
+        "question": "Küçük çocuk odaları için yer kazandıran çözümler var mı?",
+        "answer": "Evet, altı çalışma masalı veya dolaplı ranza sistemleri, kademeli merdiven çekmeceleri ve katlanır yatak mekanizmaları ile dar alanlarda maksimum kullanım alanı yaratıyoruz."
       },
       {
-        "question": "Konya çocuk odası mobilyacıları arasında seçim yaparken nelere dikkat edilmelidir?",
-        "answer": "Konya'da özel ölçü üretilen çocuk odası mobilyalarıyla güvenli, düzenli ve fonksiyonel yaşam alanları tasarlıyoruz."
+        "question": "Çocukların güvenliği için ne gibi önlemler alınıyor?",
+        "answer": "Çarpma ve yaralanmaları önlemek amacıyla mobilya köşelerine yumuşatılmış kavisli (pahlı) hatlar uygulanır. Çekmece ve kapaklarda parmak sıkışmasını önleyen frenli mekanizmalar kullanılır."
       },
       {
-        "question": "Hazır çocuk odası takımı mı, özel ölçü çocuk odası mı tercih edilmelidir?",
-        "answer": "Konya'da özel ölçü üretilen çocuk odası mobilyalarıyla güvenli, düzenli ve fonksiyonel yaşam alanları tasarlıyoruz."
+        "question": "İleride gencin yaşı büyüdüğünde mobilyalar dönüştürülebilir mi?",
+        "answer": "Tasarımlarımızı modüler anlayışla üretiyoruz; çocuk büyüdüğünde beşik genç yatağına dönüşebilir, çalışma masası ve kitaplık ek modüllerle büyütülebilir."
       },
       {
-        "question": "Küçük çocuk odaları için özel mobilya yapılabilir mi?",
-        "answer": "Konya'da özel ölçü üretilen çocuk odası mobilyalarıyla güvenli, düzenli ve fonksiyonel yaşam alanları tasarlıyoruz."
+        "question": "Çalışma masası ve kitaplık odaya özel ölçülendiriliyor mu?",
+        "answer": "Evet, çocuğunuzun boyuna, ders çalışma alışkanlıklarına ve odanın pencere/ışık açısına en uygun ergonomik masa ve depolama alanları özel üretilir."
       },
       {
-        "question": "Çocuk odası mobilyalarının üretimi ne kadar sürer?",
-        "answer": "Konya'da özel ölçü üretilen çocuk odası mobilyalarıyla güvenli, düzenli ve fonksiyonel yaşam alanları tasarlıyoruz."
+        "question": "Çocuk odası imalat ve montaj süresi nedir?",
+        "answer": "Ölçü ve renk seçiminden sonra ortalama 15-20 gün içinde atölyemizde üretilir, Konya içi adresinizde temiz ve sessiz şekilde 1 günde monte edilir."
       }
     ]
   }

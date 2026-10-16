@@ -1,5 +1,4 @@
 import { createServerFn } from "@tanstack/react-start";
-import { randomBytes } from "node:crypto";
 import { z } from "zod";
 import galeriImagesJson from "@/data/galeri_images.json";
 import { adminAuthMiddleware } from "./security/auth";
@@ -346,6 +345,7 @@ export const uploadImageToR2ServerFn = createServerFn({ method: "POST" })
       // 4. Secure Filename and Cryptographic Object Key (Prevent Path Traversal)
       const cleanFileName = sanitizeFileName(fileName);
       const yearMonth = new Date().toISOString().slice(0, 7).replace("-", "/"); // e.g. 2026/10
+      const { randomBytes } = await import("node:crypto");
       const randomSuffix = randomBytes(8).toString("hex");
       const key = `${yearMonth}/${Date.now()}-${randomSuffix}-${cleanFileName}`;
 

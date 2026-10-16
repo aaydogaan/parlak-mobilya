@@ -307,20 +307,23 @@ export function ProjectDetailView({ project }: Props) {
               {project.faqs.map((faq, i) => {
                 const isOpen = activeFaq === i;
                 return (
-                  <div key={i} className="py-4 first:pt-0 last:pb-0">
+                  <div key={i} className="py-4.5 first:pt-0 last:pb-0">
                     <button
+                      type="button"
                       onClick={() => setActiveFaq(isOpen ? null : i)}
-                      className="flex w-full items-center justify-between text-left font-display text-[17px] font-medium text-ink transition hover:opacity-80"
+                      className="flex w-full items-center justify-between text-left font-['Lexend'] text-[16px] sm:text-[17px] font-medium text-[#0d0100] transition-colors hover:text-amber-900 cursor-pointer gap-4"
                     >
                       <span>{faq.question}</span>
-                      <ChevronDown
-                        className={`h-5 w-5 text-subtle transition-transform duration-200 ${
-                          isOpen ? "rotate-180 text-ink" : ""
-                        }`}
-                      />
+                      <div className="size-7 rounded-full bg-black/5 flex items-center justify-center shrink-0">
+                        <ChevronDown
+                          className={`size-4 text-[#524e4e] transition-transform duration-300 ${
+                            isOpen ? "rotate-180 text-[#0d0100]" : ""
+                          }`}
+                        />
+                      </div>
                     </button>
                     {isOpen && (
-                      <p className="mt-3 text-[14.5px] leading-relaxed text-subtle">
+                      <p className="mt-3.5 font-['Lexend'] font-light text-[14.5px] leading-relaxed text-[#524e4e] pr-8 animate-in fade-in duration-200">
                         {faq.answer}
                       </p>
                     )}
