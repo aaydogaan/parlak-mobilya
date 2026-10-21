@@ -37,7 +37,7 @@ export function ProjectDetailView({ project }: Props) {
       "@type": "LocalBusiness",
       name: "Parlak Mobilya ve Dekorasyon",
       telephone: "+905071721196",
-      image: project.heroImage.startsWith("http") ? project.heroImage : `https://www.parlakmobilyadekorasyon.com${project.heroImage}`,
+      image: project.heroImage.startsWith("http") ? project.heroImage : `https://parlakmobilyadekorasyon.com${project.heroImage}`,
       address: {
         "@type": "PostalAddress",
         streetAddress: "Horozluhan Mah. Saraycık Sok. No:50",
@@ -61,19 +61,19 @@ export function ProjectDetailView({ project }: Props) {
         "@type": "ListItem",
         position: 1,
         name: "Ana Sayfa",
-        item: "https://www.parlakmobilyadekorasyon.com/",
+        item: "https://parlakmobilyadekorasyon.com/",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Projelerimiz",
-        item: "https://www.parlakmobilyadekorasyon.com/projeler",
+        item: "https://parlakmobilyadekorasyon.com/projeler",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: project.title,
-        item: `https://www.parlakmobilyadekorasyon.com/projeler/${project.slug}`,
+        item: `https://parlakmobilyadekorasyon.com/projeler/${project.slug}`,
       },
     ],
   };

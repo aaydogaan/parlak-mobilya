@@ -12,10 +12,10 @@ export const Route = createFileRoute("/urunler")({
           "Konya mutfak dolapları, gardıroplar, vestiyerler ve özel ölçü ahşap mobilya modellerimizi inceleyin.",
       },
       { property: "og:title", content: "Ürünler & Modeller - Parlak Mobilya ve Dekorasyon" },
-      { property: "og:url", content: "https://www.parlakmobilyadekorasyon.com/hizmetler" },
+      { property: "og:url", content: "https://parlakmobilyadekorasyon.com/hizmetler" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.parlakmobilyadekorasyon.com/hizmetler" },
+      { rel: "canonical", href: "https://parlakmobilyadekorasyon.com/hizmetler" },
     ],
   }),
 });

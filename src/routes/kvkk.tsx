@@ -11,7 +11,7 @@ export const Route = createFileRoute("/kvkk")({
       { name: "robots", content: "noindex, nofollow" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.parlakmobilyadekorasyon.com/kvkk" },
+      { rel: "canonical", href: "https://parlakmobilyadekorasyon.com/kvkk" },
     ],
   }),
 });

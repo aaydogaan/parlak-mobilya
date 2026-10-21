@@ -10,7 +10,7 @@ export interface SitemapUrl {
   priority?: string;
 }
 
-const BASE_URL = "https://www.parlakmobilyadekorasyon.com";
+const BASE_URL = "https://parlakmobilyadekorasyon.com";
 
 /**
  * Generates an up-to-date XML sitemap including all static pages,

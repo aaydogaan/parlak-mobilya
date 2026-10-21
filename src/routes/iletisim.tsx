@@ -12,10 +12,10 @@ export const Route = createFileRoute("/iletisim")({
           "Konya merkez, Selçuklu, Meram ve Karatay'da özel ölçü mobilya çözümleri için Parlak Mobilya ve Dekorasyon ile iletişime geçin. Ücretsiz keşif ve fiyat teklifi alın.",
       },
       { property: "og:title", content: "İletişim - Parlak Mobilya ve Dekorasyon" },
-      { property: "og:url", content: "https://www.parlakmobilyadekorasyon.com/iletisim" },
+      { property: "og:url", content: "https://parlakmobilyadekorasyon.com/iletisim" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.parlakmobilyadekorasyon.com/iletisim" },
+      { rel: "canonical", href: "https://parlakmobilyadekorasyon.com/iletisim" },
     ],
   }),
 });

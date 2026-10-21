@@ -19,10 +19,10 @@ export const Route = createFileRoute("/blog/")({
           "Konya mobilya ve mutfak dolapları hakkında uzman rehberleri okuyun. Gardırop, vestiyer, TV ünitesi ve dekorasyon fikirleriyle yaşam alanlarınızı daha bilinçli planlayın.",
       },
       { property: "og:title", content: "Blog ve Dekorasyon Rehberi - Parlak Mobilya" },
-      { property: "og:url", content: "https://www.parlakmobilyadekorasyon.com/blog" },
+      { property: "og:url", content: "https://parlakmobilyadekorasyon.com/blog" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.parlakmobilyadekorasyon.com/blog" },
+      { rel: "canonical", href: "https://parlakmobilyadekorasyon.com/blog" },
     ],
   }),
 });

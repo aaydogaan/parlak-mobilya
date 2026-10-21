@@ -21,10 +21,10 @@ export const Route = createFileRoute("/galeri")({
           "Konya'da tamamladığımız mutfak dolabı, gardırop, vestiyer, TV ünitesi ve özel ölçü mobilya projelerini galerimizde inceleyin. Gerçek uygulamalardan ilham alın.",
       },
       { property: "og:title", content: "Fotoğraf Galerisi - Parlak Mobilya ve Dekorasyon" },
-      { property: "og:url", content: "https://www.parlakmobilyadekorasyon.com/galeri" },
+      { property: "og:url", content: "https://parlakmobilyadekorasyon.com/galeri" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.parlakmobilyadekorasyon.com/galeri" },
+      { rel: "canonical", href: "https://parlakmobilyadekorasyon.com/galeri" },
     ],
   }),
 });

@@ -16,10 +16,10 @@ export const Route = createFileRoute("/projeler/$slug")({
       { property: "og:title", content: loaderData?.project.metaTitle ?? "Proje Detayı — Parlak Mobilya" },
       { property: "og:description", content: loaderData?.project.metaDesc ?? "" },
       { property: "og:image", content: loaderData?.project.heroImage ?? "" },
-      { property: "og:url", content: `https://www.parlakmobilyadekorasyon.com/projeler/${params.slug}` },
+      { property: "og:url", content: `https://parlakmobilyadekorasyon.com/projeler/${params.slug}` },
     ],
     links: [
-      { rel: "canonical", href: `https://www.parlakmobilyadekorasyon.com/projeler/${params.slug}` },
+      { rel: "canonical", href: `https://parlakmobilyadekorasyon.com/projeler/${params.slug}` },
     ],
   }),
 });

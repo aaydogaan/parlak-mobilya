@@ -11,7 +11,7 @@ export const Route = createFileRoute("/cerez-politikasi")({
       { name: "robots", content: "noindex, nofollow" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.parlakmobilyadekorasyon.com/cerez-politikasi" },
+      { rel: "canonical", href: "https://parlakmobilyadekorasyon.com/cerez-politikasi" },
     ],
   }),
 });

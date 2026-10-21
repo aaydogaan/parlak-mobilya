@@ -16,10 +16,10 @@ export const Route = createFileRoute("/projeler/")({
           "Konya mobilya projeleri, özel ölçü mutfak dolapları, gardırop, vestiyer, TV ünitesi ve çocuk odası uygulamalarımızı inceleyin. Tamamladığımız gerçek projeleri keşfedin.",
       },
       { property: "og:title", content: "Projelerimiz - Parlak Mobilya ve Dekorasyon" },
-      { property: "og:url", content: "https://www.parlakmobilyadekorasyon.com/projeler" },
+      { property: "og:url", content: "https://parlakmobilyadekorasyon.com/projeler" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.parlakmobilyadekorasyon.com/projeler" },
+      { rel: "canonical", href: "https://parlakmobilyadekorasyon.com/projeler" },
     ],
   }),
 });

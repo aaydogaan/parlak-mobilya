@@ -21,10 +21,10 @@ export const Route = createFileRoute("/blog/$slug")({
       { property: "og:description", content: loaderData?.post.metaDesc ?? "" },
       { property: "og:image", content: loaderData?.post.image ?? "" },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: `https://www.parlakmobilyadekorasyon.com/blog/${params.slug}` },
+      { property: "og:url", content: `https://parlakmobilyadekorasyon.com/blog/${params.slug}` },
     ],
     links: [
-      { rel: "canonical", href: `https://www.parlakmobilyadekorasyon.com/blog/${params.slug}` },
+      { rel: "canonical", href: `https://parlakmobilyadekorasyon.com/blog/${params.slug}` },
     ],
   }),
 });

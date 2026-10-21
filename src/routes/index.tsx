@@ -30,10 +30,10 @@ export const Route = createFileRoute("/")({
           "Konya Parlak Mobilya ve Dekorasyon; 1984'ten bu yana 40 yılı aşkın tecrübeyle özel ölçü mutfak dolabı, gardırop, vestiyer, TV ünitesi ve dekorasyon çözümleri sunar.",
       },
       { property: "og:title", content: "Parlak Mobilya ve Dekorasyon - Konya Özel Ölçü Mobilya & Mutfak Dolabı" },
-      { property: "og:url", content: "https://www.parlakmobilyadekorasyon.com/" },
+      { property: "og:url", content: "https://parlakmobilyadekorasyon.com/" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.parlakmobilyadekorasyon.com/" },
+      { rel: "canonical", href: "https://parlakmobilyadekorasyon.com/" },
     ],
   }),
 });

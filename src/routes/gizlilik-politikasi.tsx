@@ -11,7 +11,7 @@ export const Route = createFileRoute("/gizlilik-politikasi")({
       { name: "robots", content: "noindex, nofollow" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.parlakmobilyadekorasyon.com/gizlilik-politikasi" },
+      { rel: "canonical", href: "https://parlakmobilyadekorasyon.com/gizlilik-politikasi" },
     ],
   }),
 });

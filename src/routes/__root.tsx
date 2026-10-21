@@ -10,10 +10,10 @@ const localBusinessSchema = {
   "@type": "FurnitureStore",
   name: "Parlak Mobilya ve Dekorasyon",
   image: "https://cdn.parlakmobilyadekorasyon.com/wp-content/uploads/2026/07/konya-parlak-mobilya-dekorasyon-gardrop-45-scaled.webp",
-  logo: "https://www.parlakmobilyadekorasyon.com/images/logo.png",
+  logo: "https://parlakmobilyadekorasyon.com/images/logo.png",
   telephone: "+905071721196",
   email: "info@parlakmobilyadekorasyon.com",
-  url: "https://www.parlakmobilyadekorasyon.com",
+  url: "https://parlakmobilyadekorasyon.com",
   foundingDate: "1984",
   priceRange: "₺₺",
   founder: {
@@ -91,7 +91,7 @@ export const Route = createRootRoute({
         property: "og:image",
         content: "https://cdn.parlakmobilyadekorasyon.com/wp-content/uploads/2026/07/konya-parlak-mobilya-dekorasyon-gardrop-45-scaled.webp",
       },
-      { property: "og:url", content: "https://www.parlakmobilyadekorasyon.com" },
+      { property: "og:url", content: "https://parlakmobilyadekorasyon.com" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Parlak Mobilya ve Dekorasyon - Konya Özel Ölçü Mobilya" },
       {

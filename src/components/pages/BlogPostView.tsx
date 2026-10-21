@@ -105,7 +105,7 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
     description: post.metaDesc,
     image: post.image?.startsWith("http")
       ? post.image
-      : `https://www.parlakmobilyadekorasyon.com${post.image || ""}`,
+      : `https://parlakmobilyadekorasyon.com${post.image || ""}`,
     author: {
       "@type": "Person",
       name: authorName,
@@ -115,12 +115,12 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
       name: "Parlak Mobilya ve Dekorasyon",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.parlakmobilyadekorasyon.com/images/logo.png",
+        url: "https://parlakmobilyadekorasyon.com/images/logo.png",
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://www.parlakmobilyadekorasyon.com/blog/${post.slug}`,
+      "@id": `https://parlakmobilyadekorasyon.com/blog/${post.slug}`,
     },
   };
 
@@ -132,25 +132,25 @@ export function BlogPostView({ post, otherPosts: propOtherPosts }: Props) {
         "@type": "ListItem",
         position: 1,
         name: "Ana Sayfa",
-        item: "https://www.parlakmobilyadekorasyon.com/",
+        item: "https://parlakmobilyadekorasyon.com/",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Blog",
-        item: "https://www.parlakmobilyadekorasyon.com/blog",
+        item: "https://parlakmobilyadekorasyon.com/blog",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: post.title,
-        item: `https://www.parlakmobilyadekorasyon.com/blog/${post.slug}`,
+        item: `https://parlakmobilyadekorasyon.com/blog/${post.slug}`,
       },
     ],
   };
 
   const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
-    `${post.title} - https://www.parlakmobilyadekorasyon.com/blog/${post.slug}`
+    `${post.title} - https://parlakmobilyadekorasyon.com/blog/${post.slug}`
   )}`;
 
   return (

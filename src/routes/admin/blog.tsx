@@ -900,7 +900,7 @@ function AdminBlogPage() {
                     Parlak Mobilya ve Dekorasyon
                   </span>
                   <span className="text-[11px] text-[#5f6368] font-mono block leading-tight truncate">
-                    https://www.parlakmobilyadekorasyon.com › blog › {currentSlugPreview}
+                    https://parlakmobilyadekorasyon.com › blog › {currentSlugPreview}
                   </span>
                 </div>
               </div>
